@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="30dp"
+    android:layout_marginBottom="20dp"
+    app:cardElevation="8dp"
+    android:layout_margin="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:background="@drawable/bg_task_item">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/taskTitleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?colorAccent"
+                android:text="Finishing Alien Book"
+                android:textSize="20sp"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/taskDescriptionTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?colorAccent"
+                android:text="Finishing the last chapter.!"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:maxLines="3"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/importanceBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_importance_high"
+                android:text="Important"
+                android:padding="8dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:textAlignment="center"
+                android:textColor="?colorOnSurface"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnCheck"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_checkbox"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

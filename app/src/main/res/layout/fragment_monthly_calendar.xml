@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.MonthlyCalendarFragment"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:id="@+id/headerRl">
+
+        <TextView
+            android:id="@+id/yearTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarYear"
+            android:layout_marginLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/monthTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="September"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarMonth"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"/>
+
+        <ImageView
+            android:id="@+id/timeLineBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_timeline_monthly"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/weekDaysLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="6"
+        android:layout_marginTop="12dp"
+        android:layout_below="@id/headerRl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mon"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tue"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wen"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thu"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fri"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sat"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sun"
+            android:textAppearance="@style/TextAppearance.MyTheme.calendarWeekDays"
+            android:layout_below="@+id/yearTv"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendarRv"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:numColumns="7"
+        android:layout_below="@id/weekDaysLl"
+        android:layout_marginTop="12dp"/>
+
+
+</RelativeLayout>

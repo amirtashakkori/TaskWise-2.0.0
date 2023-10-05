@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskDetailActivity"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dark2light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            app:tint="?colorOnSurface"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/headerTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Create new task"
+            android:textColor="?colorOnSurface"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/deleteTaskBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_header_buttons"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_delete"
+                app:tint="?colorOnSurface" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorOnSurface"
+            android:text="Title"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp">
+
+            <EditText
+                android:id="@+id/taskTitleEt"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@null"
+                android:textColor="?colorOnSurface"
+                android:hint="Enter the Task Title"
+                android:textColorHint="?colorOnSurface"
+                android:textSize="19sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorOnSurface"
+            android:text="Time Period"
+            android:textSize="16sp"
+            android:layout_marginTop="32dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp">
+
+            <Spinner
+                android:id="@+id/timePeriodSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:spinnerMode="dropdown"
+                android:backgroundTint="?colorOnSurface"
+                android:contextClickable="true"
+                android:textSize="19sp"
+                android:layout_marginLeft="-4dp"
+                style="@style/SpinnerTheme"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/bg_white2white"
+        android:layout_marginTop="24dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/txt_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
+            android:text="Description"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/descriptionLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/txt_description">
+
+            <EditText
+                android:id="@+id/descriptionEt"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:textColor="?colorAccent"
+                android:hint="Enter your task description"
+                android:textSize="16sp"
+                android:background="#00FEFEFE"
+                android:textColorHint="?colorAccent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorAccent"
+                android:layout_below="@+id/descriptionEdt"/>
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/importanceSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:spinnerMode="dropdown"
+            android:backgroundTint="?colorAccent"
+            android:contextClickable="true"
+            android:textSize="19sp"
+            android:layout_marginTop="24dp"
+            android:layout_below="@id/descriptionLay"
+            android:layout_marginLeft="-4dp"
+            style="@style/SpinnerTheme"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/submitTaskBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_buttons"
+            android:text="@string/createTask"
+            android:textColor="?colorOnSurface"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

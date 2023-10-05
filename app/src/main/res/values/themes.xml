@@ -1,0 +1,37 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/darkGreen</item>
+        <item name="colorPrimaryVariant">@color/darkerGreen</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/lightGreen</item>
+        <item name="colorSecondaryVariant">@color/darkerLightGreen</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@color/darkerGreen</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+    </style>
+
+
+    <style name="Widget.MaterialComponents.MaterialCalendar.MonthTextView." parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/darkGreen</item>
+        <item name="colorControlActivated">@color/darkGreen</item>
+        <item name="colorControlHighlight">@color/lightGreen</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColorSecondary">@color/darkGreen</item>
+        <item name="android:textColorPrimary">@color/darkGreen</item>
+        <item name="android:textColorSecondaryInverse">@color/white</item>
+        <item name="android:headerDayOfMonthTextAppearance">@style/TextAppearance.MyTheme.calendarWeekDays</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:popupBackground">@drawable/bg_spinner</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+</resources>
