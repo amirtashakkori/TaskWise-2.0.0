@@ -25,4 +25,17 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="menuItemText" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">?colorAccent</item>
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="textSize">14sp</item>
+    </style>
+
+    <style name="userInfo" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?colorOnSurface</item>
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="textSize">8sp</item>
+    </style>
+
+
 </resources>

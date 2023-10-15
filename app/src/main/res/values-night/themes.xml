@@ -9,12 +9,13 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/lightGreen</item>
         <item name="colorSecondaryVariant">@color/darkerLightGreen</item>
-        <item name="colorOnSecondary">@color/lighterBlack</item>
+        <item name="colorOnSecondary">#3C3C3C</item>
         <item name="colorAccent">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="android:actionMenuTextColor">@color/darkerGreen</item>
     </style>
 
 
@@ -29,8 +30,5 @@
         <item name="android:headerDayOfMonthTextAppearance">@style/TextAppearance.MyTheme.calendarWeekDays</item>
     </style>
 
-    <style name="SpinnerTheme" parent="Widget.AppCompat.DropDownItem.Spinner">
-        <item name="android:popupBackground">@drawable/bg_spinner</item>
-        <item name="android:textAlignment">textStart</item>
-    </style>
+
 </resources>

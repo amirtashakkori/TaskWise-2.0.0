@@ -2,12 +2,19 @@ package com.example.taskmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +23,10 @@ import android.widget.Toast;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.WorkManager.TaskListStatusUpdater;
+
+import java.util.concurrent.TimeUnit;
+
 
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -24,12 +35,14 @@ public class TaskDetailActivity extends AppCompatActivity {
     TextView spinnerTv , headerTv;
     Spinner timePeriodSpinner , importanceSpinner;
     RelativeLayout deleteTaskBtn;
+    ImageView backBtn;
 
     Task task;
     TaskDao dao;
     int time_period , importance = 1;
 
     public void cast(){
+
         taskTitleEt = findViewById(R.id.taskTitleEt);
         descriptionEt = findViewById(R.id.descriptionEt);
         timePeriodSpinner = findViewById(R.id.timePeriodSpinner);
@@ -38,6 +51,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         importanceSpinner = findViewById(R.id.importanceSpinner);
         headerTv = findViewById(R.id.headerTv);
         deleteTaskBtn = findViewById(R.id.deleteTaskBtn);
+        backBtn = findViewById(R.id.backBtn);
     }
 
     @Override
@@ -93,6 +107,16 @@ public class TaskDetailActivity extends AppCompatActivity {
                         task.setImportance(importance);
 
                         dao.addTask(task);
+
+                        Data data = new Data.Builder().putString("taskInfo" , taskTitle ).build();
+
+                        WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
+                        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(TaskListStatusUpdater.class)
+                                .setInputData(data)
+                                .setInitialDelay(getTaskExpiredTime(task) , TimeUnit.DAYS)
+                                .build();
+                        manager.enqueue(request);
+
                         finish();
                     }
                 }
@@ -101,7 +125,6 @@ public class TaskDetailActivity extends AppCompatActivity {
 
                 else if(descriptionEt.length() == 0)
                     descriptionEt.setError("Enter a short description for your task!");
-
 
             }
         });
@@ -115,6 +138,13 @@ public class TaskDetailActivity extends AppCompatActivity {
                     finish();
 
                 }
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -155,5 +185,16 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public int getTaskExpiredTime(Task task){
+        if (task.getTime_period() == 1)
+            return 1;
+        else if (task.getTime_period() == 2)
+            return 3;
+        else if (task.getTime_period() == 3)
+            return 7;
+        else
+            return 30;
     }
 }

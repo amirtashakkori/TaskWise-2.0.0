@@ -5,9 +5,20 @@
     <string name="allTasks">All Tasks</string>
     <string name="createTask">Create Task</string>
     <string name="calendar">Calendar</string>
-    <string name="description">Im in chapter 12 and there is 4 chapters left
- it’s about 156 pages that i have to read until
-tommarow night.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="description">Im in chapter 12 and there is 4 chapters left</string>
+    //EmptyStates
+    <string name="todayTaskEmptyState">You dont have any scheduled tasks for today!</string>
+    <string name="futureTaskEmptyState">You dont have any scheduled tasks for this month!</string>
+    <string name="tasksEmptyState">You didnt set any tasks yet!</string>
+    <string name="unspecifiedTasksEmptyState">You dont have any unspecified tasks!</string>
+    <string name="completedTaskEmptyState">Sorry But you dont have any completed tasks!</string>
+    //Navigation
+    <string name="openNavigation">Open navigation</string>
+    <string name="closeNavigation">Open navigation</string>
+    //WelcomeActivity
+    <string name="welcomePageText">Hi, How are you today? :)\nWe are here to create an environment together so that we can perform your daily tasks and tasks with more planning and power than before.!</string>
+    <string name="userInfoText">Before continuing\nwe are very eager to know your name and expertise so that we can work together better than before.!</string>
+
+
+
 </resources>

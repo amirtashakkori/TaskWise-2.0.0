@@ -1,7 +1,11 @@
 package com.example.taskmanager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,7 +13,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,32 +26,38 @@ import com.example.taskmanager.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.SharedPreferences.UserInfoContainer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener {
 
-    NestedScrollView taskListSv;
-    LinearLayout emptyState;
     RecyclerView tasksRv;
-    RelativeLayout deleteAllBtn;
+    RelativeLayout searchBtn, taskList ; ;
+    LinearLayout emptyState ;
     ZiresSwitchSegmentedControl taskListSwitch;
-    TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv , clockTv , allTaskEmptyState;
+    TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv , clockTv ,  userNameTv , userExpertiseTv ;
     FloatingActionButton addTaskBtn;
+    ImageView drawerToggle, editBtn , singleCatEmptyState;
+    DrawerLayout drawerLayout_parent;
+    NavigationView navigationMain;
+    View navigationHeader;
 
     TaskDao dao;
     List<Task> allTasks;
     List<Task> todayTasks;
     TaskAdapter adapter;
+    UserInfoContainer container;
 
     public void cast(){
-        taskListSv = findViewById(R.id.taskListSv);
+        taskList = findViewById(R.id.taskList);
         emptyState = findViewById(R.id.emptyState);
         nameTv = findViewById(R.id.nameTv);
         plansNumberTv = findViewById(R.id.plansNumberTv);
@@ -53,10 +66,19 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         clockTv = findViewById(R.id.clockTv);
         addTaskBtn = findViewById(R.id.addTaskBtn);
         tasksRv = findViewById(R.id.tasksRv);
-        deleteAllBtn = findViewById(R.id.deleteAllBtn);
+        searchBtn = findViewById(R.id.searchBtn);
         taskListSwitch = findViewById(R.id.taskListSwitch);
-        allTaskEmptyState = findViewById(R.id.allTaskEmptyState);
+        singleCatEmptyState = findViewById(R.id.singleCatEmptyState);
         headerTv = findViewById(R.id.headerTv);
+        drawerToggle = findViewById(R.id.drawerToggle);
+        drawerLayout_parent = findViewById(R.id.drawerLayout_parent);
+        navigationMain = findViewById(R.id.navigationMain);
+
+        //NavigationCasting
+        navigationHeader = navigationMain.getHeaderView(0);
+        userNameTv = navigationHeader.findViewById(R.id.userNameTv);
+        userExpertiseTv = navigationHeader.findViewById(R.id.userExpertiseTv);
+        editBtn = navigationHeader.findViewById(R.id.editBtn);
     }
 
     @Override
@@ -66,8 +88,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
         cast();
 
-        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
+        container = new UserInfoContainer(this);
+        String name = container.getName();
+        if (name.equals("")){
+            Intent intent = new Intent(this , WelcomeActivity.class);
+            startActivity(intent);
+        }
 
+        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
         bindTasks();
 
         getDate();
@@ -80,17 +108,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             }
         });
 
-        deleteAllBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dao.deleteAll();
-                headerTv.setText("Task Manager");
-                plansNumberTv.setVisibility(View.GONE);
-                tasksRv.setVisibility(View.GONE);
-                emptyState.setVisibility(View.VISIBLE);
-            }
-        });
-
         taskListSwitch.setOnToggleSwitchChangeListener(new ZiresSwitchSegmentedControl.OnSwitchChangeListener() {
             @Override
             public void onToggleSwitchChangeListener(boolean b) {
@@ -99,13 +116,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                 if (b == false){
                     if (allTasks.size() > 0){
                         tasksRv.setVisibility(View.VISIBLE);
-                        allTaskEmptyState.setVisibility(View.GONE);
+                        singleCatEmptyState.setVisibility(View.GONE);
                         adapter = new TaskAdapter(MainActivity.this , allTasks , MainActivity.this);
                         tasksRv.setAdapter(adapter);
                     } else {
                         tasksRv.setVisibility(View.GONE);
-                        allTaskEmptyState.setVisibility(View.VISIBLE);
-                        allTaskEmptyState.setText("You don't have any tasks more than today.!");
+                        singleCatEmptyState.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -113,18 +129,19 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                 else{
                     if (todayTasks.size() > 0){
                         tasksRv.setVisibility(View.VISIBLE);
-                        allTaskEmptyState.setVisibility(View.GONE);
+                        singleCatEmptyState.setVisibility(View.GONE);
                         adapter = new TaskAdapter(MainActivity.this , todayTasks , MainActivity.this);
                         tasksRv.setAdapter(adapter);
                     } else {
                         tasksRv.setVisibility(View.GONE);
-                        allTaskEmptyState.setVisibility(View.VISIBLE);
-                        allTaskEmptyState.setText("You don't have any tasks for today.!");
+                        singleCatEmptyState.setVisibility(View.VISIBLE);
                     }
                 }
 
             }
         });
+
+        navigationDrawer();
 
     }
 
@@ -140,11 +157,15 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             plansNumberTv.setText("(" + todayTasks.size() + " Plans)");
             emptyState.setVisibility(View.GONE);
             tasksRv.setVisibility(View.VISIBLE);
-            allTaskEmptyState.setVisibility(View.GONE);
+            singleCatEmptyState.setVisibility(View.GONE);
             adapter = new TaskAdapter(MainActivity.this , todayTasks,MainActivity.this);
             tasksRv.setAdapter(adapter);
 
         }
+
+        nameTv.setText("Hi " + container.getName());
+        userNameTv.setText(container.getName() + " " + container.getFamily());
+        userExpertiseTv.setText(container.getExpertise());
     }
 
 
@@ -176,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             plansNumberTv.setVisibility(View.VISIBLE);
 
             emptyState.setVisibility(View.GONE);
-            taskListSv.setVisibility(View.VISIBLE);
+            taskList.setVisibility(View.VISIBLE);
 
 
             adapter = new TaskAdapter(MainActivity.this , todayTasks,MainActivity.this);
@@ -189,18 +210,17 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             plansNumberTv.setVisibility(View.VISIBLE);
             plansNumberTv.setText("(" + allTasks.size() + " Plans)");
 
-
-            allTaskEmptyState.setVisibility(View.VISIBLE);
-            allTaskEmptyState.setText("You don't have any task for today!");
+            tasksRv.setVisibility(View.GONE);
+            singleCatEmptyState.setVisibility(View.VISIBLE);
 
             emptyState.setVisibility(View.GONE);
-            taskListSv.setVisibility(View.VISIBLE);
+            taskList.setVisibility(View.VISIBLE);
 
         } else if (todayTasks.size() == 0 && allTasks.size() == 0){
             headerTv.setText("Task Manager");
             plansNumberTv.setVisibility(View.GONE);
             emptyState.setVisibility(View.VISIBLE);
-            taskListSv.setVisibility(View.GONE);
+            taskList.setVisibility(View.GONE);
         }
     }
 
@@ -211,8 +231,65 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         @SuppressLint("SimpleDateFormat") SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEEE");
         weekDayTv.setText(weekDayFormat.format(calendar.getTime()));
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat monthNameFormat = new SimpleDateFormat("MMMM");
-        monthTv.setText(monthNameFormat.format(calendar.getTime()));
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat monthNameFormat = new SimpleDateFormat("dd MMMM");
+        monthTv.setText( monthNameFormat.format(calendar.getTime()));
     }
+
+    public void navigationDrawer(){
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this , drawerLayout_parent , R.string.openNavigation , R.string.closeNavigation);
+        drawerLayout_parent.addDrawerListener(toggle);
+        navigationMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.deleteAllBtn:
+                        dao.deleteAll();
+                        headerTv.setText("Task Manager");
+                        plansNumberTv.setVisibility(View.GONE);
+                        taskList.setVisibility(View.GONE);
+                        emptyState.setVisibility(View.VISIBLE);
+                        drawerLayout_parent.close();
+                        break;
+
+                    case R.id.completedBtn:
+                        Intent completedIntent = new Intent(MainActivity.this , TaskListActivity.class);
+                        completedIntent.putExtra("listNum" , 1);
+                        startActivity(completedIntent);
+                        drawerLayout_parent.close();
+                        break;
+
+                    case R.id.unspecifiedBtn:
+                        Intent unspecifiedIntent = new Intent(MainActivity.this , TaskListActivity.class);
+                        unspecifiedIntent.putExtra("listNum" , 2);
+                        startActivity(unspecifiedIntent);
+                        drawerLayout_parent.close();
+                        break;
+                }
+                return false;
+            }
+        });
+
+        drawerToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout_parent.openDrawer(Gravity.LEFT);
+            }
+        });
+
+
+        userNameTv.setText(container.getName() + " " + container.getFamily());
+        userExpertiseTv.setText(container.getExpertise());
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this , WelcomeActivity.class);
+                intent.putExtra("key" , 1);
+                startActivity(intent);
+            }
+        });
+    }
+
 
 }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.UserInfoFragment"
+    android:background="@drawable/bg_dark2light"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_back"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/il1"
+            android:layout_width="300dp"
+            android:layout_height="280dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/il_high_five"
+            android:layout_marginBottom="-19dp"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/il2"
+            android:layout_width="300dp"
+            android:layout_height="222dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:src="@drawable/il_edit_user_info"
+            android:layout_marginBottom="-14dp"/>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_welcome_text"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/userInfoTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/userInfoText"
+                android:textAlignment="center"
+                android:textColor="?colorOnSurface"
+                android:textAppearance="@style/userInfo" />
+
+            <EditText
+                android:id="@+id/nameEt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_edit_text_user_info"
+                android:hint="Enter your name"
+                android:paddingLeft="12dp"
+                android:textColorHint="?colorOnSurface"
+                android:textSize="14sp"
+                android:textColor="?colorOnSurface"/>
+
+            <EditText
+                android:id="@+id/familyEt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edit_text_user_info"
+                android:hint="Enter your family name"
+                android:paddingLeft="12dp"
+                android:textColorHint="?colorOnSurface"
+                android:textSize="14sp"
+                android:textColor="?colorOnSurface" />
+
+            <EditText
+                android:id="@+id/expertiseEt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_edit_text_user_info"
+                android:hint="Enter your expertise"
+                android:paddingLeft="12dp"
+                android:textColorHint="?colorOnSurface"
+                android:textSize="14sp"
+                android:textColor="?colorOnSurface" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/submitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/bg_buttons"
+                android:text="Submit"
+                android:textColor="?colorOnSurface" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
