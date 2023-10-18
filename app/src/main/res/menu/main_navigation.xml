@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/completedBtn" android:title="Completed Tasks" android:icon="@drawable/ic_checklist" />
-    <item android:id="@+id/unspecifiedBtn" android:title="Unspecified Tasks" android:icon="@drawable/ic_question_mark" />
-    <item android:id="@+id/deleteAllBtn" android:title="Clear List" android:icon="@drawable/ic_delete"/>
-    <item android:id="@+id/languagesBtn" android:title="Language" >
+    <item android:title="@string/listOptions">
         <menu>
-            <item android:id="@+id/englishBtn" android:title="English" android:checked="true"/>
-            <item android:id="@+id/persianBtn" android:title="Persian"/>
+            <item android:id="@+id/completedBtn" android:title="@string/completedTasks" android:icon="@drawable/ic_checklist" />
+            <item android:id="@+id/unspecifiedBtn" android:title="@string/unspecifiedTasks" android:icon="@drawable/ic_question_mark" />
+            <item android:id="@+id/deleteAllBtn" android:title="@string/clearList" android:icon="@drawable/ic_delete"/>
         </menu>
     </item>
-    <item android:id="@+id/themeBtn" android:title="Theme" >
-        <menu>
-            <item android:id="@+id/lightBtn" android:title="Light Mode" android:enabled="true"/>
-            <item android:id="@+id/darkBtn" android:title="Dark Mode"/>
-        </menu>
-    </item>
+    <item  android:id="@+id/settingBtn" android:title="@string/setting" android:icon="@drawable/ic_settings"/>
+    <item  android:id="@+id/aboutBtn" android:title="@string/about" android:icon="@drawable/ic_info"/>
 </menu>

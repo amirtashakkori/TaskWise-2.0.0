@@ -121,10 +121,10 @@ public class TaskDetailActivity extends AppCompatActivity {
                     }
                 }
                 else if (taskTitleEt.length() == 0)
-                    taskTitleEt.setError("Enter the task title!");
+                    taskTitleEt.setError(R.string.titleError + "");
 
                 else if(descriptionEt.length() == 0)
-                    descriptionEt.setError("Enter a short description for your task!");
+                    descriptionEt.setError(R.string.descriptionError + "");
 
             }
         });
@@ -134,7 +134,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int res = dao.delete(task);
                 if (res > 0){
-                    Toast.makeText(TaskDetailActivity.this, "Deleted Successfuly!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TaskDetailActivity.this, R.string.edited, Toast.LENGTH_SHORT).show();
                     finish();
 
                 }
@@ -150,12 +150,12 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
     public void setSpinners(){
-        String[] period_spinner_items = {"in the day ahead" , "In three days" , "in the week ahead" , "in this month"};
+        String[] period_spinner_items = {getString(R.string.inDayAhead) , getString(R.string.inThreeDays) , getString(R.string.inThisWeek) , getString(R.string.inThisMonth)};
         ArrayAdapter<String> periodSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_period_spinner , R.id.spinnerTv , period_spinner_items);
         periodSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         timePeriodSpinner.setAdapter(periodSpinnerAdapter);
 
-        String[] importance_spinner_items = {"High Importance" , "Normal Priority" , "Low Priority"};
+        String[] importance_spinner_items = {getString(R.string.highImportance) , getString(R.string.normalPriority) , getString(R.string.lowPriority)};
         ArrayAdapter<String> importanceSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_importance_spinner , R.id.spinnerTv , importance_spinner_items);
         importanceSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         importanceSpinner.setAdapter(importanceSpinnerAdapter);

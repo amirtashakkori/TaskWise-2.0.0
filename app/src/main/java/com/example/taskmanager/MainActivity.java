@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
         }
 
-        nameTv.setText("Hi " + container.getName());
+        nameTv.setText(R.string.hi + " " + container.getName());
         userNameTv.setText(container.getName() + " " + container.getFamily());
         userExpertiseTv.setText(container.getExpertise());
     }
@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         if (todayTasks.size() > 0){
             taskListSwitch.setChecked(false);
 
-            headerTv.setText("Your today Task");
-            plansNumberTv.setText("(" + todayTasks.size() + " Plans)");
+            headerTv.setText(R.string.todayTasks);
+            plansNumberTv.setText("(" + todayTasks.size() + " " + R.string.plans + " )");
             plansNumberTv.setVisibility(View.VISIBLE);
 
             emptyState.setVisibility(View.GONE);
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             taskList.setVisibility(View.VISIBLE);
 
         } else if (todayTasks.size() == 0 && allTasks.size() == 0){
-            headerTv.setText("Task Manager");
+            headerTv.setText(R.string.taskManager);
             plansNumberTv.setVisibility(View.GONE);
             emptyState.setVisibility(View.VISIBLE);
             taskList.setVisibility(View.GONE);
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         drawerToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout_parent.openDrawer(Gravity.LEFT);
+                drawerLayout_parent.openDrawer(Gravity.START);
             }
         });
 

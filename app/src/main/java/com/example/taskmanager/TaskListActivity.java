@@ -108,7 +108,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
                 nested.setVisibility(View.GONE);
                 emptyState.setVisibility(View.VISIBLE);
                 img_empty_state.setImageResource(R.drawable.il_completed_empty_state);
-                emptyStateTv.setText("You don't have any completed task!");
+                emptyStateTv.setText(R.string.completedTaskEmptyState);
                 deleteAllBtn.setVisibility(View.GONE);
             }
         }
@@ -126,7 +126,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
                 nested.setVisibility(View.GONE);
                 emptyState.setVisibility(View.VISIBLE);
                 img_empty_state.setImageResource(R.drawable.il_unspecified_empty_state);
-                emptyStateTv.setText("You don't have any Unspecified task!");
+                emptyStateTv.setText(R.string.unspecifiedTasksEmptyState);
                 deleteAllBtn.setVisibility(View.GONE);
 
             }

@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:text="In the next three days"
-        android:textColor="?colorAccent"
-        android:layout_marginBottom="8dp"/>
+        android:textColor="?colorAccent"/>
 
 </RelativeLayout>

@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Completed Tasks"
+            android:text="@string/completedTasks"
             android:textColor="?colorOnSurface"
             android:textSize="16sp" />
 
@@ -94,10 +94,12 @@
             android:id="@+id/emptyStateTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You don't have any completed task!"
+            android:text="@string/completedTaskEmptyState"
             android:textSize="18sp"
             android:textColor="?colorSecondary"
             android:layout_marginTop="20dp"
+            android:lineSpacingExtra="12dp"
+            android:textAlignment="center"
             android:layout_below="@+id/img_empty_state"
             android:layout_centerHorizontal="true"/>
 

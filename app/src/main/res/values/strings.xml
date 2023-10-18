@@ -1,24 +1,69 @@
 <resources>
     <string name="app_name">Task Manager</string>
-    <string name="todayPlans">Your Today Plans</string>
-    <string name="todayTasks">Today Tasks</string>
-    <string name="allTasks">All Tasks</string>
-    <string name="createTask">Create Task</string>
-    <string name="calendar">Calendar</string>
-    <string name="description">Im in chapter 12 and there is 4 chapters left</string>
-    //EmptyStates
-    <string name="todayTaskEmptyState">You dont have any scheduled tasks for today!</string>
-    <string name="futureTaskEmptyState">You dont have any scheduled tasks for this month!</string>
-    <string name="tasksEmptyState">You didnt set any tasks yet!</string>
-    <string name="unspecifiedTasksEmptyState">You dont have any unspecified tasks!</string>
-    <string name="completedTaskEmptyState">Sorry But you dont have any completed tasks!</string>
-    //Navigation
+    //MainActivity
+    <string name="hi">Hello</string>
+    <string name="todayTasks">Your today\'s tasks</string>
+    <string name="futureTasks">your future tasks</string>
+    <string name="plans">plans</string>
+    <string name="taskManager">Task manager</string>
+
+    //NavigationDrawer
+    <string name="listOptions">List options</string>
+    <string name="completedTasks">Completed tasks</string>
+    <string name="unspecifiedTasks">Unspecified tasks</string>
+    <string name="clearList">Clear list</string>
+    <string name="setting">Setting</string>
+    <string name="about">About Developer</string>
+
     <string name="openNavigation">Open navigation</string>
     <string name="closeNavigation">Open navigation</string>
+
+    //TaskDetailActivity
+    <string name="title">Title</string>
+    <string name="titleHint">Enter task title</string>
+
+    <string name="timePeriod">Time period</string>
+    <string name="inDayAhead">In day ahead</string>
+    <string name="inThreeDays">In three days</string>
+    <string name="inThisWeek">In this week</string>
+    <string name="inThisMonth">In this month</string>
+
+    <string name="description">Description</string>
+    <string name="descriptionHint">Enter task description</string>
+
+    <string name="importance">Priority</string>
+    <string name="highImportance">High priority</string>
+    <string name="normalPriority">Normal task</string>
+    <string name="lowPriority">Low priority</string>
+
+    <string name="createNewTask">Create new task</string>
+    <string name="createTask">create task</string>
+    <string name="saveChanges">Save Changes</string>
+
+
+    //EmptyStates
+    <string name="tasksEmptyState">You didn\'t set any tasks</string>
+    <string name="unspecifiedTasksEmptyState">You don\'t have any unspecified tasks!</string>
+    <string name="completedTaskEmptyState">Sorry but you don\'t have any completed tasks!</string>
+
     //WelcomeActivity
     <string name="welcomePageText">Hi, How are you today? :)\nWe are here to create an environment together so that we can perform your daily tasks and tasks with more planning and power than before.!</string>
     <string name="userInfoText">Before continuing\nwe are very eager to know your name and expertise so that we can work together better than before.!</string>
+    <string name="nameHint">Enter your name</string>
+    <string name="familyHint">Enter your family name</string>
+    <string name="expertiseHint">Enter your expertiese</string>
+    <string name="save">Save</string>
 
+    //Toasts
+    <string name="deleted">Deleted successfuly!</string>
+    <string name="edited">Edited successfuly!</string>
+    <string name="cleared">List cleared!</string>
 
+    //Error
+    <string name="titleError">Enter the task title!</string>
+    <string name="descriptionError">Enter a short description for your task!</string>
+    <string name="nameError">Enter your name!</string>
+    <string name="familyError">Enter your family name!</string>
+    <string name="expertiseError">Enter your expertiese!</string>
 
 </resources>

@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Create new task"
+            android:text="@string/createNewTask"
             android:textColor="?colorOnSurface"
             android:textSize="16sp" />
 
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?colorOnSurface"
-            android:text="Title"
+            android:text="@string/title"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -69,8 +69,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp">
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
 
             <EditText
                 android:id="@+id/taskTitleEt"
@@ -78,7 +78,7 @@
                 android:layout_height="56dp"
                 android:background="@null"
                 android:textColor="?colorOnSurface"
-                android:hint="Enter the Task Title"
+                android:hint="@string/titleHint"
                 android:textColorHint="?colorOnSurface"
                 android:textSize="19sp"/>
 
@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?colorOnSurface"
-            android:text="Time Period"
+            android:text="@string/timePeriod"
             android:textSize="16sp"
             android:layout_marginTop="32dp"/>
 
@@ -102,8 +102,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp">
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp">
 
             <Spinner
                 android:id="@+id/timePeriodSpinner"
@@ -113,7 +113,7 @@
                 android:backgroundTint="?colorOnSurface"
                 android:contextClickable="true"
                 android:textSize="19sp"
-                android:layout_marginLeft="-4dp"
+                android:layout_marginStart="-4dp"
                 style="@style/SpinnerTheme"/>
 
             <View
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?colorAccent"
-            android:text="Description"
+            android:text="@string/description"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -149,8 +149,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
             android:layout_below="@+id/txt_description">
 
@@ -159,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:textColor="?colorAccent"
-                android:hint="Enter your task description"
+                android:hint="@string/descriptionHint"
                 android:textSize="16sp"
                 android:background="#00FEFEFE"
                 android:textColorHint="?colorAccent"/>
@@ -182,7 +182,7 @@
             android:textSize="19sp"
             android:layout_marginTop="24dp"
             android:layout_below="@id/descriptionLay"
-            android:layout_marginLeft="-4dp"
+            android:layout_marginStart="-4dp"
             style="@style/SpinnerTheme"/>
 
         <androidx.appcompat.widget.AppCompatButton

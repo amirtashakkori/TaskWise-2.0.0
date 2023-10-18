@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Task Manager</string>
+    //MainActivity
+    <string name="hi">سلام</string>
+    <string name="todayTasks">برنامه های امروزت</string>
+    <string name="futureTasks">برنامه های آیندت</string>
+    <string name="plans">برنامه</string>
+    <string name="taskManager">تسک منیجر</string>
+
+    //NavigationDrawer
+    <string name="listOptions">گزینه های لیست</string>
+    <string name="completedTasks">وظایف تکمیل شده</string>
+    <string name="unspecifiedTasks">وظایف نامشخص</string>
+    <string name="clearList">پاک کردن لیست</string>
+    <string name="setting">تنظیمات</string>
+    <string name="about">درباره توسعه دهنده</string>
+
+    <string name="openNavigation">Open navigation</string>
+    <string name="closeNavigation">Open navigation</string>
+
+    //TaskDetailActivity
+    <string name="title">عنوان</string>
+    <string name="titleHint">عنوان وظیفه را وارد کنید</string>
+
+    <string name="timePeriod">بازه زمانی</string>
+    <string name="inDayAhead">همین امروز</string>
+    <string name="inThreeDays">در سه روز آینده</string>
+    <string name="inThisWeek">تو این هفته</string>
+    <string name="inThisMonth">تو این ماه</string>
+
+    <string name="description">توضیحات</string>
+    <string name="descriptionHint">توضیحات وظیفه را وارد کنید</string>
+
+    <string name="importance">الویت</string>
+    <string name="highImportance">خیلی مهم</string>
+    <string name="normalPriority">روزمره</string>
+    <string name="lowPriority">نه چندان مهم</string>
+
+    <string name="createNewTask">ذخیره وظیفه</string>
+    <string name="createTask">ذخیره وظیفه</string>
+    <string name="saveChanges">ذخیره تغییرات</string>
+
+
+    //EmptyStates
+    <string name="tasksEmptyState">شما تا به الان برنامه ای ذخیره نکرده اید!</string>
+    <string name="unspecifiedTasksEmptyState">شما برنامه ای با شرایط نامشخص ندارید!</string>
+    <string name="completedTaskEmptyState">متاسفم! ولی شما هنوز برنامه ی تیک خورده ای ندارید!</string>
+
+    //WelcomeActivity
+    <string name="welcomePageText">سلام امروز چطوری؟ :)\nما اینجاییم تا با هم محیطی بسازیم تا بتونیم با برنامه ریزی و توان بیشتری نسبت به قبل کارها و وظایف روزمره شما را انجام دهیم.!</string>
+    <string name="userInfoText">قبل از ادامه\nما بسیار مشتاقیم که نام و تخصص شما رو بدونیم تا بتونیم بهتر از قبل با هم همکاری کنیم.!</string>
+    <string name="nameHint">اسمتو وارد کن</string>
+    <string name="familyHint">فامیلیتو وارد کن</string>
+    <string name="expertiseHint">تخصصتتو وارد کن</string>
+    <string name="save">ذخیره</string>
+
+    //Toasts
+    <string name="deleted">با موفقیت حذف شد!</string>
+    <string name="edited">با موفقیت تصحیح شد!</string>
+    <string name="cleared">لیست با موفقیت خالی شد!</string>
+
+    //Error
+    <string name="titleError">عنوان وظیفه را وارد کنید!</string>
+    <string name="descriptionError">برای وظیفه خود یه توضیح کوچیک ثبت کنید!</string>
+    <string name="nameError">نام خود را وارد کنید!</string>
+    <string name="familyError">نام خانوادگی خود را وارد کنید!</string>
+    <string name="expertiseError">تخصص خود را وارد کنید!</string>
+
+</resources>
