@@ -3,7 +3,9 @@
     //MainActivity
     <string name="hi">Hello</string>
     <string name="todayTasks">Your today\'s tasks</string>
+    <string name="todayTasksSwitch">Today\'s Tasks</string>
     <string name="futureTasks">your future tasks</string>
+    <string name="allTasksSwitch">All Tasks</string>
     <string name="plans">plans</string>
     <string name="taskManager">Task manager</string>
 
@@ -49,6 +51,8 @@
     //WelcomeActivity
     <string name="welcomePageText">Hi, How are you today? :)\nWe are here to create an environment together so that we can perform your daily tasks and tasks with more planning and power than before.!</string>
     <string name="userInfoText">Before continuing\nwe are very eager to know your name and expertise so that we can work together better than before.!</string>
+    <string name="editUserInfoText">Please Enter the new info!</string>
+    <string name="getStarted">Get started</string>
     <string name="nameHint">Enter your name</string>
     <string name="familyHint">Enter your family name</string>
     <string name="expertiseHint">Enter your expertiese</string>
@@ -65,5 +69,16 @@
     <string name="nameError">Enter your name!</string>
     <string name="familyError">Enter your family name!</string>
     <string name="expertiseError">Enter your expertiese!</string>
+
+    //SettingActivity
+    <string name="language">Language</string>
+    <string name="selectLanguage">Select your language :</string>
+    <string name="english">English</string>
+    <string name="persian">Persian</string>
+    <string name="theme">Theme</string>
+    <string name="appMode">App mode</string>
+    <string name="lightMode">Light mode</string>
+    <string name="darkMode">Dark mode</string>
+
 
 </resources>

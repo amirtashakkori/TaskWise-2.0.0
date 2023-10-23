@@ -4,28 +4,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DigitalClock;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taskmanager.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
+import com.example.taskmanager.Fragments.SettingItemFragment;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -35,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener {
@@ -43,18 +53,21 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     RelativeLayout searchBtn, taskList ; ;
     LinearLayout emptyState ;
     ZiresSwitchSegmentedControl taskListSwitch;
-    TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv , clockTv ,  userNameTv , userExpertiseTv ;
+    TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     FloatingActionButton addTaskBtn;
     ImageView drawerToggle, editBtn , singleCatEmptyState;
     DrawerLayout drawerLayout_parent;
     NavigationView navigationMain;
     View navigationHeader;
+    TextClock clockTv;
+
 
     TaskDao dao;
     List<Task> allTasks;
     List<Task> todayTasks;
     TaskAdapter adapter;
     UserInfoContainer container;
+    AppSettingContainer settingContainer;
 
     public void cast(){
         taskList = findViewById(R.id.taskList);
@@ -63,10 +76,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         plansNumberTv = findViewById(R.id.plansNumberTv);
         weekDayTv = findViewById(R.id.weekDayTv);
         monthTv = findViewById(R.id.monthTv);
-        clockTv = findViewById(R.id.clockTv);
         addTaskBtn = findViewById(R.id.addTaskBtn);
         tasksRv = findViewById(R.id.tasksRv);
         searchBtn = findViewById(R.id.searchBtn);
+        clockTv = findViewById(R.id.clockTv);
         taskListSwitch = findViewById(R.id.taskListSwitch);
         singleCatEmptyState = findViewById(R.id.singleCatEmptyState);
         headerTv = findViewById(R.id.headerTv);
@@ -108,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             }
         });
 
+        taskListSwitch.setRightToggleText(getString(R.string.allTasksSwitch));
+        taskListSwitch.setLeftToggleText(getString(R.string.todayTasksSwitch));
         taskListSwitch.setOnToggleSwitchChangeListener(new ZiresSwitchSegmentedControl.OnSwitchChangeListener() {
             @Override
             public void onToggleSwitchChangeListener(boolean b) {
@@ -146,6 +161,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         bindTasks();
@@ -154,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         allTasks = dao.getTaskList();
 
         if (todayTasks.size() > 0){
-            plansNumberTv.setText("(" + todayTasks.size() + " Plans)");
+            plansNumberTv.setText("( " + todayTasks.size() + " " + getString(R.string.plans) + " )");
             emptyState.setVisibility(View.GONE);
             tasksRv.setVisibility(View.VISIBLE);
             singleCatEmptyState.setVisibility(View.GONE);
@@ -163,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
         }
 
-        nameTv.setText(R.string.hi + " " + container.getName());
+        nameTv.setText(getString(R.string.hi) + " " + container.getName());
         userNameTv.setText(container.getName() + " " + container.getFamily());
         userExpertiseTv.setText(container.getExpertise());
     }
@@ -227,12 +247,15 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     //Calendar Section
     public void getDate(){
         Calendar calendar = Calendar.getInstance();
+        settingContainer = new AppSettingContainer(MainActivity.this);
+        Locale locale = new Locale(settingContainer.getAppLanguage());
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEEE");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEEE" , locale);
         weekDayTv.setText(weekDayFormat.format(calendar.getTime()));
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat monthNameFormat = new SimpleDateFormat("dd MMMM");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat monthNameFormat = new SimpleDateFormat("dd MMMM" , locale);
         monthTv.setText( monthNameFormat.format(calendar.getTime()));
+
     }
 
     public void navigationDrawer(){
@@ -265,6 +288,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                         startActivity(unspecifiedIntent);
                         drawerLayout_parent.close();
                         break;
+
+                    case R.id.settingBtn:
+                        Intent settingIntent = new Intent(MainActivity.this , SettingActivity.class);
+                        startActivity(settingIntent);
                 }
                 return false;
             }
@@ -273,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         drawerToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout_parent.openDrawer(Gravity.START);
+                drawerLayout_parent.openDrawer(GravityCompat.START);
             }
         });
 
@@ -289,6 +316,16 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                 startActivity(intent);
             }
         });
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        conf.setLayoutDirection(myLocale);
+        res.updateConfiguration(conf, dm);
     }
 
 

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="2023"
             android:textAppearance="@style/TextAppearance.MyTheme.calendarYear"
-            android:layout_marginLeft="4dp"/>
+            android:layout_marginStart="4dp"/>
 
         <TextView
             android:id="@+id/monthTv"
@@ -33,7 +33,7 @@
             android:id="@+id/timeLineBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/ic_timeline_monthly"
             android:layout_centerVertical="true"/>
 

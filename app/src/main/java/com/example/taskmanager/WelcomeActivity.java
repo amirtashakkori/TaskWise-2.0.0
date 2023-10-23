@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.appsearch.GetSchemaResponse;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,5 +49,10 @@ public class WelcomeActivity extends AppCompatActivity {
             finishAffinity();
         }
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
     }
 }

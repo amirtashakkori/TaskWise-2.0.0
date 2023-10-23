@@ -10,7 +10,7 @@
         android:id="@+id/editBtn"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_edit"
         app:tint="?colorOnSurface" />
 

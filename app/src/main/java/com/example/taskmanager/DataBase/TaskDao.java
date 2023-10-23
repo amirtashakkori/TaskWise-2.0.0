@@ -21,7 +21,7 @@ public interface TaskDao {
     @Query("select * from table_task where time_period = 0")
     List<Task> getTodayTaskList();
 
-    @Query("select * from table_task where time_period = 4")
+    @Query("select * from table_task where time_period = 4 and is_completed = 0")
     List<Task> getUnspecifiedTasks();
 
     @Query("select * from table_task where is_completed = 1")

@@ -6,6 +6,7 @@ import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -113,7 +114,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                         WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
                         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(TaskListStatusUpdater.class)
                                 .setInputData(data)
-                                .setInitialDelay(getTaskExpiredTime(task) , TimeUnit.DAYS)
+                                .setInitialDelay(getTaskExpiredTime(task.getTime_period()) , TimeUnit.DAYS)
                                 .build();
                         manager.enqueue(request);
 
@@ -147,6 +148,11 @@ public class TaskDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
     }
 
     public void setSpinners(){
@@ -187,12 +193,12 @@ public class TaskDetailActivity extends AppCompatActivity {
         });
     }
 
-    public int getTaskExpiredTime(Task task){
-        if (task.getTime_period() == 1)
-            return 1;
-        else if (task.getTime_period() == 2)
+    public int getTaskExpiredTime(int time_period){
+        if (time_period == 1)
+            return 10;
+        else if (time_period == 2)
             return 3;
-        else if (task.getTime_period() == 3)
+        else if (time_period == 3)
             return 7;
         else
             return 30;

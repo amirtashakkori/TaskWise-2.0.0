@@ -5,6 +5,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     TaskDao dao;
     List<Task> tasks;
     TaskAdapter adapter;
+    int listNumber;
 
     public void cast(){
         headerTv = findViewById(R.id.headerTv);
@@ -53,7 +55,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
         rv_tasks.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
 
-        int listNumber = getIntent().getIntExtra("listNum" , 0);
+        listNumber = getIntent().getIntExtra("listNum" , 0);
 
         bindTasks(listNumber);
 
@@ -84,6 +86,12 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     public void onUpdate(Task task) {
         dao.update(task);
         adapter.updateTask(task);
+        bindTasks(listNumber);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
     }
 
     @Override

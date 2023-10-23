@@ -53,8 +53,8 @@ public class UserInfoFragment extends Fragment {
             nameEt.setText(userContainer.getName());
             familyEt.setText(userContainer.getFamily());
             expertiseEt.setText(userContainer.getExpertise());
-            userInfoTv.setText("Please Enter your new info!");
-            submitBtn.setText("Save Changes");
+            userInfoTv.setText(getString(R.string.editUserInfoText));
+            submitBtn.setText(getString(R.string.saveChanges));
             backBtn.setVisibility(View.VISIBLE);
         }
 

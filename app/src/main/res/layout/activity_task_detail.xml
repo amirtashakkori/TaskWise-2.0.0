@@ -11,8 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <ImageView
             android:id="@+id/backBtn"
@@ -36,7 +36,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/bg_header_buttons"
             android:visibility="gone">
 
@@ -128,8 +128,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="28dp"
-        android:paddingRight="28dp"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
         android:paddingTop="24dp"
         android:paddingBottom="20dp"
         android:background="@drawable/bg_white2white"

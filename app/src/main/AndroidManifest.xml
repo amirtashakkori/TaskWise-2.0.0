@@ -8,15 +8,19 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:windowSoftInputMode="adjustUnspecified"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TaskManager"
+        android:configChanges="locale|orientation"
+        android:windowSoftInputMode="adjustUnspecified"
         tools:targetApi="31">
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="false"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name=".TaskListActivity"
             android:exported="false">

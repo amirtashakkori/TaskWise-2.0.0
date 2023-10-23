@@ -3,7 +3,9 @@
     //MainActivity
     <string name="hi">سلام</string>
     <string name="todayTasks">برنامه های امروزت</string>
+    <string name="todayTasksSwitch">وظایف امروز</string>
     <string name="futureTasks">برنامه های آیندت</string>
+    <string name="allTasksSwitch">همه وظایف</string>
     <string name="plans">برنامه</string>
     <string name="taskManager">تسک منیجر</string>
 
@@ -49,6 +51,8 @@
     //WelcomeActivity
     <string name="welcomePageText">سلام امروز چطوری؟ :)\nما اینجاییم تا با هم محیطی بسازیم تا بتونیم با برنامه ریزی و توان بیشتری نسبت به قبل کارها و وظایف روزمره شما را انجام دهیم.!</string>
     <string name="userInfoText">قبل از ادامه\nما بسیار مشتاقیم که نام و تخصص شما رو بدونیم تا بتونیم بهتر از قبل با هم همکاری کنیم.!</string>
+    <string name="editUserInfoText">لطفا اطلاعات جدید را وارد کنید!</string>
+    <string name="getStarted">بزن بریم</string>
     <string name="nameHint">اسمتو وارد کن</string>
     <string name="familyHint">فامیلیتو وارد کن</string>
     <string name="expertiseHint">تخصصتتو وارد کن</string>
@@ -65,5 +69,15 @@
     <string name="nameError">نام خود را وارد کنید!</string>
     <string name="familyError">نام خانوادگی خود را وارد کنید!</string>
     <string name="expertiseError">تخصص خود را وارد کنید!</string>
+
+    //SettingActivity
+    <string name="language">زبان</string>
+    <string name="selectLanguage">زبان مورد نظر را انتخاب کنید :</string>
+    <string name="english">انگلیسی</string>
+    <string name="persian">فارسی</string>
+    <string name="theme">تم</string>
+    <string name="appMode">حالت ظاهری</string>
+    <string name="lightMode">روشن</string>
+    <string name="darkMode">تاریک</string>
 
 </resources>
