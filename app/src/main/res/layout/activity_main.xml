@@ -80,32 +80,13 @@
 
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/searchBtn"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_header_buttons"
-                        android:baselineAligned="false">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_search"
-                            app:tint="?colorOnSurface" />
-
-                    </RelativeLayout>
-
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:background="@drawable/bg_light2darker"
-                    android:elevation="-1dp"
                     android:fitsSystemWindows="true"
                     android:paddingTop="20dp"
                     android:paddingBottom="55dp"
@@ -152,15 +133,20 @@
                     android:visibility="visible"
                     android:background="@drawable/bg_white2white"
                     android:layout_marginTop="-35dp"
-                    android:padding="8dp">
+                    android:paddingTop="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/taskList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
-                        android:padding="8dp"
+                        android:visibility="visible"
+                        android:paddingTop="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingLeft="8dp"
                         android:orientation="vertical"
+                        android:fitsSystemWindows="true"
                         android:layout_centerHorizontal="true">
 
                         <com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl
@@ -176,7 +162,8 @@
                             app:borderColor="?colorSecondary"
                             app:inactiveTextColor="?colorSecondary"
                             app:strokeWidth="1dp"
-                            app:textSize="6sp"
+                            android:layoutDirection="locale"
+                            app:textSize="5sp"
                             android:layout_marginTop="4dp"
                             app:textToggleLeft="Today Tasks"
                             app:textToggleRight="All Tasks"/>
@@ -193,19 +180,21 @@
 
                         <ImageView
                             android:id="@+id/singleCatEmptyState"
-                            android:layout_width="280dp"
-                            android:layout_height="280dp"
-                            android:layout_below="@+id/taskListSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="240dp"
+                            android:layout_gravity="center_horizontal"
                             android:src="@drawable/il_empty_state"
-                            android:layout_centerInParent="true"/>
+                            android:layout_weight="1"
+                            android:layout_margin="12dp"/>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/emptyState"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <ImageView

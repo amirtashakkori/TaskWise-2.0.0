@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.WorkManager.TaskListStatusUpdater;
 
 import java.util.concurrent.TimeUnit;
@@ -41,6 +42,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     Task task;
     TaskDao dao;
     int time_period , importance = 1;
+    AppSettingContainer settingContainer;
 
     public void cast(){
 
@@ -58,6 +60,8 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingContainer = new AppSettingContainer(this);
+        ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_detail);
         cast();
 

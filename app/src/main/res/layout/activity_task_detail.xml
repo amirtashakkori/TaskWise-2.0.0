@@ -78,7 +78,9 @@
                 android:layout_height="56dp"
                 android:background="@null"
                 android:textColor="?colorOnSurface"
+                android:imeOptions="actionNext"
                 android:hint="@string/titleHint"
+                android:maxLines="1"
                 android:textColorHint="?colorOnSurface"
                 android:textSize="19sp"/>
 
@@ -90,59 +92,13 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?colorOnSurface"
-            android:text="@string/timePeriod"
-            android:textSize="16sp"
-            android:layout_marginTop="32dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp">
-
-            <Spinner
-                android:id="@+id/timePeriodSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="56dp"
-                android:spinnerMode="dropdown"
-                android:backgroundTint="?colorOnSurface"
-                android:contextClickable="true"
-                android:textSize="19sp"
-                android:layout_marginStart="-4dp"
-                style="@style/SpinnerTheme"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="28dp"
-        android:paddingEnd="28dp"
-        android:paddingTop="24dp"
-        android:paddingBottom="20dp"
-        android:background="@drawable/bg_white2white"
-        android:layout_marginTop="24dp"
-        android:elevation="2dp">
-
-        <TextView
             android:id="@+id/txt_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?colorAccent"
+            android:textColor="?colorOnSurface"
             android:text="@string/description"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginTop="32dp"/>
 
         <LinearLayout
             android:id="@+id/descriptionLay"
@@ -158,32 +114,111 @@
                 android:id="@+id/descriptionEt"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:textColor="?colorAccent"
-                android:hint="@string/descriptionHint"
-                android:textSize="16sp"
                 android:background="#00FEFEFE"
-                android:textColorHint="?colorAccent"/>
+                android:hint="@string/descriptionHint"
+                android:textColor="?colorOnSurface"
+                android:textColorHint="?colorOnSurface"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
+                android:textSize="19sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?colorAccent"
+                android:background="?colorOnSurface"
                 android:layout_below="@+id/descriptionEdt"/>
 
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/importanceSpinner"
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/bg_white2white"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/timePeriodTv"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:spinnerMode="dropdown"
-            android:backgroundTint="?colorAccent"
-            android:contextClickable="true"
-            android:textSize="19sp"
-            android:layout_marginTop="24dp"
-            android:layout_below="@id/descriptionLay"
-            android:layout_marginStart="-4dp"
-            style="@style/SpinnerTheme"/>
+            android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
+            android:text="@string/timePeriod"
+            android:textSize="14sp"/>
+
+        <LinearLayout
+            android:id="@+id/timePeriodLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@id/timePeriodTv"
+            android:layout_marginStart="8dp">
+
+            <Spinner
+                android:id="@+id/timePeriodSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:spinnerMode="dropdown"
+                android:backgroundTint="?colorAccent"
+                android:contextClickable="true"
+                android:textSize="19sp"
+                android:layout_marginStart="-4dp"
+                style="@style/SpinnerTheme"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorAccent"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/importanceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?colorAccent"
+            android:text="@string/importance"
+            android:textSize="14sp"
+            android:layout_marginTop="32dp"
+            android:layout_below="@+id/timePeriodLay"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_below="@id/importanceTv"
+            android:layout_marginStart="8dp">
+
+            <Spinner
+                android:id="@+id/importanceSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:spinnerMode="dropdown"
+                android:backgroundTint="?colorAccent"
+                android:contextClickable="true"
+                android:textSize="19sp"
+                android:layout_below="@id/timePeriodLay"
+                android:layout_marginStart="-4dp"
+                style="@style/SpinnerTheme"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorAccent"/>
+
+        </LinearLayout>
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submitTaskBtn"

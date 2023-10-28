@@ -17,6 +17,7 @@ import com.example.taskmanager.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 
 import java.time.format.TextStyle;
 import java.util.List;
@@ -34,6 +35,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     List<Task> tasks;
     TaskAdapter adapter;
     int listNumber;
+    AppSettingContainer settingContainer;
 
     public void cast(){
         headerTv = findViewById(R.id.headerTv);
@@ -49,6 +51,8 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingContainer = new AppSettingContainer(this);
+        ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_list);
         cast();
 

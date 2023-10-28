@@ -20,7 +20,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_language"
-            app:tint="?colorPrimary"
+            app:tint="?colorAccent"
             android:layout_gravity="center_vertical"/>
 
         <TextView
@@ -32,13 +32,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_weight="1"/>
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_arrow_right"
-            app:tint="?colorPrimary"
-            android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 

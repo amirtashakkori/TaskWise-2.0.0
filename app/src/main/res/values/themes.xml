@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.GreenTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/darkGreen</item>
         <item name="colorPrimaryVariant">@color/darkerGreen</item>
@@ -19,6 +19,62 @@
         <item name="android:textAppearance">@style/menuItemText</item>
     </style>
 
+    <style name="Theme.NudeTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/darkBrown</item>
+        <item name="colorPrimaryVariant">@color/darkerBrown</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/nude</item>
+        <item name="colorSecondaryVariant">@color/darkerNude</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@color/darkerBrown</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/darkerBrown</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="actionMenuTextColor">@color/darkBrown</item>
+        <item name="android:textAppearance">@style/menuItemText</item>
+    </style>
+
+    <style name="Theme.RedTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/darkRed</item>
+        <item name="colorPrimaryVariant">@color/darkerRed</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/ivory</item>
+        <item name="colorSecondaryVariant">@color/darkerIvory</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@color/darkerRed</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/darkerRed</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="actionMenuTextColor">@color/darkRed</item>
+        <item name="android:textAppearance">@style/menuItemText</item>
+    </style>
+
+    <style name="Theme.BlueTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/darkBlue</item>
+        <item name="colorPrimaryVariant">@color/darkerBlue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/lightBlue</item>
+        <item name="colorSecondaryVariant">@color/darkerLightBlue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@color/darkerBlue</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/darkerBlue</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="actionMenuTextColor">@color/darkBlue</item>
+        <item name="android:textAppearance">@style/menuItemText</item>
+    </style>
 
     <style name="Widget.MaterialComponents.MaterialCalendar.MonthTextView." parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/darkGreen</item>
@@ -34,21 +90,6 @@
     <style name="SpinnerTheme" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:popupBackground">@drawable/bg_spinner</item>
         <item name="android:textAlignment">textStart</item>
-    </style>
-
-    <style name="SearchTextStyle">
-        <!-- Custom values write to here for SearchEditText. -->
-        <item name="android:focusable">true</item>
-        <item name="android:focusableInTouchMode">true</item>
-        <item name="android:enabled">true</item>
-        <item name="android:hint">Search</item>
-        <item name="icon">@drawable/ic_search</item>
-        <item name="android:imeOptions">actionSearch</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:maxLength">40</item>
-        <item name="android:inputType">textCapSentences</item>
-        <item name="android:textColorHint">#80999999</item>
-        <item name="android:textColor">#000</item>
     </style>
 
 </resources>

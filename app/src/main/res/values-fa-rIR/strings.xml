@@ -7,7 +7,7 @@
     <string name="futureTasks">برنامه های آیندت</string>
     <string name="allTasksSwitch">همه وظایف</string>
     <string name="plans">برنامه</string>
-    <string name="taskManager">تسک منیجر</string>
+    <string name="taskManager">مدیریت وظایف</string>
 
     //NavigationDrawer
     <string name="listOptions">گزینه های لیست</string>
@@ -78,6 +78,6 @@
     <string name="theme">تم</string>
     <string name="appMode">حالت ظاهری</string>
     <string name="lightMode">روشن</string>
-    <string name="darkMode">تاریک</string>
+    <string name="themeSelector">تم مورد نظرتو انتخاب کن :</string>
 
 </resources>

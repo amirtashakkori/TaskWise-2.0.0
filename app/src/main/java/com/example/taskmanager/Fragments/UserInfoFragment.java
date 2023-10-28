@@ -1,5 +1,6 @@
 package com.example.taskmanager.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskmanager.MainActivity;
 import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;
 
@@ -68,6 +70,8 @@ public class UserInfoFragment extends Fragment {
                 if (name.length() > 0 && family.length() > 0 && expertise.length() > 0){
                     userContainer.saveInfo(nameEt.getText().toString() , familyEt.getText().toString() , expertiseEt.getText().toString());
                     getActivity().finish();
+                    Intent intent = new Intent(getActivity() , MainActivity.class);
+                    startActivity(intent);
                     
                     if (!userContainer.getName().equals(""))
                         Toast.makeText(getActivity(), "Changes Saved!", Toast.LENGTH_SHORT).show();

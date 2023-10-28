@@ -40,7 +40,7 @@
     <style name="settingOptions" parent="TextAppearance.MaterialComponents.Body2">
         <item name="android:textColor">?colorAccent</item>
         <item name="fontFamily">@font/gilroy_samibold_regular</item>
-        <item name="textSize">14sp</item>
+        <item name="textSize">16sp</item>
     </style>
 
 </resources>

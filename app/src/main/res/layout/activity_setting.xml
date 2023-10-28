@@ -1,71 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingActivity"
-    android:orientation="vertical"
-    android:background="@drawable/bg_dark2light">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
-
-        <ImageView
-            android:id="@+id/backBtn"
-            android:layout_width="@dimen/buttonIcon"
-            android:layout_height="@dimen/buttonIcon"
-            android:src="@drawable/ic_back"
-            app:tint="?colorOnSurface"
-            android:clickable="true"
-            android:layout_centerVertical="true"/>
-
-        <TextView
-            android:id="@+id/headerTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/setting"
-            android:textColor="?colorOnSurface"
-            android:textSize="16sp" />
-
-        <RelativeLayout
-            android:id="@+id/appModeBtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/bg_header_buttons"
-            android:clickable="true">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_them_mode"
-                app:tint="?colorOnSurface" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_white2white"
-        android:padding="8dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/settingRv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
-            android:choiceMode="singleChoice"/>
-
-    </FrameLayout>
-
-</LinearLayout>
+    android:id="@+id/fragment_container"/>

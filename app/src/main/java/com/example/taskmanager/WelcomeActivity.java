@@ -11,14 +11,18 @@ import android.widget.TextView;
 
 import com.example.taskmanager.Fragments.UserInfoFragment;
 import com.example.taskmanager.Fragments.WelcomeFragment;
+import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     int key;
+    AppSettingContainer settingContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingContainer = new AppSettingContainer(this);
+        ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_welcome);
 
         key = getIntent().getIntExtra("key" , 0);

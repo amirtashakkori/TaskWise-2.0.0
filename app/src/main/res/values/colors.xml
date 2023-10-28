@@ -7,12 +7,32 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#232323</color>
     <color name="white">#fefefe</color>
+    <color name="darkerWhite">#f1f1f1</color>
+    <color name="lighterBlack">#4B4B4B</color>
 
+    //Green TaskManager
     <color name="darkGreen">#246832</color>
     <color name="darkerGreen">#175524</color>
     <color name="lightGreen">#9FCA59 </color>
     <color name="darkerLightGreen">#84A74A</color>
-    <color name="darkerWhite">#f1f1f1</color>
-    <color name="lighterBlack">#4B4B4B</color>
+    
+    //Nude TaskManager
+    <color name="darkBrown">#754923</color>
+    <color name="darkerBrown">#533317</color>
+    <color name="nude">#E3BC9A</color>
+    <color name="darkerNude">#C88750</color>
+
+    //Red TaskManger
+    <color name="darkRed">#A41D19</color>
+    <color name="darkerRed">#921916</color>
+    <color name="ivory">#F8EAB9</color>
+    <color name="darkerIvory">#D6CA9F</color>
+
+    //Blue TaskManger
+    <color name="darkBlue">#0C356A</color>
+    <color name="darkerBlue">#05254E</color>
+    <color name="lightBlue">#0174BE</color>
+    <color name="darkerLightBlue">#015F9C</color>
+
 
 </resources>
