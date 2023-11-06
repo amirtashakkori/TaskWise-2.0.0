@@ -33,7 +33,7 @@ public class AppSettingContainer {
     }
 
     public String getAppLanguage(){
-            return languageSp.getString("language"  , "");
+            return languageSp.getString("language"  , "en");
     }
 
     public String getAppMode(){

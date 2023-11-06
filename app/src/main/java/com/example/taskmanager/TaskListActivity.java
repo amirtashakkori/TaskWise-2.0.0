@@ -26,10 +26,9 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
 
     TextView headerTv , emptyStateTv;
     RecyclerView rv_tasks;
-    RelativeLayout deleteAllBtn;
-    RelativeLayout emptyState;
+    RelativeLayout deleteAllBtn , backBtn , emptyState;
     NestedScrollView nested;
-    ImageView img_empty_state , backBtn;
+    ImageView img_empty_state;
 
     TaskDao dao;
     List<Task> tasks;
@@ -119,7 +118,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
             else {
                 nested.setVisibility(View.GONE);
                 emptyState.setVisibility(View.VISIBLE);
-                img_empty_state.setImageResource(R.drawable.il_completed_empty_state);
+                img_empty_state.setImageResource(setCompletedIlls(settingContainer.getAppTheme()));
                 emptyStateTv.setText(R.string.completedTaskEmptyState);
                 deleteAllBtn.setVisibility(View.GONE);
             }
@@ -137,12 +136,40 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
             else {
                 nested.setVisibility(View.GONE);
                 emptyState.setVisibility(View.VISIBLE);
-                img_empty_state.setImageResource(R.drawable.il_unspecified_empty_state);
+                img_empty_state.setImageResource(setOutdatedIlls(settingContainer.getAppTheme()));
                 emptyStateTv.setText(R.string.unspecifiedTasksEmptyState);
                 deleteAllBtn.setVisibility(View.GONE);
 
             }
         }
 
+    }
+
+    public int setCompletedIlls(int theme){
+        if (theme == 0)
+            return R.drawable.il_completed_es_green;
+
+        else if (theme == 1)
+            return R.drawable.il_completed_es_nude;
+
+        else if (theme == 2)
+            return R.drawable.il_completed_es_ivory;
+
+        else
+            return R.drawable.il_completed_es_blue;
+    }
+
+    public int setOutdatedIlls(int theme){
+        if (theme == 0)
+            return R.drawable.il_outdated_es_green;
+
+        else if (theme == 1)
+            return R.drawable.il_outdated_es_nude;
+
+        else if (theme == 2)
+            return R.drawable.il_outdated_es_ivory;
+
+        else
+            return R.drawable.il_outdated_es_blue;
     }
 }

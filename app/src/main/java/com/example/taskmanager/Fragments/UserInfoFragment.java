@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taskmanager.MainActivity;
 import com.example.taskmanager.R;
+import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;
 
 public class UserInfoFragment extends Fragment {
@@ -24,9 +26,11 @@ public class UserInfoFragment extends Fragment {
     EditText nameEt , familyEt , expertiseEt;
     AppCompatButton submitBtn;
     TextView userInfoTv;
-    ImageView il1 , il2 , backBtn;
+    ImageView il1 , il2;
+    RelativeLayout backBtn;
 
     UserInfoContainer userContainer;
+    AppSettingContainer settingContainer;
 
     public void cast(){
         nameEt = view.findViewById(R.id.nameEt);
@@ -48,10 +52,12 @@ public class UserInfoFragment extends Fragment {
         cast();
 
         userContainer = new UserInfoContainer(getActivity());
+        settingContainer = new AppSettingContainer(getActivity());
 
         if (!userContainer.getName().equals("")){
             il1.setVisibility(View.GONE);
             il2.setVisibility(View.VISIBLE);
+            il2.setImageResource(setIlls(settingContainer.getAppTheme()));
             nameEt.setText(userContainer.getName());
             familyEt.setText(userContainer.getFamily());
             expertiseEt.setText(userContainer.getExpertise());
@@ -74,9 +80,9 @@ public class UserInfoFragment extends Fragment {
                     startActivity(intent);
                     
                     if (!userContainer.getName().equals(""))
-                        Toast.makeText(getActivity(), "Changes Saved!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Saving Info Completed!", Toast.LENGTH_SHORT).show();
                     else
-                        Toast.makeText(getActivity(), "Saving Info Completed.\n Welcome :)", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Changes Saved!", Toast.LENGTH_SHORT).show();
                     
                 } else if (name.length() == 0)
                     nameEt.setError("Please Enter your first name");
@@ -98,5 +104,19 @@ public class UserInfoFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public int setIlls(int theme){
+        if (theme == 0)
+            return R.drawable.il_edit_user_info_green;
+
+        else if (theme == 1)
+            return R.drawable.il_edit_user_info_nude;
+
+        else if (theme == 2)
+            return R.drawable.il_edit_user_info_ivory;
+
+        else
+            return R.drawable.il_edit_user_info_blue;
     }
 }

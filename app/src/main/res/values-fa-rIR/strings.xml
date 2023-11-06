@@ -5,14 +5,14 @@
     <string name="todayTasks">برنامه های امروزت</string>
     <string name="todayTasksSwitch">وظایف امروز</string>
     <string name="futureTasks">برنامه های آیندت</string>
-    <string name="allTasksSwitch">همه وظایف</string>
+    <string name="allTasksSwitch">وظایف آینده</string>
     <string name="plans">برنامه</string>
     <string name="taskManager">مدیریت وظایف</string>
 
     //NavigationDrawer
     <string name="listOptions">گزینه های لیست</string>
     <string name="completedTasks">وظایف تکمیل شده</string>
-    <string name="unspecifiedTasks">وظایف نامشخص</string>
+    <string name="outDatedTasks">وظایف منقضی شده</string>
     <string name="clearList">پاک کردن لیست</string>
     <string name="setting">تنظیمات</string>
     <string name="about">درباره توسعه دهنده</string>

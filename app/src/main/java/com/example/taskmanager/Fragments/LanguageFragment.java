@@ -25,8 +25,7 @@ public class LanguageFragment extends Fragment {
     ListView languageList;
     ArrayAdapter<String> adapter;
     AppSettingContainer settingContainer;
-    ImageView backBtn;
-    RelativeLayout appModeBtn;
+    RelativeLayout backBtn;
 
 
     public void cast(){

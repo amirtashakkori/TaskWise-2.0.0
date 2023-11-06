@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     ZiresSwitchSegmentedControl taskListSwitch;
     TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     FloatingActionButton addTaskBtn;
-    ImageView drawerToggle, editBtn , singleCatEmptyState;
+    ImageView drawerToggle, editBtn , singleCatEmptyState , emptyStateImg;
     DrawerLayout drawerLayout_parent;
     NavigationView navigationMain;
     View navigationHeader;
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         drawerToggle = findViewById(R.id.drawerToggle);
         drawerLayout_parent = findViewById(R.id.drawerLayout_parent);
         navigationMain = findViewById(R.id.navigationMain);
+        emptyStateImg = findViewById(R.id.emptyStateImg);
 
         //NavigationCasting
         navigationHeader = navigationMain.getHeaderView(0);
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                     } else {
                         tasksRv.setVisibility(View.GONE);
                         singleCatEmptyState.setVisibility(View.VISIBLE);
+                        singleCatEmptyState.setImageResource(setIlls(settingContainer.getAppTheme()));
                     }
                 }
 
@@ -227,19 +229,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             headerTv.setText(R.string.taskManager);
             plansNumberTv.setVisibility(View.GONE);
             emptyState.setVisibility(View.VISIBLE);
+            emptyStateImg.setImageResource(setIlls(settingContainer.getAppTheme()));
             taskList.setVisibility(View.GONE);
         }
     }
 
-    public int getTheme(int theme){
+
+    public int setIlls(int theme){
         if (theme == 0)
-            return R.style.Theme_GreenTaskManager;
+            return R.drawable.il_empty_state_green;
+
         else if (theme == 1)
-            return R.style.Theme_NudeTaskManager;
+            return R.drawable.il_empty_state_nude;
+
         else if (theme == 2)
-            return R.style.Theme_RedTaskManager;
+            return R.drawable.il_empty_state_ivory;
+
         else
-            return R.style.Theme_BlueTaskManager;
+            return R.drawable.il_empty_state_blue;
     }
 
     //Calendar Section

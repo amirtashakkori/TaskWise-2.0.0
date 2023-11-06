@@ -26,10 +26,9 @@ public class ThemeFragment extends Fragment {
     View view;
     AppSettingContainer settingContainer;
     RecyclerView themeRv;
-    ImageView backBtn;
+    RelativeLayout backBtn;
     List<Theme> themeList;
     ThemeAdapter themeAdapter;
-    RelativeLayout appModeBtn;
 
     public void cast(){
         themeRv = view.findViewById(R.id.themeRv);

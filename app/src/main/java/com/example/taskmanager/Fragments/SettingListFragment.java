@@ -26,11 +26,10 @@ import java.util.List;
 public class SettingListFragment extends Fragment implements SettingAdapter.onCLickListener{
 
     View view;
-    ImageView backBtn;
     List<Option> optionList;
     RecyclerView settingRv;
     SettingAdapter adapter;
-    RelativeLayout appModeBtn;
+    RelativeLayout appModeBtn , backBtn;
     AppSettingContainer settingContainer;
 
     String appMode;

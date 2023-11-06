@@ -5,14 +5,14 @@
     <string name="todayTasks">Your today\'s tasks</string>
     <string name="todayTasksSwitch">Today\'s Tasks</string>
     <string name="futureTasks">your future tasks</string>
-    <string name="allTasksSwitch">All Tasks</string>
+    <string name="allTasksSwitch">Future Tasks</string>
     <string name="plans">plans</string>
     <string name="taskManager">Task manager</string>
 
     //NavigationDrawer
     <string name="listOptions">List options</string>
     <string name="completedTasks">Completed tasks</string>
-    <string name="unspecifiedTasks">Unspecified tasks</string>
+    <string name="outDatedTasks">Outdated Tasks</string>
     <string name="clearList">Clear list</string>
     <string name="setting">Setting</string>
     <string name="about">About Developer</string>
@@ -79,8 +79,6 @@
     <string name="appMode">App mode</string>
     <string name="lightMode">Light mode</string>
     <string name="themeSelector">Select your theme :</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

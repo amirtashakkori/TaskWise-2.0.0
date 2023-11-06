@@ -14,13 +14,20 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp">
 
-        <ImageView
+        <RelativeLayout
             android:id="@+id/backBtn"
-            android:layout_width="@dimen/buttonIcon"
-            android:layout_height="@dimen/buttonIcon"
-            android:src="@drawable/ic_back"
-            app:tint="?colorOnSurface"
-            android:layout_centerVertical="true"/>
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                app:tint="?colorOnSurface"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/headerTv"
@@ -58,6 +65,7 @@
         android:paddingBottom="20dp"
         android:background="@drawable/bg_white2white"
         android:elevation="2dp"
+        android:padding="8dp"
         android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -83,15 +91,14 @@
             android:id="@+id/img_empty_state"
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/il_completed_empty_state" />
+            android:layout_centerInParent="true"/>
 
         <TextView
             android:id="@+id/emptyStateTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/completedTaskEmptyState"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="?colorSecondary"
             android:layout_marginTop="20dp"
             android:lineSpacingExtra="12dp"

@@ -3,10 +3,9 @@
     <item android:title="@string/listOptions">
         <menu>
             <item android:id="@+id/completedBtn" android:title="@string/completedTasks" android:icon="@drawable/ic_checklist" />
-            <item android:id="@+id/unspecifiedBtn" android:title="@string/unspecifiedTasks" android:icon="@drawable/ic_question_mark" />
+            <item android:id="@+id/unspecifiedBtn" android:title="@string/outDatedTasks" android:icon="@drawable/ic_question_mark" />
             <item android:id="@+id/deleteAllBtn" android:title="@string/clearList" android:icon="@drawable/ic_delete"/>
         </menu>
     </item>
     <item  android:id="@+id/settingBtn" android:title="@string/setting" android:icon="@drawable/ic_settings"/>
-    <item  android:id="@+id/aboutBtn" android:title="@string/about" android:icon="@drawable/ic_info"/>
 </menu>

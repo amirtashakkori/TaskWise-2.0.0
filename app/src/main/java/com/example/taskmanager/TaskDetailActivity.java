@@ -36,8 +36,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     AppCompatButton submitTaskBtn;
     TextView spinnerTv , headerTv;
     Spinner timePeriodSpinner , importanceSpinner;
-    RelativeLayout deleteTaskBtn;
-    ImageView backBtn;
+    RelativeLayout deleteTaskBtn , backBtn;
 
     Task task;
     TaskDao dao;
@@ -139,7 +138,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int res = dao.delete(task);
                 if (res > 0){
-                    Toast.makeText(TaskDetailActivity.this, R.string.edited, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TaskDetailActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
                     finish();
 
                 }
@@ -199,7 +198,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     public int getTaskExpiredTime(int time_period){
         if (time_period == 1)
-            return 10;
+            return 1;
         else if (time_period == 2)
             return 3;
         else if (time_period == 3)

@@ -31,8 +31,8 @@
     //Blue TaskManger
     <color name="darkBlue">#0C356A</color>
     <color name="darkerBlue">#05254E</color>
-    <color name="lightBlue">#0174BE</color>
-    <color name="darkerLightBlue">#015F9C</color>
+    <color name="lightBlue">#0087DD</color>
+    <color name="darkerLightBlue">#0069AC</color>
 
 
 </resources>

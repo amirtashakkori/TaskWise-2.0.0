@@ -14,14 +14,20 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp">
 
-        <ImageView
+        <RelativeLayout
             android:id="@+id/backBtn"
-            android:layout_width="@dimen/buttonIcon"
-            android:layout_height="@dimen/buttonIcon"
-            android:src="@drawable/ic_back"
-            app:tint="?colorOnSurface"
-            android:clickable="true"
-            android:layout_centerVertical="true"/>
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                app:tint="?colorOnSurface"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/headerTv"
