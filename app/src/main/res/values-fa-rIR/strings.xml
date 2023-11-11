@@ -80,4 +80,12 @@
     <string name="lightMode">روشن</string>
     <string name="themeSelector">تم مورد نظرتو انتخاب کن :</string>
 
+    //TaskCategory
+    <string name="category">دسته بندی</string>
+    <string name="personal">شخصی</string>
+    <string name="lesson">دانشگاه/مدرسه</string>
+    <string name="study">مطالعه</string>
+    <string name="work">کار</string>
+    <string name="gym">باشگاه</string>
+
 </resources>

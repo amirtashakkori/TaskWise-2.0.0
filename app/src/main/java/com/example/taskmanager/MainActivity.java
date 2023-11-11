@@ -23,6 +23,7 @@ import com.example.taskmanager.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.Model.TaskCategory;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -92,6 +93,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         container = new UserInfoContainer(this);
         String name = container.getName();
         if (name.equals("")){
+            dao.addCategory(new TaskCategory(getString(R.string.personal)));
+            dao.addCategory(new TaskCategory(getString(R.string.lesson)));
+            dao.addCategory(new TaskCategory(getString(R.string.work)));
+            dao.addCategory(new TaskCategory(getString(R.string.study)));
+            dao.addCategory(new TaskCategory(getString(R.string.gym)));
+
             Intent intent = new Intent(this , WelcomeActivity.class);
             startActivity(intent);
             finish();

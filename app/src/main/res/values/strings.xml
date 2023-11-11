@@ -79,6 +79,14 @@
     <string name="appMode">App mode</string>
     <string name="lightMode">Light mode</string>
     <string name="themeSelector">Select your theme :</string>
+    
+    //TaskCategory
+    <string name="category">Category</string>
+    <string name="personal">Personal</string>
+    <string name="lesson">University/School</string>
+    <string name="study">Study</string>
+    <string name="work">Work</string>
+    <string name="gym">Gym</string>
 
 
 </resources>

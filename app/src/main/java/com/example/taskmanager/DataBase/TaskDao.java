@@ -7,11 +7,14 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.Model.TaskCategory;
 
 import java.util.List;
+import java.util.Locale;
 
 @Dao
 public interface TaskDao {
+    //Task DataBase
     @Insert
     long addTask(Task task);
 
@@ -30,9 +33,6 @@ public interface TaskDao {
     @Query("SELECT * FROM table_task WHERE task_title LIKE :query")
     Task search(String query);
 
-    @Query("SELECT * FROM table_task WHERE task_title + task_description + importance + time_period LIKE '%' || :query || '%'")
-    Task searchByInfo(String query);
-
     @Delete
     int delete(Task task);
 
@@ -47,4 +47,11 @@ public interface TaskDao {
 
     @Update
     int update(Task task);
+
+    //Category DataBase
+    @Insert
+    long addCategory(TaskCategory category);
+
+    @Query("select * from table_task")
+    List<TaskCategory> getCategories();
 }

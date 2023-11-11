@@ -35,7 +35,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     EditText taskTitleEt , descriptionEt;
     AppCompatButton submitTaskBtn;
     TextView spinnerTv , headerTv;
-    Spinner timePeriodSpinner , importanceSpinner;
+    Spinner timePeriodSpinner , importanceSpinner , categoryPeriodSpinner;
     RelativeLayout deleteTaskBtn , backBtn;
 
     Task task;
@@ -54,6 +54,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         headerTv = findViewById(R.id.headerTv);
         deleteTaskBtn = findViewById(R.id.deleteTaskBtn);
         backBtn = findViewById(R.id.backBtn);
+        categoryPeriodSpinner = findViewById(R.id.categoryPeriodSpinner);
     }
 
     @Override
