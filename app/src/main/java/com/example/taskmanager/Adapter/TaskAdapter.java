@@ -17,7 +17,7 @@ import com.example.taskmanager.R;
 
 import java.util.List;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
+public claTaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
 
     Context c;
     List<Task> tasks;
