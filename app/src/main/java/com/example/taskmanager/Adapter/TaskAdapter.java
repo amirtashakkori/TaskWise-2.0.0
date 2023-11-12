@@ -17,20 +17,14 @@ import com.example.taskmanager.R;
 
 import java.util.List;
 
-public claTaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
 
     Context c;
     List<Task> tasks;
     changeListener listener;
 
-    public TaskAdapter(Context c, List<Task> tasks) {
+    public TaskAdapter(Context c, changeListener listener) {
         this.c = c;
-        this.tasks = tasks;
-    }
-
-    public TaskAdapter(Context c, List<Task> tasks, changeListener listener) {
-        this.c = c;
-        this.tasks = tasks;
         this.listener = listener;
     }
 
@@ -126,6 +120,11 @@ public claTaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
                 break;
             }
         }
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+        notifyDataSetChanged();
     }
 
     public void updateTask(Task task){

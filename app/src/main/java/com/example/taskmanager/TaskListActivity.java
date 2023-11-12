@@ -109,7 +109,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         if (listNumber == 1){
             tasks = dao.getCompletedTasks();
             if (tasks.size() > 0) {
-                adapter = new TaskAdapter(this , tasks , this);
+                adapter = new TaskAdapter(this , this);
                 rv_tasks.setAdapter(adapter);
                 nested.setVisibility(View.VISIBLE);
                 emptyState.setVisibility(View.GONE);
@@ -127,7 +127,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         if (listNumber == 2){
             tasks = dao.getUnspecifiedTasks();
             if (tasks.size() > 0) {
-                adapter = new TaskAdapter(this , tasks , this);
+                adapter = new TaskAdapter(this ,  this);
                 rv_tasks.setAdapter(adapter);
                 nested.setVisibility(View.VISIBLE);
                 emptyState.setVisibility(View.GONE);

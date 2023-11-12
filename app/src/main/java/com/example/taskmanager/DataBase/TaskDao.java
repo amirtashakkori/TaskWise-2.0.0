@@ -47,11 +47,4 @@ public interface TaskDao {
 
     @Update
     int update(Task task);
-
-    //Category DataBase
-    @Insert
-    long addCategory(TaskCategory category);
-
-    @Query("select * from table_task")
-    List<TaskCategory> getCategories();
 }

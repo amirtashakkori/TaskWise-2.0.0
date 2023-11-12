@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.example.taskmanager.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
+import com.example.taskmanager.Main.MainContract;
+import com.example.taskmanager.Main.MainPresentor;
 import com.example.taskmanager.Model.Task;
 import com.example.taskmanager.Model.TaskCategory;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
@@ -35,7 +37,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener {
+public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener , MainContract.view {
 
     RecyclerView tasksRv;
     LinearLayout emptyState , taskList ;
@@ -50,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
 
     TaskDao dao;
-    List<Task> allTasks;
-    List<Task> todayTasks;
     TaskAdapter adapter;
     UserInfoContainer container;
     AppSettingContainer settingContainer;
+
+    MainPresentor presentor;
 
     public void cast(){
         taskList = findViewById(R.id.taskList);
@@ -89,23 +91,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         setContentView(R.layout.activity_main);
 
         cast();
-
-        container = new UserInfoContainer(this);
-        String name = container.getName();
-        if (name.equals("")){
-            dao.addCategory(new TaskCategory(getString(R.string.personal)));
-            dao.addCategory(new TaskCategory(getString(R.string.lesson)));
-            dao.addCategory(new TaskCategory(getString(R.string.work)));
-            dao.addCategory(new TaskCategory(getString(R.string.study)));
-            dao.addCategory(new TaskCategory(getString(R.string.gym)));
-
-            Intent intent = new Intent(this , WelcomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
-        bindTasks();
+        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        adapter = new TaskAdapter(this , this);
+        presentor.onAttach(this);
+        presentor.validatingUserInfo();
 
         getDate();
 
@@ -122,35 +111,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         taskListSwitch.setOnToggleSwitchChangeListener(new ZiresSwitchSegmentedControl.OnSwitchChangeListener() {
             @Override
             public void onToggleSwitchChangeListener(boolean b) {
-                //this is the second one
-                //we have to write code for all tasks here
-                if (b == false){
-                    if (allTasks.size() > 0){
-                        tasksRv.setVisibility(View.VISIBLE);
-                        singleCatEmptyState.setVisibility(View.GONE);
-                        adapter = new TaskAdapter(MainActivity.this , allTasks , MainActivity.this);
-                        tasksRv.setAdapter(adapter);
-                    } else {
-                        tasksRv.setVisibility(View.GONE);
-                        singleCatEmptyState.setVisibility(View.VISIBLE);
-                        singleCatEmptyState.setImageResource(setIlls(settingContainer.getAppTheme()));
-                    }
+                    presentor.listSwitch(b);
                 }
-
-                //This is the first one
-                else{
-                    if (todayTasks.size() > 0){
-                        tasksRv.setVisibility(View.VISIBLE);
-                        singleCatEmptyState.setVisibility(View.GONE);
-                        adapter = new TaskAdapter(MainActivity.this , todayTasks , MainActivity.this);
-                        tasksRv.setAdapter(adapter);
-                    } else {
-                        tasksRv.setVisibility(View.GONE);
-                        singleCatEmptyState.setVisibility(View.VISIBLE);
-                    }
-                }
-
-            }
         });
 
         navigationDrawer();
@@ -165,24 +127,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     protected void onResume() {
         super.onResume();
-        bindTasks();
+        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        presentor.onAttach(this);
 
-        todayTasks = dao.getTodayTaskList();
-        allTasks = dao.getTaskList();
-
-        if (todayTasks.size() > 0){
-            plansNumberTv.setText("( " + todayTasks.size() + " " + getString(R.string.plans) + " )");
-            emptyState.setVisibility(View.GONE);
-            tasksRv.setVisibility(View.VISIBLE);
-            singleCatEmptyState.setVisibility(View.GONE);
-            adapter = new TaskAdapter(MainActivity.this , todayTasks,MainActivity.this);
-            tasksRv.setAdapter(adapter);
-
-        }
-
-        nameTv.setText(getString(R.string.hi) + " " + container.getName());
-        userNameTv.setText(container.getName() + " " + container.getFamily());
-        userExpertiseTv.setText(container.getExpertise());
     }
 
 
@@ -197,48 +144,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         Intent onClickIntent = new Intent(MainActivity.this , TaskDetailActivity.class);
         onClickIntent.putExtra("task" , task);
         startActivity(onClickIntent);
-    }
-
-
-    public void bindTasks(){
-        todayTasks = dao.getTodayTaskList();
-        allTasks = dao.getTaskList();
-
-        tasksRv.setLayoutManager(new LinearLayoutManager(this , RecyclerView.VERTICAL , false));
-
-        if (todayTasks.size() > 0){
-            taskListSwitch.setChecked(false);
-
-            headerTv.setText(R.string.todayTasks);
-            plansNumberTv.setText("(" + todayTasks.size() + " " + R.string.plans + " )");
-            plansNumberTv.setVisibility(View.VISIBLE);
-
-            emptyState.setVisibility(View.GONE);
-            taskList.setVisibility(View.VISIBLE);
-
-            adapter = new TaskAdapter(MainActivity.this , todayTasks,MainActivity.this);
-            tasksRv.setAdapter(adapter);
-
-        } else if (todayTasks.size() == 0 && allTasks.size() > 0){
-            taskListSwitch.setChecked(false);
-
-            headerTv.setText("Your Future Tasks");
-            plansNumberTv.setVisibility(View.VISIBLE);
-            plansNumberTv.setText("(" + allTasks.size() + " Plans)");
-
-            tasksRv.setVisibility(View.GONE);
-            singleCatEmptyState.setVisibility(View.VISIBLE);
-
-            emptyState.setVisibility(View.GONE);
-            taskList.setVisibility(View.VISIBLE);
-
-        } else if (todayTasks.size() == 0 && allTasks.size() == 0){
-            headerTv.setText(R.string.taskManager);
-            plansNumberTv.setVisibility(View.GONE);
-            emptyState.setVisibility(View.VISIBLE);
-            emptyStateImg.setImageResource(setIlls(settingContainer.getAppTheme()));
-            taskList.setVisibility(View.GONE);
-        }
     }
 
 
@@ -315,8 +220,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         });
 
 
-        userNameTv.setText(container.getName() + " " + container.getFamily());
-        userExpertiseTv.setText(container.getExpertise());
+
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -329,4 +233,56 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
 
+    @Override
+    public void setHeaderTexts(String name, int taskTime, int tasksCount) {
+        nameTv.setText( getString(R.string.hi) + " " + name );
+        headerTv.setText(taskTime);
+        plansNumberTv.setText("( " + tasksCount + " " + getString(R.string.plans) + " )");
+    }
+
+    @Override
+    public void setDate() {
+
+    }
+
+    @Override
+    public void showTasks(List<Task> tasks) {
+        tasksRv.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
+        adapter.setTasks(tasks);
+        tasksRv.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void updateTask(Task task) {
+
+    }
+
+    @Override
+    public void deleteTask() {
+
+    }
+
+
+    @Override
+    public void goToWelcomeActivity() {
+        Intent intent = new Intent(this , WelcomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void setEmptyStateVisibility(boolean visible , int theme) {
+        emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
+        emptyStateImg.setImageResource(setIlls(theme));
+        plansNumberTv.setVisibility(visible ? View.GONE : View.VISIBLE);
+        taskList.setVisibility(visible ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void setListEmptyStateVisibility(boolean visibile , int theme) {
+        tasksRv.setVisibility(visibile ? View.GONE : View.VISIBLE);
+        singleCatEmptyState.setVisibility(visibile ? View.VISIBLE : View.GONE);
+        singleCatEmptyState.setImageResource(setIlls(theme));
+    }
 }
