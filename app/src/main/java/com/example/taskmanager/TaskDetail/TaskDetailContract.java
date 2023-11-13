@@ -6,14 +6,16 @@ import com.example.taskmanager.Model.Task;
 
 public interface TaskDetailContract {
     interface view extends BaseView{
-        void setTexts();
+        void setTexts(int headerText, int buttonTv);
         void showTask(Task task);
         void setDeleteButtonVisibility(boolean visible);
+        void setWorkManager(String taskTitle , int expiredDate);
+        void updateTask();
+        void deleteTask();
     }
 
     interface presentor extends BasePresentor<view>{
         void deleteButtonClicked();
-        void saveButtonClicked(String titel , String description , int timePeriod , int priority);
-        void backButtonClicked();
+        void saveButtonClicked(String title , String description , int timePeriod , int priority);
     }
 }

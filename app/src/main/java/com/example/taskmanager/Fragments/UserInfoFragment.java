@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskmanager.MainActivity;
+import com.example.taskmanager.Main.MainActivity;
 import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;

@@ -25,12 +25,14 @@ import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
+import com.example.taskmanager.TaskDetail.TaskDetailContract;
+import com.example.taskmanager.TaskDetail.TaskDetailPresentor;
 import com.example.taskmanager.WorkManager.TaskListStatusUpdater;
 
 import java.util.concurrent.TimeUnit;
 
 
-public class TaskDetailActivity extends AppCompatActivity {
+public class TaskDetailActivity extends AppCompatActivity implements TaskDetailContract.view {
 
     EditText taskTitleEt , descriptionEt;
     AppCompatButton submitTaskBtn;
@@ -39,9 +41,10 @@ public class TaskDetailActivity extends AppCompatActivity {
     RelativeLayout deleteTaskBtn , backBtn;
 
     Task task;
-    TaskDao dao;
     int time_period , importance = 1;
     AppSettingContainer settingContainer;
+
+    TaskDetailPresentor presentor;
 
     public void cast(){
 
@@ -64,25 +67,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_detail);
         cast();
+        presentor = new TaskDetailPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getParcelableExtra("task"));
+        presentor.onAttach(this);
 
-        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
         setSpinners();
-
-        task = getIntent().getParcelableExtra("task");
-
-        if (task != null){
-            taskTitleEt.setText(task.getTitle());
-            descriptionEt.setText(task.getDescription());
-            timePeriodSpinner.setSelection(task.getTime_period());
-            importanceSpinner.setSelection(task.getImportance());
-
-            headerTv.setText("Update Task");
-            submitTaskBtn.setText("Save Changes");
-
-            deleteTaskBtn.setVisibility(View.VISIBLE);
-
-        }
-
 
         submitTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,38 +80,7 @@ public class TaskDetailActivity extends AppCompatActivity {
                 String taskDescription = descriptionEt.getText().toString();
 
                 if (taskTitle.length() > 0 && taskDescription.length() > 0){
-                    if (task != null){
-                        task.setTitle(taskTitleEt.getText().toString());
-                        task.setDescription(descriptionEt.getText().toString());
-                        task.setTime_period(time_period);
-                        task.setImportance(importance);
-
-                        int res = dao.update(task);
-                        if (res > 0){
-                            Toast.makeText(TaskDetailActivity.this, "Seccessfuly updated!", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    }
-                    else{
-                        task = new Task();
-                        task.setTitle(taskTitle);
-                        task.setDescription(taskDescription);
-                        task.setTime_period(time_period);
-                        task.setImportance(importance);
-
-                        dao.addTask(task);
-
-                        Data data = new Data.Builder().putString("taskInfo" , taskTitle ).build();
-
-                        WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
-                        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(TaskListStatusUpdater.class)
-                                .setInputData(data)
-                                .setInitialDelay(getTaskExpiredTime(task.getTime_period()) , TimeUnit.DAYS)
-                                .build();
-                        manager.enqueue(request);
-
-                        finish();
-                    }
+                    presentor.saveButtonClicked(taskTitle , taskDescription , time_period , importance);
                 }
                 else if (taskTitleEt.length() == 0)
                     taskTitleEt.setError(R.string.titleError + "");
@@ -137,12 +94,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         deleteTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int res = dao.delete(task);
-                if (res > 0){
-                    Toast.makeText(TaskDetailActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
-                    finish();
-
-                }
+                presentor.deleteButtonClicked();
             }
         });
 
@@ -197,14 +149,55 @@ public class TaskDetailActivity extends AppCompatActivity {
         });
     }
 
-    public int getTaskExpiredTime(int time_period){
-        if (time_period == 1)
-            return 1;
-        else if (time_period == 2)
-            return 3;
-        else if (time_period == 3)
-            return 7;
-        else
-            return 30;
+    @Override
+    public void setTexts(int headerText, int buttonTv) {
+        headerTv.setText(headerText);
+        submitTaskBtn.setText(buttonTv);
+    }
+
+    @Override
+    public void showTask(Task task) {
+        taskTitleEt.setText(task.getTitle());
+        descriptionEt.setText(task.getDescription());
+        timePeriodSpinner.setSelection(task.getTime_period());
+        importanceSpinner.setSelection(task.getImportance());
+
+    }
+
+    @Override
+    public void setDeleteButtonVisibility(boolean visible) {
+        deleteTaskBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setWorkManager(String taskTitle , int expiredDate) {
+        Data data = new Data.Builder().putString("taskInfo" , taskTitle ).build();
+
+        WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(TaskListStatusUpdater.class)
+                .setInputData(data)
+                .setInitialDelay(expiredDate , TimeUnit.DAYS)
+                .build();
+        manager.enqueue(request);
+
+        finish();
+    }
+
+    @Override
+    public void updateTask() {
+        Toast.makeText(this, "Successfuly Edited.!", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void deleteTask() {
+        Toast.makeText(this, "Seccessfuly Deleted.!", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presentor.onDetach();
     }
 }

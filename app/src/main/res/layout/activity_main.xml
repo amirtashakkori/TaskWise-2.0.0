@@ -67,7 +67,7 @@
                             android:layout_marginTop="12dp"
                             android:text="@string/todayTasks"
                             android:textColor="?colorOnSurface"
-                            android:textSize="26sp" />
+                            android:textSize="28sp" />
 
                         <TextView
                             android:id="@+id/plansNumberTv"
@@ -76,7 +76,7 @@
                             android:layout_marginTop="12dp"
                             android:text="@string/plans"
                             android:textColor="?colorOnSurface"
-                            android:textSize="26sp" />
+                            android:textSize="28sp" />
 
                     </LinearLayout>
 

@@ -4,7 +4,7 @@
     <string name="hi">Hello</string>
     <string name="todayTasks">Your today\'s tasks</string>
     <string name="todayTasksSwitch">Today\'s Tasks</string>
-    <string name="futureTasks">your future tasks</string>
+    <string name="futureTasks">Your future tasks</string>
     <string name="allTasksSwitch">Future Tasks</string>
     <string name="plans">plans</string>
     <string name="taskManager">Task manager</string>
@@ -39,7 +39,8 @@
     <string name="lowPriority">Low priority</string>
 
     <string name="createNewTask">Create new task</string>
-    <string name="createTask">create task</string>
+    <string name="createTask">Create task</string>
+    <string name="editTask">Edit task</string>
     <string name="saveChanges">Save Changes</string>
 
 

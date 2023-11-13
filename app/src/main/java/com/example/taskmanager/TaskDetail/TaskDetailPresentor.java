@@ -38,17 +38,13 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
         if (task != null){
             int result = dao.delete(task);
             if (result > 0){
+                view.deleteTask();
             }
         }
     }
 
     @Override
     public void saveButtonClicked(String titel, String description, int timePeriod, int priority) {
-
-    }
-
-    @Override
-    public void backButtonClicked() {
 
     }
 }
