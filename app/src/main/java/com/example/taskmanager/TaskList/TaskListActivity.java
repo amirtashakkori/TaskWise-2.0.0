@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.TaskList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -13,16 +13,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.taskmanager.Adapter.TaskAdapter;
+import com.example.taskmanager.ContextWrapper;
+import com.example.taskmanager.Main.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
+import com.example.taskmanager.TaskDetail.TaskDetailActivity;
 
-import java.time.format.TextStyle;
 import java.util.List;
 
-public class TaskListActivity extends AppCompatActivity implements TaskAdapter.changeListener{
+public class TaskListActivity extends AppCompatActivity implements TaskAdapter.changeListener , TaskListContract.view{
 
     TextView headerTv , emptyStateTv;
     RecyclerView rv_tasks;
@@ -31,10 +33,10 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     ImageView img_empty_state;
 
     TaskDao dao;
-    List<Task> tasks;
     TaskAdapter adapter;
-    int listNumber;
     AppSettingContainer settingContainer;
+
+    TaskListContract.presentor presentor;
 
     public void cast(){
         headerTv = findViewById(R.id.headerTv);
@@ -54,13 +56,9 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_list);
         cast();
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0));
+        presentor.onAttach(this);
 
-        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
-        rv_tasks.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
-
-        listNumber = getIntent().getIntExtra("listNum" , 0);
-
-        bindTasks(listNumber);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +70,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         deleteAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listNumber == 1){
-                    dao.deleteCompletedTasks();
-                    bindTasks(listNumber);
-                }
-                else if (listNumber == 2){
-                    dao.deleteUnspecifiedTasks();
-                    bindTasks(listNumber);
-                }
+                presentor.deleteAllButtonClicked();
             }
         });
 
@@ -89,7 +80,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     public void onUpdate(Task task) {
         dao.update(task);
         adapter.updateTask(task);
-        bindTasks(listNumber);
     }
 
     @Override
@@ -104,46 +94,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         startActivity(onClickIntent);
     }
 
-    public void bindTasks(int listNumber){
-
-        if (listNumber == 1){
-            tasks = dao.getCompletedTasks();
-            if (tasks.size() > 0) {
-                adapter = new TaskAdapter(this , this);
-                rv_tasks.setAdapter(adapter);
-                nested.setVisibility(View.VISIBLE);
-                emptyState.setVisibility(View.GONE);
-                deleteAllBtn.setVisibility(View.VISIBLE);
-            }
-            else {
-                nested.setVisibility(View.GONE);
-                emptyState.setVisibility(View.VISIBLE);
-                img_empty_state.setImageResource(setCompletedIlls(settingContainer.getAppTheme()));
-                emptyStateTv.setText(R.string.completedTaskEmptyState);
-                deleteAllBtn.setVisibility(View.GONE);
-            }
-        }
-
-        if (listNumber == 2){
-            tasks = dao.getUnspecifiedTasks();
-            if (tasks.size() > 0) {
-                adapter = new TaskAdapter(this ,  this);
-                rv_tasks.setAdapter(adapter);
-                nested.setVisibility(View.VISIBLE);
-                emptyState.setVisibility(View.GONE);
-                deleteAllBtn.setVisibility(View.VISIBLE);
-            }
-            else {
-                nested.setVisibility(View.GONE);
-                emptyState.setVisibility(View.VISIBLE);
-                img_empty_state.setImageResource(setOutdatedIlls(settingContainer.getAppTheme()));
-                emptyStateTv.setText(R.string.unspecifiedTasksEmptyState);
-                deleteAllBtn.setVisibility(View.GONE);
-
-            }
-        }
-
-    }
 
     public int setCompletedIlls(int theme){
         if (theme == 0)
@@ -171,5 +121,25 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
 
         else
             return R.drawable.il_outdated_es_blue;
+    }
+
+    @Override
+    public void showList(List<Task> tasks) {
+        adapter.setTasks(tasks);
+        rv_tasks.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
+        rv_tasks.setAdapter(adapter);
+    }
+
+    @Override
+    public void setDeleteButtonVisibility(boolean visible) {
+        deleteAllBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setEmptyStateVisibility(boolean visible , int es , int appTheme) {
+        emptyState.setVisibility(visible ? View.GONE : View.VISIBLE);
+        if (es == 1){
+            img_empty_state.setC
+        }
     }
 }

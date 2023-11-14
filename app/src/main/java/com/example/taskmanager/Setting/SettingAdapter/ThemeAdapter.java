@@ -1,6 +1,5 @@
-package com.example.taskmanager.Adapter;
+package com.example.taskmanager.Setting.SettingAdapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,17 +9,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taskmanager.MainActivity;
+import com.example.taskmanager.Main.MainActivity;
 import com.example.taskmanager.Model.Theme;
 import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 
-import java.net.PortUnreachableException;
 import java.util.List;
 
 public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.item> {

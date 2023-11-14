@@ -1,4 +1,4 @@
-package com.example.taskmanager.Adapter;
+package com.example.taskmanager.Main.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -110,16 +109,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
         public void onUpdate(Task task);
 
         public void onClick(Task task);
-    }
-
-    public void deleteTask(Task task){
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId() == task.getId()) {
-                tasks.remove(i);
-                notifyItemRemoved(i);
-                break;
-            }
-        }
     }
 
     public void setTasks(List<Task> tasks) {

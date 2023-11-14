@@ -1,17 +1,16 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Welcome;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.appsearch.GetSchemaResponse;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.taskmanager.Fragments.UserInfoFragment;
-import com.example.taskmanager.Fragments.WelcomeFragment;
+import com.example.taskmanager.ContextWrapper;
+import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
+import com.example.taskmanager.Welcome.Fragments.UserInfoFragment;
+import com.example.taskmanager.Welcome.Fragments.WelcomeFragment;
 
 public class WelcomeActivity extends AppCompatActivity {
 

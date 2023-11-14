@@ -25,7 +25,7 @@ public interface TaskDao {
     List<Task> getTodayTaskList();
 
     @Query("select * from table_task where time_period = 4 and is_completed = 0")
-    List<Task> getUnspecifiedTasks();
+    List<Task> getOutDatedTasks();
 
     @Query("select * from table_task where is_completed = 1")
     List<Task> getCompletedTasks();
@@ -43,7 +43,7 @@ public interface TaskDao {
     void deleteCompletedTasks();
 
     @Query("delete from table_task where time_period = 4")
-    void deleteUnspecifiedTasks();
+    void deleteOutDatedTasks();
 
     @Update
     int update(Task task);

@@ -8,13 +8,12 @@ import java.util.List;
 
 public interface TaskListContract {
     interface view extends BaseView {
-        void showList(List<Task> tasks , int position);
+        void showList(List<Task> tasks);
         void setDeleteButtonVisibility(boolean visible);
-        void setEmptyStateVisibility(boolean visible);
+        void setEmptyStateVisibility(boolean visible ,int es , int appTheme);
     }
 
-    interface presentor extends BasePresentor {
+    interface presentor extends BasePresentor<view> {
         void deleteAllButtonClicked();
-        void backButtonClicked();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.taskmanager.Fragments;
+package com.example.taskmanager.Welcome.Fragments;
 
 import android.os.Bundle;
 

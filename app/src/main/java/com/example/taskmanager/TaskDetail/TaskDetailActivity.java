@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.TaskDetail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,7 +7,6 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -15,19 +14,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskmanager.ContextWrapper;
 import com.example.taskmanager.DataBase.AppDataBase;
-import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
-import com.example.taskmanager.TaskDetail.TaskDetailContract;
-import com.example.taskmanager.TaskDetail.TaskDetailPresentor;
-import com.example.taskmanager.WorkManager.TaskListStatusUpdater;
+import com.example.taskmanager.TaskDetail.WorkManager.TaskListStatusUpdater;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +37,6 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     Spinner timePeriodSpinner , importanceSpinner , categoryPeriodSpinner;
     RelativeLayout deleteTaskBtn , backBtn;
 
-    Task task;
     int time_period , importance = 1;
     AppSettingContainer settingContainer;
 
@@ -81,6 +77,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
                 if (taskTitle.length() > 0 && taskDescription.length() > 0){
                     presentor.saveButtonClicked(taskTitle , taskDescription , time_period , importance);
+                    finish();
                 }
                 else if (taskTitleEt.length() == 0)
                     taskTitleEt.setError(R.string.titleError + "");
@@ -116,12 +113,13 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         ArrayAdapter<String> periodSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_period_spinner , R.id.spinnerTv , period_spinner_items);
         periodSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         timePeriodSpinner.setAdapter(periodSpinnerAdapter);
+        timePeriodSpinner.setSelection(time_period);
 
         String[] importance_spinner_items = {getString(R.string.highImportance) , getString(R.string.normalPriority) , getString(R.string.lowPriority)};
         ArrayAdapter<String> importanceSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_importance_spinner , R.id.spinnerTv , importance_spinner_items);
         importanceSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         importanceSpinner.setAdapter(importanceSpinnerAdapter);
-        importanceSpinner.setSelection(1);
+        importanceSpinner.setSelection(importance);
 
 
         timePeriodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -159,6 +157,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     public void showTask(Task task) {
         taskTitleEt.setText(task.getTitle());
         descriptionEt.setText(task.getDescription());
+        time_period = task.getTime_period();
+        importance = task.getImportance();
         timePeriodSpinner.setSelection(task.getTime_period());
         importanceSpinner.setSelection(task.getImportance());
 

@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,15 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 
-import com.example.taskmanager.Adapter.TaskAdapter;
+import com.example.taskmanager.ContextWrapper;
 import com.example.taskmanager.DataBase.AppDataBase;
 import com.example.taskmanager.DataBase.TaskDao;
-import com.example.taskmanager.Main.MainContract;
-import com.example.taskmanager.Main.MainPresentor;
+import com.example.taskmanager.Main.Adapter.TaskAdapter;
 import com.example.taskmanager.Model.Task;
-import com.example.taskmanager.Model.TaskCategory;
+import com.example.taskmanager.R;
+import com.example.taskmanager.Setting.SettingActivity;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;
+import com.example.taskmanager.TaskDetail.TaskDetailActivity;
+import com.example.taskmanager.TaskList.TaskListActivity;
+import com.example.taskmanager.Welcome.WelcomeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
@@ -40,7 +43,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener , MainContract.view {
 
     RecyclerView tasksRv;
-    LinearLayout emptyState , taskList ;
+    LinearLayout emptyState , taskList , singleCatEmptyStateLay;
     ZiresSwitchSegmentedControl taskListSwitch;
     TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     FloatingActionButton addTaskBtn;
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         drawerLayout_parent = findViewById(R.id.drawerLayout_parent);
         navigationMain = findViewById(R.id.navigationMain);
         emptyStateImg = findViewById(R.id.emptyStateImg);
+        singleCatEmptyStateLay = findViewById(R.id.singleCatEmptyStateLay);
 
         //NavigationCasting
         navigationHeader = navigationMain.getHeaderView(0);
@@ -95,8 +99,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         adapter = new TaskAdapter(this , this);
         presentor.onAttach(this);
         presentor.validatingUserInfo();
-
-        getDate();
 
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,13 +131,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         super.onResume();
         presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
         presentor.onAttach(this);
-
+        taskListSwitch.setChecked(false);
     }
 
 
     @Override
     public void onUpdate(Task task) {
-        dao.update(task);
+        presentor.updateTask(task);
         adapter.updateTask(task);
     }
 
@@ -161,18 +163,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             return R.drawable.il_empty_state_blue;
     }
 
-    //Calendar Section
-    public void getDate(){
-        Calendar calendar = Calendar.getInstance();
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEEE" );
-        weekDayTv.setText(weekDayFormat.format(calendar.getTime()));
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat monthNameFormat = new SimpleDateFormat("dd MMMM");
-        monthTv.setText( monthNameFormat.format(calendar.getTime()));
-
-    }
-
     public void navigationDrawer(){
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this , drawerLayout_parent , R.string.openNavigation , R.string.closeNavigation);
@@ -182,11 +172,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.deleteAllBtn:
-                        dao.deleteAll();
-                        headerTv.setText("Task Manager");
-                        plansNumberTv.setVisibility(View.GONE);
-                        taskList.setVisibility(View.GONE);
-                        emptyState.setVisibility(View.VISIBLE);
+                        presentor.clearListClicked();
                         drawerLayout_parent.close();
                         break;
 
@@ -220,8 +206,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         });
 
 
-
-
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         });
     }
 
-
     @Override
     public void setHeaderTexts(String name, int taskTime, int tasksCount) {
         nameTv.setText( getString(R.string.hi) + " " + name );
@@ -242,25 +225,21 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
     @Override
     public void setDate() {
+        Calendar calendar = Calendar.getInstance();
 
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEEE" );
+        weekDayTv.setText(weekDayFormat.format(calendar.getTime()));
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat monthNameFormat = new SimpleDateFormat("dd MMMM");
+        monthTv.setText( monthNameFormat.format(calendar.getTime()));
     }
+
 
     @Override
     public void showTasks(List<Task> tasks) {
         tasksRv.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
         adapter.setTasks(tasks);
         tasksRv.setAdapter(adapter);
-    }
-
-
-    @Override
-    public void updateTask(Task task) {
-
-    }
-
-    @Override
-    public void deleteTask() {
-
     }
 
 
@@ -282,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     public void setListEmptyStateVisibility(boolean visibile , int theme) {
         tasksRv.setVisibility(visibile ? View.GONE : View.VISIBLE);
-        singleCatEmptyState.setVisibility(visibile ? View.VISIBLE : View.GONE);
+        singleCatEmptyStateLay.setVisibility(visibile ? View.VISIBLE : View.GONE);
         singleCatEmptyState.setImageResource(setIlls(theme));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.taskmanager.WorkManager;
+package com.example.taskmanager.TaskDetail.WorkManager;
 
 import android.content.Context;
 import android.content.IntentFilter;

@@ -1,21 +1,15 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import com.example.taskmanager.Adapter.SettingAdapter;
-import com.example.taskmanager.Fragments.SettingListFragment;
-import com.example.taskmanager.Model.Option;
+import com.example.taskmanager.ContextWrapper;
+import com.example.taskmanager.R;
+import com.example.taskmanager.Setting.Fragments.SettingListFragment;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
-
-import java.util.List;
 
 
 public class SettingActivity extends AppCompatActivity {

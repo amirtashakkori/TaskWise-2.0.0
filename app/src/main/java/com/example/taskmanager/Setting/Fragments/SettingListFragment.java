@@ -1,4 +1,4 @@
-package com.example.taskmanager.Fragments;
+package com.example.taskmanager.Setting.Fragments;
 
 import android.os.Bundle;
 
@@ -8,16 +8,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.example.taskmanager.Adapter.SettingAdapter;
 import com.example.taskmanager.Model.Option;
 import com.example.taskmanager.R;
+import com.example.taskmanager.Setting.SettingAdapter.SettingAdapter;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 
 import java.util.ArrayList;

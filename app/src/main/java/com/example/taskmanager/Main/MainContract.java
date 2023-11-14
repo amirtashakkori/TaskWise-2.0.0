@@ -11,8 +11,6 @@ public interface MainContract {
         void setHeaderTexts(String name , int taskTime , int tasksCount);
         void setDate();
         void showTasks(List<Task> tasks);
-        void updateTask(Task task);
-        void deleteTask();
         void goToWelcomeActivity();
         void setEmptyStateVisibility(boolean visible , int theme);
         void setListEmptyStateVisibility(boolean visible , int theme);
@@ -21,13 +19,7 @@ public interface MainContract {
     interface presentor extends BasePresentor<view>{
         void validatingUserInfo();
         void listSwitch(boolean b);
-        void onItemClicked(Task task);
-        void drawerToggleClicked();
-        void addTaskButtonClicked();
-        void onCompletedListClicked();
-        void onOutDatedListClicked();
-        void cleareListClicked();
-        void settingClicked();
-        void onResume();
+        void clearListClicked();
+        void updateTask(Task task);
     }
 }

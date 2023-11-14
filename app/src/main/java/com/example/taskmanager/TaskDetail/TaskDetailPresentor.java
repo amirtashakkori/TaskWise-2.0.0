@@ -6,6 +6,7 @@ import com.example.taskmanager.BaseView;
 import com.example.taskmanager.DataBase.TaskDao;
 import com.example.taskmanager.Main.MainContract;
 import com.example.taskmanager.Model.Task;
+import com.example.taskmanager.R;
 
 public class TaskDetailPresentor implements TaskDetailContract.presentor
 {
@@ -25,6 +26,10 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
         if (task != null){
             view.setDeleteButtonVisibility(true);
             view.showTask(task);
+            view.setTexts(R.string.editUserInfoText , R.string.saveChanges);
+        } else {
+            view.setDeleteButtonVisibility(false);
+            view.setTexts(R.string.createNewTask , R.string.createTask);
         }
     }
 
@@ -44,7 +49,35 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
     }
 
     @Override
-    public void saveButtonClicked(String titel, String description, int timePeriod, int priority) {
-
+    public void saveButtonClicked(String title, String description, int timePeriod, int priority) {
+        if (task != null){
+            task.setTitle(title);
+            task.setDescription(description);
+            task.setTime_period(timePeriod);
+            task.setImportance(priority);
+            int res = dao.update(task);
+            if (res > 0)
+                view.updateTask();
+        } else {
+            task = new Task();
+            task.setTitle(title);
+            task.setDescription(description);
+            task.setTime_period(timePeriod);
+            task.setImportance(priority);
+            dao.addTask(task);
+            view.setWorkManager(title , getExpireDate(timePeriod));
+        }
     }
+
+    public int getExpireDate(int timePeriod){
+        if(timePeriod == 0)
+            return 1;
+        else if (timePeriod == 1)
+            return 3;
+        else if (timePeriod == 2)
+            return 7;
+        else
+            return 30;
+    }
+
 }

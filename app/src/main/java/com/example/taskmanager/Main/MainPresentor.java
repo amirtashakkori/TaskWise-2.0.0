@@ -1,16 +1,10 @@
 package com.example.taskmanager.Main;
 
-import android.content.Intent;
-import android.view.View;
-
-import com.example.taskmanager.Adapter.TaskAdapter;
 import com.example.taskmanager.DataBase.TaskDao;
-import com.example.taskmanager.MainActivity;
 import com.example.taskmanager.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskmanager.SharedPreferences.AppSettingContainer;
 import com.example.taskmanager.SharedPreferences.UserInfoContainer;
-import com.example.taskmanager.WelcomeActivity;
 
 import java.util.List;
 
@@ -39,19 +33,21 @@ public class MainPresentor implements MainContract.presentor {
     @Override
     public void onAttach(MainContract.view view) {
         this.view = view;
+        view.setDate();
         if (!todaysTasks.isEmpty() && !futureTasks.isEmpty()){
             view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
-            view.showTasks(todaysTasks);
+            view.showTasks(todaysTasks );
             view.setEmptyStateVisibility(false , appTheme);
         }
         else if (!todaysTasks.isEmpty() && futureTasks.isEmpty()) {
             view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
-            view.showTasks(todaysTasks);
+            view.showTasks(todaysTasks );
             view.setEmptyStateVisibility(false , appTheme);
         }
         else if (todaysTasks.isEmpty() && !futureTasks.isEmpty()){
             view.setHeaderTexts(userName , R.string.futureTasks , futureTasks.size());
             view.setListEmptyStateVisibility(true , appTheme);
+            view.setEmptyStateVisibility(false , appTheme);
         }
         else if (todaysTasks.isEmpty() && futureTasks.isEmpty()){
             view.setEmptyStateVisibility(true, appTheme);
@@ -93,42 +89,14 @@ public class MainPresentor implements MainContract.presentor {
     }
 
     @Override
-    public void onItemClicked(Task task) {
-
+    public void clearListClicked() {
+        dao.deleteAll();
+        view.setEmptyStateVisibility(true , appTheme);
     }
 
     @Override
-    public void drawerToggleClicked() {
-
+    public void updateTask(Task task) {
+        dao.update(task);
     }
 
-    @Override
-    public void addTaskButtonClicked() {
-
-    }
-
-    @Override
-    public void onCompletedListClicked() {
-
-    }
-
-    @Override
-    public void onOutDatedListClicked() {
-
-    }
-
-    @Override
-    public void cleareListClicked() {
-
-    }
-
-    @Override
-    public void settingClicked() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
 }
