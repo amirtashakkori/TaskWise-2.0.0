@@ -64,4 +64,9 @@ public class TaskListPresentor implements TaskListContract.presentor {
         else
             dao.deleteOutDatedTasks();
     }
+
+    @Override
+    public void updateTask(Task task) {
+        dao.update(task);
+    }
 }

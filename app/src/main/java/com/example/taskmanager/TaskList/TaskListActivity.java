@@ -56,7 +56,8 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_list);
         cast();
-        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0));
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
+        adapter = new TaskAdapter(this , this);
         presentor.onAttach(this);
 
 
@@ -77,9 +78,19 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
+        presentor.onAttach(this);
+    }
+
+    @Override
     public void onUpdate(Task task) {
-        dao.update(task);
+        presentor.updateTask(task);
         adapter.updateTask(task);
+
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
+        presentor.onAttach(this);
     }
 
     @Override
@@ -137,9 +148,12 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
 
     @Override
     public void setEmptyStateVisibility(boolean visible , int es , int appTheme) {
-        emptyState.setVisibility(visible ? View.GONE : View.VISIBLE);
-        if (es == 1){
-            img_empty_state.setC
-        }
+        emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
+        nested.setVisibility(visible ? View.GONE : View.VISIBLE);
+        if (es == 1)
+            img_empty_state.setImageResource(setCompletedIlls(appTheme));
+
+        else
+            img_empty_state.setImageResource(setOutdatedIlls(appTheme));
     }
 }

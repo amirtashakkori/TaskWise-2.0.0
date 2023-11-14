@@ -15,5 +15,6 @@ public interface TaskListContract {
 
     interface presentor extends BasePresentor<view> {
         void deleteAllButtonClicked();
+        void updateTask(Task task);
     }
 }

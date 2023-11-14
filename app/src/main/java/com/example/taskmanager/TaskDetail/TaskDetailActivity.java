@@ -34,7 +34,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     EditText taskTitleEt , descriptionEt;
     AppCompatButton submitTaskBtn;
     TextView spinnerTv , headerTv;
-    Spinner timePeriodSpinner , importanceSpinner , categoryPeriodSpinner;
+    Spinner timePeriodSpinner , importanceSpinner ;
     RelativeLayout deleteTaskBtn , backBtn;
 
     int time_period , importance = 1;
@@ -53,7 +53,6 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         headerTv = findViewById(R.id.headerTv);
         deleteTaskBtn = findViewById(R.id.deleteTaskBtn);
         backBtn = findViewById(R.id.backBtn);
-        categoryPeriodSpinner = findViewById(R.id.categoryPeriodSpinner);
     }
 
     @Override
