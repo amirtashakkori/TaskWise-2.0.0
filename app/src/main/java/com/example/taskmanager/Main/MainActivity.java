@@ -154,9 +154,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             return R.drawable.il_empty_state_green;
 
         else if (theme == 1)
-            return R.drawable.il_empty_state_nude;
-
-        else if (theme == 2)
             return R.drawable.il_empty_state_ivory;
 
         else

@@ -15,12 +15,6 @@
     <color name="darkerGreen">#175524</color>
     <color name="lightGreen">#9FCA59 </color>
     <color name="darkerLightGreen">#84A74A</color>
-    
-    //Nude TaskManager
-    <color name="darkBrown">#754923</color>
-    <color name="darkerBrown">#533317</color>
-    <color name="nude">#E3BC9A</color>
-    <color name="darkerNude">#C88750</color>
 
     //Red TaskManger
     <color name="darkRed">#A41D19</color>

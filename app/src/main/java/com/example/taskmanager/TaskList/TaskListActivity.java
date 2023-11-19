@@ -110,9 +110,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
             return R.drawable.il_completed_es_green;
 
         else if (theme == 1)
-            return R.drawable.il_completed_es_nude;
-
-        else if (theme == 2)
             return R.drawable.il_completed_es_ivory;
 
         else
@@ -124,9 +121,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
             return R.drawable.il_outdated_es_green;
 
         else if (theme == 1)
-            return R.drawable.il_outdated_es_nude;
-
-        else if (theme == 2)
             return R.drawable.il_outdated_es_ivory;
 
         else

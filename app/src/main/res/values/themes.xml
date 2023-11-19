@@ -19,25 +19,6 @@
         <item name="android:textAppearance">@style/menuItemText</item>
     </style>
 
-    <style name="Theme.NudeTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/darkBrown</item>
-        <item name="colorPrimaryVariant">@color/darkerBrown</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/nude</item>
-        <item name="colorSecondaryVariant">@color/darkerNude</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="colorAccent">@color/darkerBrown</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/darkerBrown</item>
-        <!-- Customize your theme here. -->
-        <item name="fontFamily">@font/gilroy_samibold_regular</item>
-        <item name="actionMenuTextColor">@color/darkBrown</item>
-        <item name="android:textAppearance">@style/menuItemText</item>
-    </style>
-
     <style name="Theme.RedTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/darkRed</item>

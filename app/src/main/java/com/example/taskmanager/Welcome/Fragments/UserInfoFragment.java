@@ -111,9 +111,6 @@ public class UserInfoFragment extends Fragment {
             return R.drawable.il_edit_user_info_green;
 
         else if (theme == 1)
-            return R.drawable.il_edit_user_info_nude;
-
-        else if (theme == 2)
             return R.drawable.il_edit_user_info_ivory;
 
         else

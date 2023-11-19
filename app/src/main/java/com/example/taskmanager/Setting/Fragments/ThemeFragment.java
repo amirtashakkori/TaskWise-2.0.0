@@ -42,7 +42,6 @@ public class ThemeFragment extends Fragment {
 
         themeList = new ArrayList<>();
         themeList.add(new Theme(R.drawable.bg_theme_green , "Avocado" , "#246832"));
-        themeList.add(new Theme(R.drawable.bg_theme_nude , "Alef" , "#754923"));
         themeList.add(new Theme(R.drawable.bg_theme_red , "Red Apple" , "#A41D19"));
         themeList.add(new Theme(R.drawable.bg_theme_blue , "BlueBerry" , "#0C356A"));
         themeRv.setLayoutManager(new GridLayoutManager(getActivity() , 2 , RecyclerView.VERTICAL , false));
