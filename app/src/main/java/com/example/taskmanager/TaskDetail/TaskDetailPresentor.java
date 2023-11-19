@@ -26,7 +26,7 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
         if (task != null){
             view.setDeleteButtonVisibility(true);
             view.showTask(task);
-            view.setTexts(R.string.editUserInfoText , R.string.saveChanges);
+            view.setTexts(R.string.editTask , R.string.saveChanges);
         } else {
             view.setDeleteButtonVisibility(false);
             view.setTexts(R.string.createNewTask , R.string.createTask);

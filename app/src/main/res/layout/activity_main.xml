@@ -58,7 +58,7 @@
                             </RelativeLayout>
 
                             <TextView
-                                android:id="@+id/nameTv"
+                                android:id="@+id/helloTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/hi"
@@ -79,7 +79,7 @@
                             android:textSize="26sp" />
 
                         <TextView
-                            android:id="@+id/plansNumberTv"
+                            android:id="@+id/plansCountTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -187,13 +187,13 @@
                             android:visibility="visible" />
 
                         <LinearLayout
-                            android:id="@+id/singleCatEmptyStateLay"
+                            android:id="@+id/singleListEmptyStateLay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="28dp">
 
                             <ImageView
-                                android:id="@+id/singleCatEmptyState"
+                                android:id="@+id/singleListEmptyState"
                                 android:layout_width="wrap_content"
                                 android:layout_height="228dp"
                                 android:layout_gravity="center_horizontal"

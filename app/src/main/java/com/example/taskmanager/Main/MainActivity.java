@@ -43,11 +43,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener , MainContract.view {
 
     RecyclerView tasksRv;
-    LinearLayout emptyState , taskList , singleCatEmptyStateLay;
+    LinearLayout emptyState , taskList , singleListEmptyStateLay;
     ZiresSwitchSegmentedControl taskListSwitch;
-    TextView headerTv , nameTv , plansNumberTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
+    TextView headerTv , helloTv , plansCountTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     FloatingActionButton addTaskBtn;
-    ImageView drawerToggle, editBtn , singleCatEmptyState , emptyStateImg;
+    ImageView drawerToggle, editBtn , singleListEmptyState , emptyStateImg;
     DrawerLayout drawerLayout_parent;
     NavigationView navigationMain;
     View navigationHeader;
@@ -64,21 +64,21 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     public void cast(){
         taskList = findViewById(R.id.taskList);
         emptyState = findViewById(R.id.emptyState);
-        nameTv = findViewById(R.id.nameTv);
-        plansNumberTv = findViewById(R.id.plansNumberTv);
+        helloTv = findViewById(R.id.helloTv);
+        plansCountTv = findViewById(R.id.plansCountTv);
         weekDayTv = findViewById(R.id.weekDayTv);
         monthTv = findViewById(R.id.monthTv);
         addTaskBtn = findViewById(R.id.addTaskBtn);
         tasksRv = findViewById(R.id.tasksRv);
         clockTv = findViewById(R.id.clockTv);
         taskListSwitch = findViewById(R.id.taskListSwitch);
-        singleCatEmptyState = findViewById(R.id.singleCatEmptyState);
+        singleListEmptyState = findViewById(R.id.singleListEmptyState);
         headerTv = findViewById(R.id.headerTv);
         drawerToggle = findViewById(R.id.drawerToggle);
         drawerLayout_parent = findViewById(R.id.drawerLayout_parent);
         navigationMain = findViewById(R.id.navigationMain);
         emptyStateImg = findViewById(R.id.emptyStateImg);
-        singleCatEmptyStateLay = findViewById(R.id.singleCatEmptyStateLay);
+        singleListEmptyStateLay = findViewById(R.id.singleListEmptyStateLay);
 
         //NavigationCasting
         navigationHeader = navigationMain.getHeaderView(0);
@@ -218,9 +218,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
     @Override
     public void setHeaderTexts(String name, int taskTime, int tasksCount) {
-        nameTv.setText( getString(R.string.hi) + " " + name );
+        helloTv.setText( getString(R.string.hi) + " " + name );
         headerTv.setText(taskTime);
-        plansNumberTv.setText("( " + tasksCount + " " + getString(R.string.plans) + " )");
+        plansCountTv.setText("( " + tasksCount + " " + getString(R.string.plans) + " )");
     }
 
     @Override
@@ -254,14 +254,15 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     public void setEmptyStateVisibility(boolean visible , int theme) {
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
         emptyStateImg.setImageResource(setIlls(theme));
-        plansNumberTv.setVisibility(visible ? View.GONE : View.VISIBLE);
+        plansCountTv.setVisibility(visible ? View.GONE : View.VISIBLE);
         taskList.setVisibility(visible ? View.GONE : View.VISIBLE);
+        headerTv.setText(getString(R.string.taskManager));
     }
 
     @Override
     public void setListEmptyStateVisibility(boolean visibile , int theme) {
         tasksRv.setVisibility(visibile ? View.GONE : View.VISIBLE);
-        singleCatEmptyStateLay.setVisibility(visibile ? View.VISIBLE : View.GONE);
-        singleCatEmptyState.setImageResource(setIlls(theme));
+        singleListEmptyStateLay.setVisibility(visibile ? View.VISIBLE : View.GONE);
+        singleListEmptyState.setImageResource(setIlls(theme));
     }
 }

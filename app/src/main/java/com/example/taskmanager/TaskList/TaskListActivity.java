@@ -32,7 +32,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     NestedScrollView nested;
     ImageView img_empty_state;
 
-    TaskDao dao;
     TaskAdapter adapter;
     AppSettingContainer settingContainer;
 
