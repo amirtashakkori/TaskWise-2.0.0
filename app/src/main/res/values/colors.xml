@@ -9,6 +9,7 @@
     <color name="white">#fefefe</color>
     <color name="darkerWhite">#f1f1f1</color>
     <color name="lighterBlack">#4B4B4B</color>
+    <color name="gray">#EDEDED</color>
 
     //Green TaskManager
     <color name="darkGreen">#246832</color>

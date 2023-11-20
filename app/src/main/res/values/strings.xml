@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Task Manager</string>
+    <string name="app_name">TaskWise</string>
     //MainActivity
     <string name="hi">Hello</string>
     <string name="todayTasks">Your today\'s tasks</string>

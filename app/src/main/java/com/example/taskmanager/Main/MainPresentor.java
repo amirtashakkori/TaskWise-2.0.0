@@ -38,6 +38,7 @@ public class MainPresentor implements MainContract.presentor {
             view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
             view.showTasks(todaysTasks );
             view.setEmptyStateVisibility(false , appTheme);
+            view.setListEmptyStateVisibility(false , appTheme);
         }
         else if (!todaysTasks.isEmpty() && futureTasks.isEmpty()) {
             view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());

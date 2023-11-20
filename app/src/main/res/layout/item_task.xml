@@ -29,6 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?colorAccent"
+                android:textAlignment="viewStart"
+
                 android:text="Finishing Alien Book"
                 android:textSize="20sp"
                 android:maxLines="1"/>
@@ -40,6 +42,7 @@
                 android:textColor="?colorAccent"
                 android:text="Finishing the last chapter.!"
                 android:textSize="16sp"
+                android:textAlignment="viewStart"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="8dp"
                 android:layout_marginTop="16dp"
@@ -47,7 +50,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/importanceBtn"
-                android:layout_width="88dp"
+                android:layout_width="100dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_importance_high"
