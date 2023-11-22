@@ -4,5 +4,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Setting.SettingActivity"
+    tools:context="com.example.taskwise.Setting.SettingActivity"
     android:id="@+id/fragment_container"/>

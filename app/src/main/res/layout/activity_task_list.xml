@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TaskList.TaskListActivity"
+    tools:context="com.example.taskwise.TaskList.TaskListActivity"
     android:background="@drawable/bg_dark2light">
 
     <RelativeLayout

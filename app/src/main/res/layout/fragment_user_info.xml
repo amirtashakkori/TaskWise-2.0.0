@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Welcome.Fragments.UserInfoFragment"
+    tools:context="com.example.taskwise.Welcome.Fragments.UserInfoFragment"
     android:background="@drawable/bg_dark2light"
     android:fillViewport="true">
 

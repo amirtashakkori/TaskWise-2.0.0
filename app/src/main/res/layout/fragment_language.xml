@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/bg_dark2light"
-    tools:context=".Setting.Fragments.LanguageFragment">
+    tools:context="com.example.taskwise.Setting.Fragments.LanguageFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

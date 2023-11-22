@@ -15,21 +15,22 @@
         android:windowSoftInputMode="adjustUnspecified"
         tools:targetApi="31">
         <activity
-            android:name=".Setting.SettingActivity"
+            android:name="com.example.taskwise.Setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".Welcome.WelcomeActivity"
+            android:name="com.example.taskwise.Welcome.WelcomeActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:noHistory="true" />
         <activity
-            android:name=".TaskList.TaskListActivity"
+            android:name="com.example.taskwise.TaskList.TaskListActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".TaskDetail.TaskDetailActivity"
+            android:name="com.example.taskwise.TaskDetail.TaskDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize">
             <meta-data
@@ -37,7 +38,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Main.MainActivity"
+            android:name="com.example.taskwise.Main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/bg_dark2light"
-    tools:context=".Setting.Fragments.ThemeFragment">
+    tools:context="com.example.taskwise.Setting.Fragments.ThemeFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,10 +52,10 @@
 
         <TextView
             android:id="@+id/darkModeTv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
             android:text="@string/themeSelector"
-            android:layout_gravity="center_vertical"
             android:textAppearance="@style/settingOptions"
             android:textSize="16sp"/>
 
