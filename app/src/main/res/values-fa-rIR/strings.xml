@@ -38,7 +38,7 @@
     <string name="normalPriority">روزمره</string>
     <string name="lowPriority">نه چندان مهم</string>
 
-    <string name="createNewTask">ذخیره وظیفه</string>
+    <string name="createNewTask">ساخت وظیفه جدید</string>
     <string name="createTask">ذخیره وظیفه</string>
     <string name="editTask">ویرایش وظیفه</string>
     <string name="saveChanges">ذخیره تغییرات</string>
@@ -88,5 +88,27 @@
     <string name="study">مطالعه</string>
     <string name="work">کار</string>
     <string name="gym">باشگاه</string>
+
+
+    //CalendarView
+    <string name="calendar">تقویم</string>
+    <string name="extendedFab">برنامه</string>
+    <string name="eventFab">رویداد</string>
+    <string name="taskFab">وظیفه</string>
+
+    //EventDetailView
+    <string name="createNewEvent">ساخت رویداد جدید</string>
+    <string name="createEvent">ساخت رویداد</string>
+
+    <string name="Date">تاریخ</string>
+    <string name="DateHint">برای رویدادتان تاریخ انتخاب کنید</string>
+
+    <string name="startTime">زمان شروع</string>
+    <string name="endTime">زمان پایان</string>
+
+    <string name="eventDescription">توضیحات رویداد</string>
+    <string name="start">شروع</string>
+    <string name="end">پایان</string>
+
 
 </resources>

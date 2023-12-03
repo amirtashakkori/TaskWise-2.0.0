@@ -21,7 +21,7 @@
     <string name="closeNavigation">Open navigation</string>
 
     //TaskDetailActivity
-    <string name="title">Title</string>
+    <string name="title">Title *</string>
     <string name="titleHint">Enter task title</string>
 
     <string name="timePeriod">Time period</string>
@@ -30,7 +30,7 @@
     <string name="inThisWeek">In this week</string>
     <string name="inThisMonth">In this month</string>
 
-    <string name="description">Description</string>
+    <string name="description">Description *</string>
     <string name="descriptionHint">Enter task description</string>
 
     <string name="importance">Priority</string>
@@ -80,7 +80,7 @@
     <string name="appMode">App mode</string>
     <string name="lightMode">Light mode</string>
     <string name="themeSelector">Select your theme :</string>
-    
+
     //TaskCategory
     <string name="category">Category</string>
     <string name="personal">Personal</string>
@@ -89,5 +89,24 @@
     <string name="work">Work</string>
     <string name="gym">Gym</string>
 
+    //CalendarView
+    <string name="calendar">Calendar</string>
+    <string name="extendedFab">Schedule</string>
+    <string name="eventFab">Event</string>
+    <string name="taskFab">Task</string>
+
+    //EventDetailView
+    <string name="createNewEvent">Create new event</string>
+    <string name="createEvent">Create event</string>
+
+    <string name="Date">Date *</string>
+    <string name="DateHint">Select Date for your event</string>
+
+    <string name="startTime">Start Time</string>
+    <string name="endTime">End Time</string>
+
+    <string name="eventDescription">Description</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
 </resources>

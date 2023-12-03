@@ -163,8 +163,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center_horizontal|top"
-                            android:baselineAligned="false"
                             android:layout_marginTop="4dp"
+                            android:baselineAligned="false"
                             android:layoutDirection="locale"
                             app:activeBgColor="?colorPrimary"
                             app:activeTextColor="?colorOnSurface"
@@ -191,10 +191,11 @@
                             android:id="@+id/singleListEmptyStateLay"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:padding="28dp"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:layout_gravity="center_vertical">
+                            android:visibility="gone"
+                            android:gravity="center"
+                            android:padding="28dp">
 
                             <ImageView
                                 android:id="@+id/singleListEmptyState"
@@ -239,16 +240,82 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addTaskBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:backgroundTint="?colorPrimary"
-            android:src="@drawable/ic_add"
-            app:tint="?colorOnSurface"
-            android:layout_margin="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/eventFabTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="?colorPrimary"
+                    android:layout_marginEnd="12dp"
+                    android:text="@string/eventFab"
+                    android:layout_gravity="center_vertical" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addEventBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?colorPrimary"
+                    app:fabSize="mini"
+                    android:src="@drawable/ic_event"
+                    app:iconTint="?colorOnPrimary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/taskFabTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="?colorPrimary"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/taskFab"
+                    android:layout_gravity="center_vertical" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addTaskBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?colorPrimary"
+                    app:fabSize="mini"
+                    android:src="@drawable/ic_check"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/addPlanBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="?colorPrimary"
+                app:icon="@drawable/ic_add"
+                app:iconTint="?colorOnPrimary"
+                android:text="@string/extendedFab"
+                android:textSize="12sp"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

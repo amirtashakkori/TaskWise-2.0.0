@@ -26,6 +26,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -47,5 +51,6 @@ dependencies {
     implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
 
     implementation "androidx.work:work-runtime:2.8.1"
+
 
 }

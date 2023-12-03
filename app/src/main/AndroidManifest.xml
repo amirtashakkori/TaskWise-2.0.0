@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:configChanges="locale|orientation"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -11,17 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenTaskManager"
-        android:configChanges="locale|orientation"
         android:windowSoftInputMode="adjustUnspecified"
         tools:targetApi="31">
+        <activity
+            android:name="com.example.taskwise.Event.EventDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.taskwise.Calendar.CalendarActivity"
+            android:exported="true"></activity>
         <activity
             android:name="com.example.taskwise.Setting.SettingActivity"
             android:exported="false" />
         <activity
             android:name="com.example.taskwise.Welcome.WelcomeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.example.taskwise.TaskList.TaskListActivity"
             android:exported="false">

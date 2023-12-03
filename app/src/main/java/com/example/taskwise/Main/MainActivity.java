@@ -31,6 +31,7 @@ import com.example.taskwise.SharedPreferences.UserInfoContainer;
 import com.example.taskwise.TaskDetail.TaskDetailActivity;
 import com.example.taskwise.TaskList.TaskListActivity;
 import com.example.taskwise.Welcome.WelcomeActivity;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
@@ -46,20 +47,21 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     LinearLayout emptyState , taskList , singleListEmptyStateLay;
     ZiresSwitchSegmentedControl taskListSwitch;
     TextView headerTv , helloTv , plansCountTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
-    FloatingActionButton addTaskBtn;
+    TextView eventFabTv , taskFabTv;
+    ExtendedFloatingActionButton addPlanBtn;
+    FloatingActionButton addEventBtn , addTaskBtn;
     ImageView drawerToggle, editBtn , singleListEmptyState , emptyStateImg;
     DrawerLayout drawerLayout_parent;
     NavigationView navigationMain;
     View navigationHeader;
     TextClock clockTv;
 
-
-    TaskDao dao;
     TaskAdapter adapter;
-    UserInfoContainer container;
     AppSettingContainer settingContainer;
 
     MainPresentor presentor;
+
+    boolean allFabsVisible;
 
     public void cast(){
         taskList = findViewById(R.id.taskList);
@@ -68,7 +70,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         plansCountTv = findViewById(R.id.plansCountTv);
         weekDayTv = findViewById(R.id.weekDayTv);
         monthTv = findViewById(R.id.monthTv);
+        addPlanBtn = findViewById(R.id.addPlanBtn);
+        addEventBtn = findViewById(R.id.addEventBtn);
         addTaskBtn = findViewById(R.id.addTaskBtn);
+        eventFabTv = findViewById(R.id.eventFabTv);
+        taskFabTv = findViewById(R.id.taskFabTv);
         tasksRv = findViewById(R.id.tasksRv);
         clockTv = findViewById(R.id.clockTv);
         taskListSwitch = findViewById(R.id.taskListSwitch);
@@ -100,13 +106,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         presentor.onAttach(this);
         presentor.validatingUserInfo();
 
-        addTaskBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this , TaskDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+        extendedFab();
 
         taskListSwitch.setRightToggleText(getString(R.string.allTasksSwitch));
         taskListSwitch.setLeftToggleText(getString(R.string.todayTasksSwitch));
@@ -267,5 +267,54 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         tasksRv.setVisibility(visibile ? View.GONE : View.VISIBLE);
         singleListEmptyStateLay.setVisibility(visibile ? View.VISIBLE : View.GONE);
         singleListEmptyState.setImageResource(setIlls(theme));
+    }
+
+    public void extendedFab(){
+        allFabsVisible = false;
+        addPlanBtn.shrink();
+
+        addTaskBtn.setVisibility(View.GONE);
+        addEventBtn.setVisibility(View.GONE);
+        taskFabTv.setVisibility(View.GONE);
+        eventFabTv.setVisibility(View.GONE);
+
+        addPlanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!allFabsVisible){
+
+                    allFabsVisible = true;
+                    addTaskBtn.show();
+                    addEventBtn.show();
+                    taskFabTv.setVisibility(View.VISIBLE);
+                    eventFabTv.setVisibility(View.VISIBLE);
+                    addPlanBtn.extend();
+
+                } else {
+                    allFabsVisible = false;
+                    addTaskBtn.hide();
+                    addEventBtn.hide();
+                    taskFabTv.setVisibility(View.GONE);
+                    eventFabTv.setVisibility(View.GONE);
+                    addPlanBtn.shrink();
+                }
+            }
+        });
+
+        addTaskBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allFabsVisible = false;
+                addTaskBtn.hide();
+                addEventBtn.hide();
+                taskFabTv.setVisibility(View.GONE);
+                eventFabTv.setVisibility(View.GONE);
+                addPlanBtn.shrink();
+
+                Intent intent = new Intent(MainActivity.this , TaskDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
