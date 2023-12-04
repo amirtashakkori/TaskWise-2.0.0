@@ -76,7 +76,7 @@
     <style name="MyCalendar" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorControlActivated">@color/darkGreen</item>
         <item name="android:windowBackground">?colorOnPrimary</item>
-        <item name="android:textColorPrimary">@color/darkGreen</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondaryInverse">@color/white</item>
     </style>
 

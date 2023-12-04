@@ -102,9 +102,13 @@
     <string name="Date">Date *</string>
     <string name="DateHint">Select Date for your event</string>
 
-    <string name="startTime">Start Time</string>
-    <string name="endTime">End Time</string>
-
+    <string name="startTime">Start Time :</string>
+    <string name="endTime">End Time :</string>
+    <string name="notifyMe">Notify me :</string>
+    <string name="hourBefore">a Hour Before</string>
+    <string name="halfHour">half-hour before</string>
+    <string name="quarterHour">quarter-hour before</string>
+    <string name="atTheTime">at the time</string>
     <string name="eventDescription">Description</string>
     <string name="start">Start</string>
     <string name="end">End</string>

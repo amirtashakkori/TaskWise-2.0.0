@@ -105,7 +105,11 @@
 
     <string name="startTime">زمان شروع</string>
     <string name="endTime">زمان پایان</string>
-
+    <string name="notifyMe">به من اطلاع بده :</string>
+    <string name="hourBefore">یک ساعت قبل</string>
+    <string name="halfHour">نیم ساعت قبل</string>
+    <string name="quarterHour">یک ربع قبل</string>
+    <string name="atTheTime">همان لحظه</string>
     <string name="eventDescription">توضیحات رویداد</string>
     <string name="start">شروع</string>
     <string name="end">پایان</string>

@@ -50,9 +50,8 @@
     </style>
 
     <style name="CustomDateTextAppearance" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">?colorSecondary</item>
+        <item name="android:textColor">?colorOnPrimary</item>
         <item name="fontFamily">@font/gilroy_samibold_regular</item>
-        <item name="textSize">14sp</item>
     </style>
 
     <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">

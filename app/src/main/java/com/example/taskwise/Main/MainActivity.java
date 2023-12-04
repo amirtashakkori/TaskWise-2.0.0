@@ -20,8 +20,9 @@ import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.example.taskwise.ContextWrapper;
-import com.example.taskwise.DataBase.AppDataBase;
 import com.example.taskwise.DataBase.TaskDao;
+import com.example.taskwise.DataBase.AppDataBase;
+import com.example.taskwise.Event.EventDetailActivity;
 import com.example.taskwise.Main.Adapter.TaskAdapter;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
@@ -283,20 +284,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             public void onClick(View v) {
                 if (!allFabsVisible){
 
-                    allFabsVisible = true;
-                    addTaskBtn.show();
-                    addEventBtn.show();
-                    taskFabTv.setVisibility(View.VISIBLE);
-                    eventFabTv.setVisibility(View.VISIBLE);
-                    addPlanBtn.extend();
+                    extendedFabExtend();
 
                 } else {
-                    allFabsVisible = false;
-                    addTaskBtn.hide();
-                    addEventBtn.hide();
-                    taskFabTv.setVisibility(View.GONE);
-                    eventFabTv.setVisibility(View.GONE);
-                    addPlanBtn.shrink();
+                    extendedFabShrink();
                 }
             }
         });
@@ -304,17 +295,41 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                allFabsVisible = false;
-                addTaskBtn.hide();
-                addEventBtn.hide();
-                taskFabTv.setVisibility(View.GONE);
-                eventFabTv.setVisibility(View.GONE);
-                addPlanBtn.shrink();
+                extendedFabShrink();
 
                 Intent intent = new Intent(MainActivity.this , TaskDetailActivity.class);
                 startActivity(intent);
             }
         });
 
+        addEventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                extendedFabShrink();
+
+                Intent intent = new Intent(MainActivity.this , EventDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+    public void extendedFabShrink(){
+        allFabsVisible = false;
+        addTaskBtn.hide();
+        addEventBtn.hide();
+        taskFabTv.setVisibility(View.GONE);
+        eventFabTv.setVisibility(View.GONE);
+        addPlanBtn.shrink();
+    }
+
+    public void extendedFabExtend(){
+        allFabsVisible = true;
+        addTaskBtn.show();
+        addEventBtn.show();
+        taskFabTv.setVisibility(View.VISIBLE);
+        eventFabTv.setVisibility(View.VISIBLE);
+        addPlanBtn.extend();
+    }
+
 }

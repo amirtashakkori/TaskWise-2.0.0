@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.taskwise.ContextWrapper;
-import com.example.taskwise.Main.Adapter.TaskAdapter;
 import com.example.taskwise.DataBase.AppDataBase;
+import com.example.taskwise.Main.Adapter.TaskAdapter;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;

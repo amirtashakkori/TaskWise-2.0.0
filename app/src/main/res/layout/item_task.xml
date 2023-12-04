@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="?colorAccent"
                 android:textAlignment="viewStart"
-
                 android:text="Finishing Alien Book"
                 android:textSize="20sp"
                 android:maxLines="1"/>
