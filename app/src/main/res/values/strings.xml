@@ -98,6 +98,7 @@
     //EventDetailView
     <string name="createNewEvent">Create new event</string>
     <string name="createEvent">Create event</string>
+    <string name="editEvent">Edit event</string>
 
     <string name="Date">Date *</string>
     <string name="DateHint">Select Date for your event</string>
@@ -112,5 +113,9 @@
     <string name="eventDescription">Description</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+
+    //Notification
+    <string name="eventChannel">This channel is a reminder for your event, this will notify you when the event time comes</string>
+    <string name="taskChannel">This channel is a reminder for your outdated tasks, this will notify you when when your tasks deadline is over</string>
 
 </resources>

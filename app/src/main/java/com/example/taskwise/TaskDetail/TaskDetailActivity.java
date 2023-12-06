@@ -62,7 +62,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_detail);
         cast();
-        presentor = new TaskDetailPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getParcelableExtra("task"));
+        presentor = new TaskDetailPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , getIntent().getParcelableExtra("task"));
         presentor.onAttach(this);
 
         setSpinners();

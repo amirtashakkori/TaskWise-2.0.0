@@ -24,7 +24,7 @@
             android:background="?colorOnPrimary"
             android:text="Cancel"
             android:theme="@style/customAppCompatButton"
-            android:id="@+id/btn_cancel"/>
+            android:id="@+id/cancelBtn"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:background="?colorOnPrimary"
             android:text="Ok"
             android:theme="@style/customAppCompatButton"
-            android:id="@+id/btn_ok" />
+            android:id="@+id/okBtn" />
 
     </LinearLayout>
 

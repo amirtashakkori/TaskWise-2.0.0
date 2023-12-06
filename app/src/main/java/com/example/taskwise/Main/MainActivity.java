@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.TaskDao;
 import com.example.taskwise.DataBase.AppDataBase;
-import com.example.taskwise.Event.EventDetailActivity;
+import com.example.taskwise.EventDatail.EventDetailActivity;
 import com.example.taskwise.Main.Adapter.TaskAdapter;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         setContentView(R.layout.activity_main);
 
         cast();
-        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
         adapter = new TaskAdapter(this , this);
         presentor.onAttach(this);
         presentor.validatingUserInfo();
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     protected void onResume() {
         super.onResume();
-        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
         presentor.onAttach(this);
         taskListSwitch.setChecked(false);
     }

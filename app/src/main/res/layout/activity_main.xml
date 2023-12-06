@@ -228,7 +228,7 @@
                             android:layout_marginTop="20dp"
                             android:lineSpacingExtra="12dp"
                             android:text="@string/tasksEmptyState"
-                            android:textColor="?colorSecondary"
+                            android:textColor="@color/middleGray"
                             android:textSize="16sp"
                             android:fontFamily="@font/gilroy_samibold_regular"/>
 
@@ -272,8 +272,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="?colorPrimary"
                     app:fabSize="mini"
-                    android:src="@drawable/ic_event"
-                    app:iconTint="?colorOnPrimary"/>
+                    app:tint="?colorOnSurface"
+                    android:src="@drawable/ic_event"/>
 
             </LinearLayout>
 
@@ -300,7 +300,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="?colorPrimary"
                     app:fabSize="mini"
-                    android:src="@drawable/ic_check"/>
+                    android:src="@drawable/ic_check"
+                    app:tint="?colorOnSurface"/>
 
             </LinearLayout>
 
@@ -310,7 +311,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="?colorPrimary"
                 app:icon="@drawable/ic_add"
-                app:iconTint="?colorOnPrimary"
+                android:textColor="?colorOnSurface"
+                app:iconTint="?colorOnSurface"
                 android:text="@string/extendedFab"
                 android:textSize="12sp"
                 android:textAlignment="center"/>

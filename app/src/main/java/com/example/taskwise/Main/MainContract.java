@@ -15,6 +15,7 @@ public interface MainContract {
         void goToWelcomeActivity();
         void setEmptyStateVisibility(boolean visible , int theme);
         void setListEmptyStateVisibility(boolean visible , int theme);
+
     }
 
     interface presentor extends BasePresentor<view>{

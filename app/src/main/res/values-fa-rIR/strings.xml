@@ -99,6 +99,7 @@
     //EventDetailView
     <string name="createNewEvent">ساخت رویداد جدید</string>
     <string name="createEvent">ساخت رویداد</string>
+    <string name="editEvent">ویرایش رویداد</string>
 
     <string name="Date">تاریخ</string>
     <string name="DateHint">برای رویدادتان تاریخ انتخاب کنید</string>
@@ -113,6 +114,10 @@
     <string name="eventDescription">توضیحات رویداد</string>
     <string name="start">شروع</string>
     <string name="end">پایان</string>
+
+    //Notification
+    <string name="eventChannel">این کانال یادآوری برای رویداد های شماست که وقتی زمان رویداد فرا برسه شمارا مطلع کند</string>
+    <string name="taskChannel">این کانال یادآوری برای وظایف منقضی شده شماست که زمانی که وظایف شما منقضی بشه شما را مطلع میکند</string>
 
 
 </resources>

@@ -15,13 +15,12 @@ import java.util.List;
 public interface EventDao {
     //Task DataBase
     @Insert
-    long addTask(Event event);
+    long addEvent(Event event);
 
-    @Query("select * from table_event ORDER BY event_date + event_time ")
+    @Query("select * from table_event ORDER BY event_date + startTime + endTime ")
     List<Event> getEventList();
 
-    @Query("SELECT * FROM table_event WHERE event_date LIKE :query")
-    Task search(String query);
+
 
     @Delete
     int delete(Event event);

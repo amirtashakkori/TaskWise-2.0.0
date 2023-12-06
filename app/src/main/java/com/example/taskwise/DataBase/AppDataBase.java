@@ -5,11 +5,12 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 
-@Database(version = 2 , exportSchema = false , entities = {Task.class , Event.class})
+@Database(version = 1 , exportSchema = false , entities = {Task.class , Event.class})
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase appDataBase;
 
@@ -20,5 +21,7 @@ public abstract class AppDataBase extends RoomDatabase {
         return appDataBase;
     }
 
-    public abstract TaskDao getDataBaseDao();
+    public abstract TaskDao getTaskDataBaseDao();
+
+    public abstract EventDao getEventDataBaseDao();
 }
