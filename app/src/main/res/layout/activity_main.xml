@@ -37,7 +37,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
@@ -59,13 +59,29 @@
 
                             <TextView
                                 android:id="@+id/helloTv"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/hi"
                                 android:textSize="16sp"
+                                android:layout_weight="1"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"
                                 android:textColor="?colorSecondary" />
+
+                            <RelativeLayout
+                                android:id="@+id/calendarBtn"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/bg_header_buttons">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_calendar"
+                                    app:tint="?colorOnSurface" />
+
+                            </RelativeLayout>
 
                         </LinearLayout>
 
@@ -219,7 +235,8 @@
                         <ImageView
                             android:id="@+id/emptyStateImg"
                             android:layout_width="250dp"
-                            android:layout_height="250dp" />
+                            android:layout_height="250dp"
+                            android:src="@drawable/il_empty_state"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -249,61 +266,27 @@
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp">
 
-            <LinearLayout
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addEventBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:backgroundTint="?colorPrimary"
+                app:fabSize="mini"
+                app:tint="?colorOnSurface"
                 android:layout_gravity="end"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/ic_event"/>
 
-                <TextView
-                    android:id="@+id/eventFabTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="?colorPrimary"
-                    android:layout_marginEnd="12dp"
-                    android:text="@string/eventFab"
-                    android:layout_gravity="center_vertical" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/addEventBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="?colorPrimary"
-                    app:fabSize="mini"
-                    app:tint="?colorOnSurface"
-                    android:src="@drawable/ic_event"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addTaskBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:backgroundTint="?colorPrimary"
+                app:fabSize="mini"
+                android:src="@drawable/ic_check"
+                app:tint="?colorOnSurface"
                 android:layout_gravity="end"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:id="@+id/taskFabTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="?colorPrimary"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/taskFab"
-                    android:layout_gravity="center_vertical" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/addTaskBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="?colorPrimary"
-                    app:fabSize="mini"
-                    android:src="@drawable/ic_check"
-                    app:tint="?colorOnSurface"/>
-
-            </LinearLayout>
+                android:layout_marginBottom="16dp"/>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/addPlanBtn"

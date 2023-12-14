@@ -5,6 +5,7 @@ import com.example.taskwise.DataBase.EventDao;
 import com.example.taskwise.Model.Event;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EventDetailPresentor implements EventDetailContract.presentor{
@@ -12,6 +13,8 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
     EventDetailContract.view view;
     EventDao dao;
     Event event;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
 
     public EventDetailPresentor(EventDao dao , Event event){
         this.dao = dao;
@@ -24,10 +27,10 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
         if (event != null){
             view.setDeleteButtonVisibility(true);
             view.showEvent(event);
-            view.setTexts(R.string.editEvent , R.string.saveChanges);
+            view.setTexts(R.string.editEvent , R.string.saveChanges , false);
         } else {
             view.setDeleteButtonVisibility(false);
-            view.setTexts(R.string.createNewEvent , R.string.createEvent);
+            view.setTexts(R.string.createNewEvent , R.string.createEvent , true);
         }
     }
 
@@ -46,22 +49,27 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
     }
 
     @Override
-    public void saveButtonClicked(String title, long date, String startTime , String endTime , int notifyMe) {
+    public void saveButtonClicked(String title, long firstDate , long secondDate , String date , int notifyMe) {
         if (event != null){
             event.setTitle(title);
-            event.setDate(date);
-            event.setStartTime(startTime);
-            event.setEndTime(endTime);
+            event.setFirstDate(firstDate);
+            event.setSecondDate(secondDate);
+            event.setDate(sdf.format(firstDate));
+            event.setNotifyMe(notifyMe);
             int result = dao.update(event);
-            if (result > 0)
+            if (result > 0) {
                 view.updateEvent();
+            }
         } else {
             event = new Event();
             event.setTitle(title);
-            event.setDate(date);
-            event.setStartTime(startTime);
-            event.setEndTime(endTime);
+            event.setFirstDate(firstDate);
+            event.setSecondDate(secondDate);
+            event.setDate(sdf.format(firstDate));
+            event.setNotifyMe(notifyMe);
             dao.addEvent(event);
+            view.setAlarmManager(title , firstDate , notifyMe);
         }
     }
+
 }

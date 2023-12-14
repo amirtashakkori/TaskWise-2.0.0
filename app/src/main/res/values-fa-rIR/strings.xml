@@ -24,6 +24,9 @@
     <string name="title">عنوان</string>
     <string name="titleHint">عنوان وظیفه را وارد کنید</string>
 
+    <string name="taskTitleError">لطفا عنوان وظیفه را وارد کنید!</string>
+    <string name="taskDescriptionError">لطفا توضیحات وظیفه را وارد کنید!</string>
+
     <string name="timePeriod">بازه زمانی</string>
     <string name="inDayAhead">همین امروز</string>
     <string name="inThreeDays">در سه روز آینده</string>
@@ -104,6 +107,8 @@
     <string name="Date">تاریخ</string>
     <string name="DateHint">برای رویدادتان تاریخ انتخاب کنید</string>
 
+    <string name="eventTitleError">لطفا عنوان رویداد را وارد کنید!</string>
+
     <string name="startTime">زمان شروع</string>
     <string name="endTime">زمان پایان</string>
     <string name="notifyMe">به من اطلاع بده :</string>
@@ -114,6 +119,8 @@
     <string name="eventDescription">توضیحات رویداد</string>
     <string name="start">شروع</string>
     <string name="end">پایان</string>
+    <string name="ok">تایید</string>
+    <string name="cancel">لغو</string>
 
     //Notification
     <string name="eventChannel">این کانال یادآوری برای رویداد های شماست که وقتی زمان رویداد فرا برسه شمارا مطلع کند</string>

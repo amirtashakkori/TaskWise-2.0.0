@@ -3,9 +3,11 @@ package com.example.taskwise.EventDatail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.app.DatePickerDialog;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -17,9 +19,11 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.taskmanager.R;
+import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
 import com.example.taskwise.EventDatail.EventDetailContract;
@@ -28,33 +32,45 @@ import com.example.taskwise.Main.MainPresentor;
 import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
+import com.google.android.material.internal.ViewOverlayImpl;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.nio.charset.StandardCharsets;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class EventDetailActivity extends AppCompatActivity implements EventDetailContract.view {
 
-    TextView headerTv , dateTv , startTime , endTime;
+    TextView headerTv , dateTv , startTimeTv , endTimeTv;
     EditText eventTitleEt;
     AppCompatButton submitEventBtn;
     Spinner notifySpinner;
     RelativeLayout deleteEventBtn , backBtn;
-    DatePicker datePicker;
-    AppCompatButton okBtn , cancelBtn;
 
     EventDetailPresentor presentor;
     AppSettingContainer settingContainer;
-    int selected_day , selected_month , selected_year;
-    String dateName;
 
-    int notify = 2;
+    int notify = 2 ;
+    long subtractDate;
+
+    Calendar selectedCalendar , futureCalendar;
+    Date selectedDate , futureDate;
+
+    SimpleDateFormat dateSdf = new SimpleDateFormat("MMM dd, yyyy");
+    SimpleDateFormat timeSdf = new SimpleDateFormat("hh:mm a");
 
     public void cast(){
         headerTv = findViewById(R.id.headerTv);
         dateTv = findViewById(R.id.dateTv);
-        startTime = findViewById(R.id.startTime);
-        endTime = findViewById(R.id.endTime);
+        startTimeTv = findViewById(R.id.startTimeTv);
+        endTimeTv = findViewById(R.id.endTimeTv);
         eventTitleEt = findViewById(R.id.eventTitleEt);
         submitEventBtn = findViewById(R.id.submitEventBtn);
         deleteEventBtn = findViewById(R.id.deleteEventBtn);
@@ -78,7 +94,12 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         submitEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!eventTitleEt.getText().toString().equals("")){
+                    presentor.saveButtonClicked(eventTitleEt.getText().toString() , selectedDate.getTime() , futureDate.getTime() , dateTv.getText().toString() , notify);
+                    finish();
+                } else {
+                    eventTitleEt.setError(R.string.eventTitleError + "");
+                }
             }
         });
 
@@ -92,28 +113,53 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         dateTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setDate();
+            }
+        });
 
-                showDatePickerDialog();
+        startTimeTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(0);
+            }
+        });
 
-
+        endTimeTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(1);
             }
         });
     }
 
     @Override
-    public void setTexts(int headerText, int buttonTv) {
+    public void setTexts(int headerText, int buttonTv , boolean create) {
         headerTv.setText(headerText);
         submitEventBtn.setText(getString(buttonTv));
+
+        if (create){
+            selectedCalendar = Calendar.getInstance();
+            selectedDate = selectedCalendar.getTime();
+
+            futureCalendar = Calendar.getInstance();
+            futureCalendar.add(Calendar.HOUR_OF_DAY , 2);
+            futureDate = futureCalendar.getTime();
+
+            dateTv.setText(dateSdf.format(selectedDate));
+            startTimeTv.setText(timeSdf.format(selectedDate));
+            endTimeTv.setText(timeSdf.format(futureDate));
+
+            notifySpinner.setSelection(notify);
+        }
     }
 
     @Override
     public void showEvent(Event event) {
         eventTitleEt.setText(event.getTitle());
-        dateTv.setText((int) event.getDate());
-        startTime.setText(event.getStartTime());
-        endTime.setText(event.getEndTime());
-        notifySpinner.setSelection(notify);
-        notifySpinner.setSelection(notify);
+        dateTv.setText(dateSdf.format(event.getFirstDate()));
+        startTimeTv.setText(timeSdf.format(event.getFirstDate()));
+        endTimeTv.setText(timeSdf.format(event.getSecondDate()));
+        notifySpinner.setSelection(event.getNotifyMe());
     }
 
     @Override
@@ -122,8 +168,41 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     }
 
     @Override
-    public void setNotificationManager(String eventTitle, int notifyMe) {
+    public void setAlarmManager(String eventTitle, long notificationDate , int notifyMe) {
+        Intent intent = new Intent(EventDetailActivity.this , Remiders.class);
+        intent.putExtra("eventTitle" , eventTitle);
+        PendingIntent pi;
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            pi = PendingIntent.getBroadcast(getApplicationContext() , 0 , intent , PendingIntent.FLAG_IMMUTABLE );
+        }
+        else {
+            pi = PendingIntent.getBroadcast(EventDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+        }
+
+        switch (notifyMe){
+            case 0 :
+                subtractDate = 0;
+                break;
+            case 1 :
+                subtractDate = TimeUnit.MINUTES.toMillis(15);
+                break;
+            case 2 :
+                subtractDate = TimeUnit.MINUTES.toMillis(30);
+                break;
+            case 3 :
+                subtractDate = TimeUnit.HOURS.toMillis(1);
+                break;
+        }
+
+        long date = notificationDate - subtractDate;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        manager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() , pi);
     }
 
     @Override
@@ -148,7 +227,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         notifySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                notify = position;
             }
 
             @Override
@@ -164,27 +243,55 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         presentor.onDetach();
     }
 
-    public void showDatePickerDialog(){
-        Calendar calendar = Calendar.getInstance();
-        int initialYear = calendar.get(Calendar.YEAR);
-        int initialMonth = calendar.get(Calendar.MONTH);
-        int initialDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typedValue, true);
-        int color = typedValue.data;
-
-        DatePickerDialog dialog = new DatePickerDialog(EventDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
+    public void setDate(){
+        int year = selectedCalendar.get(Calendar.YEAR);
+        int month = selectedCalendar.get(Calendar.MONTH );
+        int day = selectedCalendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Toast.makeText(EventDetailActivity.this, "" + year + month + dayOfMonth, Toast.LENGTH_SHORT).show();
-                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.set(year , month , dayOfMonth);
-                dateName = sdf.format(calendar1.getTime());
-                dateTv.setText(dateName);
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                selectedCalendar.set(year , monthOfYear , dayOfMonth);
+
+                selectedDate = selectedCalendar.getTime();
+                dateTv.setText(dateSdf.format(selectedDate));
             }
-        } , initialYear , initialMonth , initialDay);
-        dialog.show();
+        } , year , month , day);
+
+        datePickerDialog.show(getSupportFragmentManager().beginTransaction() , null);
+
+        datePickerDialog.setOkText(R.string.ok);
+        datePickerDialog.setCancelColor(R.string.cancel);
     }
+
+    public void setTime(int time){
+        int hour , minute;
+        if (time == 0){
+            hour = selectedCalendar.get(Calendar.HOUR_OF_DAY);
+            minute = selectedCalendar.get(Calendar.MINUTE);
+        } else {
+            hour = futureCalendar.get(Calendar.HOUR_OF_DAY);
+            minute = futureCalendar.get(Calendar.MINUTE);
+        }
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+                if (time == 0){
+                    selectedCalendar.set(Calendar.HOUR_OF_DAY , hourOfDay);
+                    selectedCalendar.set(Calendar.MINUTE , minute);
+                    selectedDate = selectedCalendar.getTime();
+                    startTimeTv.setText(timeSdf.format(selectedDate));
+                } else {
+                    futureCalendar.set(Calendar.HOUR_OF_DAY , hourOfDay);
+                    futureCalendar.set(Calendar.MINUTE , minute);
+                    futureDate = futureCalendar.getTime();
+                    endTimeTv.setText(timeSdf.format(futureDate));
+                }
+            }
+        } , hour , minute , false);
+        timePickerDialog.show(getSupportFragmentManager().beginTransaction() , null);
+
+        timePickerDialog.setOkText(R.string.ok);
+        timePickerDialog.setCancelColor(R.string.cancel);
+    }
+
 }

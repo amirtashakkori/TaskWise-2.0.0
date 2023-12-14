@@ -10,6 +10,7 @@ public interface TaskDetailContract {
         void showTask(Task task);
         void setDeleteButtonVisibility(boolean visible);
         void setWorkManager(String taskTitle , int expiredDate);
+        void setAlarmManager(String taskTitle , String taskDescription);
         void updateTask();
         void deleteTask();
     }

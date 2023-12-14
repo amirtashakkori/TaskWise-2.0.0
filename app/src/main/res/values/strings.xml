@@ -24,6 +24,9 @@
     <string name="title">Title *</string>
     <string name="titleHint">Enter task title</string>
 
+    <string name="taskTitleError">Please enter task title!</string>
+    <string name="taskDescriptionError">Please enter task description!</string>
+
     <string name="timePeriod">Time period</string>
     <string name="inDayAhead">In day ahead</string>
     <string name="inThreeDays">In three days</string>
@@ -99,6 +102,7 @@
     <string name="createNewEvent">Create new event</string>
     <string name="createEvent">Create event</string>
     <string name="editEvent">Edit event</string>
+    <string name="eventTitleError">Please enter event title!</string>
 
     <string name="Date">Date *</string>
     <string name="DateHint">Select Date for your event</string>
@@ -113,6 +117,8 @@
     <string name="eventDescription">Description</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 
     //Notification
     <string name="eventChannel">This channel is a reminder for your event, this will notify you when the event time comes</string>

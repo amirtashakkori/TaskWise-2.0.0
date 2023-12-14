@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:text="@string/completedTaskEmptyState"
             android:textSize="16sp"
-            android:textColor="?colorSecondary"
+            android:textColor="@color/middleGray"
             android:layout_marginTop="20dp"
             android:lineSpacingExtra="12dp"
             android:textAlignment="center"

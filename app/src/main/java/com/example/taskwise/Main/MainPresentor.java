@@ -42,21 +42,21 @@ public class MainPresentor implements MainContract.presentor {
         if (!todaysTasks.isEmpty() && !futureTasks.isEmpty()){
             view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
             view.showTasks(todaysTasks );
-            view.setEmptyStateVisibility(false , appTheme);
+            view.setEmptyStateVisibility(false);
             view.setListEmptyStateVisibility(false , appTheme);
         }
         else if (!todaysTasks.isEmpty() && futureTasks.isEmpty()) {
             view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
             view.showTasks(todaysTasks );
-            view.setEmptyStateVisibility(false , appTheme);
+            view.setEmptyStateVisibility(false);
         }
         else if (todaysTasks.isEmpty() && !futureTasks.isEmpty()){
             view.setHeaderTexts(userName , R.string.futureTasks , futureTasks.size());
             view.setListEmptyStateVisibility(true , appTheme);
-            view.setEmptyStateVisibility(false , appTheme);
+            view.setEmptyStateVisibility(false);
         }
         else if (todaysTasks.isEmpty() && futureTasks.isEmpty()){
-            view.setEmptyStateVisibility(true, appTheme);
+            view.setEmptyStateVisibility(true);
             view.setHeaderTexts(userName, R.string.taskManager, todaysTasks.size());
         }
     }
@@ -97,7 +97,7 @@ public class MainPresentor implements MainContract.presentor {
     @Override
     public void clearListClicked() {
         dao.deleteAll();
-        view.setEmptyStateVisibility(true , appTheme);
+        view.setEmptyStateVisibility(true);
     }
 
     @Override

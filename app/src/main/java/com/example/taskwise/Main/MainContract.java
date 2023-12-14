@@ -13,7 +13,7 @@ public interface MainContract {
         void setDate();
         void showTasks(List<Task> tasks);
         void goToWelcomeActivity();
-        void setEmptyStateVisibility(boolean visible , int theme);
+        void setEmptyStateVisibility(boolean visible);
         void setListEmptyStateVisibility(boolean visible , int theme);
 
     }

@@ -6,7 +6,10 @@ import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -19,13 +22,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
+import com.example.taskwise.EventDatail.EventDetailActivity;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
 import com.example.taskwise.TaskDetail.WorkManager.TaskListStatusUpdater;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 
@@ -180,6 +186,44 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         manager.enqueue(request);
 
         finish();
+    }
+
+    @Override
+    public void setAlarmManager(String taskTitle, String taskDescription) {
+        Intent intent = new Intent(TaskDetailActivity.this , Remiders.class);
+        intent.putExtra("taskTitle" , taskTitle);
+        PendingIntent pi;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            pi = PendingIntent.getBroadcast(getApplicationContext() , 0 , intent , PendingIntent.FLAG_IMMUTABLE );
+        }
+        else {
+            pi = PendingIntent.getBroadcast(TaskDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+        }
+
+        switch (notifyMe){
+            case 0 :
+                subtractDate = 0;
+                break;
+            case 1 :
+                subtractDate = TimeUnit.MINUTES.toMillis(15);
+                break;
+            case 2 :
+                subtractDate = TimeUnit.MINUTES.toMillis(30);
+                break;
+            case 3 :
+                subtractDate = TimeUnit.HOURS.toMillis(1);
+                break;
+        }
+
+        long date = notificationDate - subtractDate;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        manager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() , pi);
     }
 
     @Override

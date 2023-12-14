@@ -1,5 +1,8 @@
 package com.example.taskwise.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -8,17 +11,31 @@ import java.sql.Time;
 import java.util.Date;
 
 @Entity(tableName = "table_event")
-public class Event {
+public class Event implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     long id;
     @ColumnInfo(name = "event_title")
     String title;
-    @ColumnInfo(name = "event_description")
-    String description;
-    @ColumnInfo(name = "event_date")
-    long date;
-    int day , year;
-    String month , startTime , endTime;
+    long firstDate , secondDate;
+    String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    int notifyMe;
+
+    public int getNotifyMe() {
+        return notifyMe;
+    }
+
+    public void setNotifyMe(int notifyMe) {
+        this.notifyMe = notifyMe;
+    }
 
     public long getId() {
         return id;
@@ -36,59 +53,68 @@ public class Event {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public long getFirstDate() {
+        return firstDate;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFirstDate(long firstDate) {
+        this.firstDate = firstDate;
     }
 
-    public long getDate() {
-        return date;
+    public long getSecondDate() {
+        return secondDate;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setSecondDate(long secondDate) {
+        this.secondDate = secondDate;
     }
 
-    public int getDay() {
-        return day;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.title);
+        dest.writeLong(this.firstDate);
+        dest.writeLong(this.secondDate);
+        dest.writeString(this.date);
+        dest.writeInt(this.notifyMe);
     }
 
-    public int getYear() {
-        return year;
+    public void readFromParcel(Parcel source) {
+        this.id = source.readLong();
+        this.title = source.readString();
+        this.firstDate = source.readLong();
+        this.secondDate = source.readLong();
+        this.date = source.readString();
+        this.notifyMe = source.readInt();
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public Event() {
     }
 
-    public String getMonth() {
-        return month;
+    protected Event(Parcel in) {
+        this.id = in.readLong();
+        this.title = in.readString();
+        this.firstDate = in.readLong();
+        this.secondDate = in.readLong();
+        this.date = in.readString();
+        this.notifyMe = in.readInt();
     }
 
-    public void setMonth(String month) {
-        this.month = month;
-    }
+    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel source) {
+            return new Event(source);
+        }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 }

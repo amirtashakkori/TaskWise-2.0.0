@@ -17,10 +17,11 @@ public interface EventDao {
     @Insert
     long addEvent(Event event);
 
-    @Query("select * from table_event ORDER BY event_date + startTime + endTime ")
+    @Query("select * from table_event ORDER BY firstDate + secondDate ")
     List<Event> getEventList();
 
-
+    @Query("select * from table_event Where date LIKE '%' || :query || '%'")
+    List<Event> getDateEventList(String query);
 
     @Delete
     int delete(Event event);

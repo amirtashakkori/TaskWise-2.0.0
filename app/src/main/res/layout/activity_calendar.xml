@@ -1,5 +1,5 @@
 <!-- res/layout/view_custom_calendar.xml -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:org.naishadhparmar.zcustomcalendar="http://schemas.android.com/apk/res-auto"
@@ -8,74 +8,37 @@
     app:ignore="NamespaceTypo"
     android:background="@drawable/bg_dark2light">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/AppBar"
-        android:theme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@drawable/bg_dark2light">
+        android:layout_height="56dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/backBtn"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                app:tint="?colorOnSurface"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/headerTv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_dark2light"
-            app:contentScrim="@color/SecondaryColor"
-            app:layout_scrollFlags="exitUntilCollapsed|scroll">
+            android:layout_centerInParent="true"
+            android:text="@string/completedTasks"
+            android:textColor="?colorOnSurface"
+            android:textSize="16sp" />
 
-            <CalendarView
-                android:id="@+id/calendar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyCalendar"
-                app:layout_collapseMode="parallax"
-                android:layout_marginTop="50dp"
-                android:dateTextAppearance="@style/CustomDateTextAppearance"/>
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/Toolbar"
-                app:layout_collapseMode="pin">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp">
-
-                    <RelativeLayout
-                        android:id="@+id/backBtn"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_centerVertical="true">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_back"
-                            app:tint="?colorOnSurface"
-                            android:layout_centerVertical="true"/>
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/headerTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/calendar"
-                        android:textColor="?colorOnSurface"
-                        android:textSize="16sp" />
-
-
-                </RelativeLayout>
-
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -91,20 +54,22 @@
             android:orientation="vertical"
             android:background="@drawable/bg_white2white">
 
-
+            <CalendarView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
-                android:id="@+id/tasksRvLay"
+                android:id="@+id/taskList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:padding="16dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/tasksRv"
+                    android:id="@+id/eventsRv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp"
                     android:nestedScrollingEnabled="false"/>
 
             </LinearLayout>
@@ -115,16 +80,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:gravity="center"
-                android:padding="28dp">
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/singleListEmptyState"
                     android:layout_width="wrap_content"
-                    android:layout_height="228dp"
+                    android:layout_height="230dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1" />
+                    android:src="@drawable/il_empty_state" />
 
             </LinearLayout>
 
@@ -132,4 +95,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

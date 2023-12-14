@@ -103,29 +103,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         startActivity(onClickIntent);
     }
 
-
-    public int setCompletedIlls(int theme){
-        if (theme == 0)
-            return R.drawable.il_completed_es_green;
-
-        else if (theme == 1)
-            return R.drawable.il_completed_es_ivory;
-
-        else
-            return R.drawable.il_completed_es_blue;
-    }
-
-    public int setOutdatedIlls(int theme){
-        if (theme == 0)
-            return R.drawable.il_outdated_es_green;
-
-        else if (theme == 1)
-            return R.drawable.il_outdated_es_ivory;
-
-        else
-            return R.drawable.il_outdated_es_blue;
-    }
-
     @Override
     public void showList(List<Task> tasks) {
         adapter.setTasks(tasks);
@@ -143,9 +120,9 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
         nested.setVisibility(visible ? View.GONE : View.VISIBLE);
         if (es == 1)
-            img_empty_state.setImageResource(setCompletedIlls(appTheme));
+            img_empty_state.setImageResource(R.drawable.il_completed_empty_state);
 
         else
-            img_empty_state.setImageResource(setOutdatedIlls(appTheme));
+            img_empty_state.setImageResource(R.drawable.il_outdated_empty_state);
     }
 }

@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.example.taskwise.Calendar.CalendarActivity;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.TaskDao;
 import com.example.taskwise.DataBase.AppDataBase;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     LinearLayout emptyState , taskList , singleListEmptyStateLay;
     ZiresSwitchSegmentedControl taskListSwitch;
     TextView headerTv , helloTv , plansCountTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
-    TextView eventFabTv , taskFabTv;
     ExtendedFloatingActionButton addPlanBtn;
     FloatingActionButton addEventBtn , addTaskBtn;
     ImageView drawerToggle, editBtn , singleListEmptyState , emptyStateImg;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     NavigationView navigationMain;
     View navigationHeader;
     TextClock clockTv;
+    RelativeLayout calendarBtn;
 
     TaskAdapter adapter;
     AppSettingContainer settingContainer;
@@ -74,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         addPlanBtn = findViewById(R.id.addPlanBtn);
         addEventBtn = findViewById(R.id.addEventBtn);
         addTaskBtn = findViewById(R.id.addTaskBtn);
-        eventFabTv = findViewById(R.id.eventFabTv);
-        taskFabTv = findViewById(R.id.taskFabTv);
         tasksRv = findViewById(R.id.tasksRv);
         clockTv = findViewById(R.id.clockTv);
         taskListSwitch = findViewById(R.id.taskListSwitch);
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         navigationMain = findViewById(R.id.navigationMain);
         emptyStateImg = findViewById(R.id.emptyStateImg);
         singleListEmptyStateLay = findViewById(R.id.singleListEmptyStateLay);
+        calendarBtn = findViewById(R.id.calendarBtn);
 
         //NavigationCasting
         navigationHeader = navigationMain.getHeaderView(0);
@@ -120,6 +121,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
         navigationDrawer();
 
+        calendarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this , CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -149,17 +158,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         startActivity(onClickIntent);
     }
 
-
-    public int setIlls(int theme){
-        if (theme == 0)
-            return R.drawable.il_empty_state_green;
-
-        else if (theme == 1)
-            return R.drawable.il_empty_state_ivory;
-
-        else
-            return R.drawable.il_empty_state_blue;
-    }
 
     public void navigationDrawer(){
 
@@ -238,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         monthTv.setText( monthNameFormat.format(calendar.getTime()));
     }
 
-
     @Override
     public void showTasks(List<Task> tasks) {
         tasksRv.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
@@ -255,9 +252,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     @Override
-    public void setEmptyStateVisibility(boolean visible , int theme) {
+    public void setEmptyStateVisibility(boolean visible) {
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
-        emptyStateImg.setImageResource(setIlls(theme));
         plansCountTv.setVisibility(visible ? View.GONE : View.VISIBLE);
         taskList.setVisibility(visible ? View.GONE : View.VISIBLE);
         headerTv.setText(getString(R.string.taskManager));
@@ -267,7 +263,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     public void setListEmptyStateVisibility(boolean visibile , int theme) {
         tasksRv.setVisibility(visibile ? View.GONE : View.VISIBLE);
         singleListEmptyStateLay.setVisibility(visibile ? View.VISIBLE : View.GONE);
-        singleListEmptyState.setImageResource(setIlls(theme));
     }
 
     public void extendedFab(){
@@ -276,8 +271,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
         addTaskBtn.setVisibility(View.GONE);
         addEventBtn.setVisibility(View.GONE);
-        taskFabTv.setVisibility(View.GONE);
-        eventFabTv.setVisibility(View.GONE);
 
         addPlanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,8 +311,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         allFabsVisible = false;
         addTaskBtn.hide();
         addEventBtn.hide();
-        taskFabTv.setVisibility(View.GONE);
-        eventFabTv.setVisibility(View.GONE);
         addPlanBtn.shrink();
     }
 
@@ -327,8 +318,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         allFabsVisible = true;
         addTaskBtn.show();
         addEventBtn.show();
-        taskFabTv.setVisibility(View.VISIBLE);
-        eventFabTv.setVisibility(View.VISIBLE);
         addPlanBtn.extend();
     }
 
