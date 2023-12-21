@@ -18,6 +18,7 @@ public class Event implements Parcelable {
     String title;
     long firstDate , secondDate;
     String date;
+    int notifyMe;
 
     public String getDate() {
         return date;
@@ -26,8 +27,6 @@ public class Event implements Parcelable {
     public void setDate(String date) {
         this.date = date;
     }
-
-    int notifyMe;
 
     public int getNotifyMe() {
         return notifyMe;

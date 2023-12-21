@@ -41,6 +41,7 @@ public class Remiders extends BroadcastReceiver {
         Notification notification = new NotificationCompat.Builder(context, ApplicationClass.eventReminderChannel)
                 .setSmallIcon(R.drawable.ic_event)
                 .setContentTitle(eventTitle)
+                .setContentText(context.getString(R.string.eventNotificationDescription))
                 .setAutoCancel(true)
                 .build();
 
@@ -52,7 +53,7 @@ public class Remiders extends BroadcastReceiver {
         Notification notification = new NotificationCompat.Builder(context, ApplicationClass.taskReminderChannel)
                 .setSmallIcon(R.drawable.ic_task_alt)
                 .setContentTitle(taskTitle)
-                .setContentText(taskDescription)
+                .setContentText(context.getString(R.string.taskNotificationDescription))
                 .setAutoCancel(true)
                 .build();
 

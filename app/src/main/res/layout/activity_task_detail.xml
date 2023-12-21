@@ -34,7 +34,8 @@
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_back"
-                        app:tint="?colorOnSurface" />
+                        app:tint="?colorOnSurface"
+                        android:contentDescription="get back" />
 
                 </RelativeLayout>
 

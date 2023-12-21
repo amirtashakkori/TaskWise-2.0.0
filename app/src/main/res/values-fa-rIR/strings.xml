@@ -126,5 +126,8 @@
     <string name="eventChannel">این کانال یادآوری برای رویداد های شماست که وقتی زمان رویداد فرا برسه شمارا مطلع کند</string>
     <string name="taskChannel">این کانال یادآوری برای وظایف منقضی شده شماست که زمانی که وظایف شما منقضی بشه شما را مطلع میکند</string>
 
+    <string name="eventNotificationDescription">شما برای الان یک رویداد ذخیره کردی، تو انجام دادنش موفق باشی! :)</string>
+    <string name="taskNotificationDescription">حداکثر زمان ذخیره شده شما برای این وظیفه به اتمام رسیده و هنوز اقدامی نکردید!\n به بخش وظایف منقضی شده مراجعه کنید!</string>
+
 
 </resources>

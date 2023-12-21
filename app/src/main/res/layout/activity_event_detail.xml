@@ -34,7 +34,8 @@
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_back"
-                        app:tint="?colorOnSurface" />
+                        app:tint="?colorOnSurface"
+                        android:contentDescription="get back"/>
 
                 </RelativeLayout>
 
@@ -128,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/middleGray"
                     android:text="@string/Date"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
 
                 <LinearLayout
                     android:id="@+id/dateLay"
@@ -137,21 +138,21 @@
                     android:orientation="vertical"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:id="@+id/dateTv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
                         android:background="#00FEFEFE"
                         android:hint="23 Jan, 2023"
-                        android:textColor="?colorPrimary"
+                        android:textColor="?colorAccent"
                         android:textColorHint="?colorAccent"
                         android:maxLines="1"
-                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
                         android:singleLine="true"
                         android:imeOptions="actionNext"
-                        android:textSize="19sp" />
+                        android:textSize="18sp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -167,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_below="@+id/dateLay"
-                    android:layout_marginTop="44dp">
+                    android:layout_marginTop="32dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -180,17 +181,18 @@
                             android:layout_height="wrap_content"
                             android:text="@string/startTime"
                             android:textColor="@color/middleGray"
-                            android:textSize="16sp"/>
+                            android:textSize="14sp"/>
 
                         <TextView
                             android:id="@+id/startTimeTv"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="56dp"
                             android:text="00:00 AM"
                             android:textColor="?colorAccent"
-                            android:textSize="19sp"
+                            android:textSize="18sp"
+                            android:gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"/>
+                            android:layout_marginTop="8dp"/>
 
                     </LinearLayout>
 
@@ -205,17 +207,18 @@
                             android:layout_height="wrap_content"
                             android:text="@string/endTime"
                             android:textColor="@color/middleGray"
-                            android:textSize="16sp"/>
+                            android:textSize="14sp"/>
 
                         <TextView
                             android:id="@+id/endTimeTv"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="56dp"
                             android:text="00:00 AM"
                             android:textColor="?colorAccent"
-                            android:textSize="19sp"
+                            android:textSize="18sp"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"/>
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="8dp"/>
 
                     </LinearLayout>
 
@@ -226,17 +229,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/middleGray"
-                    android:layout_below="@+id/timeLay"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_below="@+id/timeLay"/>
 
                 <TextView
                     android:id="@+id/timePeriodTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/middleGray"
+                    android:layout_height="13dp"
+                    android:layout_marginTop="32dp"
                     android:text="@string/notifyMe"
-                    android:layout_marginTop="44dp"
-                    android:textSize="14sp"/>
+                    android:textColor="@color/middleGray"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:id="@+id/timePeriodLay"

@@ -2,6 +2,7 @@ package com.example.taskwise.EventDatail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -130,6 +131,13 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
                 setTime(1);
             }
         });
+
+        deleteEventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presentor.deleteButtonClicked();
+            }
+        });
     }
 
     @Override
@@ -156,10 +164,19 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     @Override
     public void showEvent(Event event) {
         eventTitleEt.setText(event.getTitle());
-        dateTv.setText(dateSdf.format(event.getFirstDate()));
-        startTimeTv.setText(timeSdf.format(event.getFirstDate()));
-        endTimeTv.setText(timeSdf.format(event.getSecondDate()));
+        selectedDate = new Date(event.getFirstDate());
+        futureDate = new Date(event.getSecondDate());
         notifySpinner.setSelection(event.getNotifyMe());
+
+        selectedCalendar = Calendar.getInstance();
+        futureCalendar = Calendar.getInstance();
+
+        selectedCalendar.setTime(selectedDate);
+        futureCalendar.setTime(futureDate);
+
+        dateTv.setText(dateSdf.format(selectedDate));
+        startTimeTv.setText(timeSdf.format(selectedDate));
+        endTimeTv.setText(timeSdf.format(futureDate));
     }
 
     @Override
@@ -247,6 +264,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         int year = selectedCalendar.get(Calendar.YEAR);
         int month = selectedCalendar.get(Calendar.MONTH );
         int day = selectedCalendar.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -257,10 +275,22 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
             }
         } , year , month , day);
 
-        datePickerDialog.show(getSupportFragmentManager().beginTransaction() , null);
+        if (new AppSettingContainer(this).getAppMode().equals("lightMode"))
+            datePickerDialog.setThemeDark(false);
+        else
+            datePickerDialog.setThemeDark(true);
 
+
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+        int colorPrimary = typedValue.data;
+
+        datePickerDialog.show(getSupportFragmentManager().beginTransaction() , null);
+        datePickerDialog.setAccentColor(colorPrimary);
+        datePickerDialog.setOkColor(colorPrimary);
+        datePickerDialog.setCancelColor(colorPrimary);
         datePickerDialog.setOkText(R.string.ok);
-        datePickerDialog.setCancelColor(R.string.cancel);
+        datePickerDialog.setCancelText(R.string.cancel);
     }
 
     public void setTime(int time){
@@ -279,7 +309,11 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
                     selectedCalendar.set(Calendar.HOUR_OF_DAY , hourOfDay);
                     selectedCalendar.set(Calendar.MINUTE , minute);
                     selectedDate = selectedCalendar.getTime();
+                    futureCalendar.setTime(selectedDate);
+                    futureCalendar.add(Calendar.HOUR_OF_DAY , 2);
+                    futureDate = futureCalendar.getTime();;
                     startTimeTv.setText(timeSdf.format(selectedDate));
+                    endTimeTv.setText(timeSdf.format(futureDate));
                 } else {
                     futureCalendar.set(Calendar.HOUR_OF_DAY , hourOfDay);
                     futureCalendar.set(Calendar.MINUTE , minute);
@@ -288,10 +322,23 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
                 }
             }
         } , hour , minute , false);
-        timePickerDialog.show(getSupportFragmentManager().beginTransaction() , null);
 
+        if (new AppSettingContainer(this).getAppMode().equals("lightMode"))
+            timePickerDialog.setThemeDark(false);
+        else
+            timePickerDialog.setThemeDark(true);
+
+
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.colorPrimary, typedValue, true);
+        int colorPrimary = typedValue.data;
+
+        timePickerDialog.show(getSupportFragmentManager().beginTransaction() , null);
+        timePickerDialog.setAccentColor(colorPrimary);
+        timePickerDialog.setOkColor(colorPrimary);
+        timePickerDialog.setCancelColor(colorPrimary);
         timePickerDialog.setOkText(R.string.ok);
-        timePickerDialog.setCancelColor(R.string.cancel);
+        timePickerDialog.setCancelText(R.string.cancel);
     }
 
 }

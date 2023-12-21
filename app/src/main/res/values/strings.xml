@@ -124,4 +124,10 @@
     <string name="eventChannel">This channel is a reminder for your event, this will notify you when the event time comes</string>
     <string name="taskChannel">This channel is a reminder for your outdated tasks, this will notify you when when your tasks deadline is over</string>
 
+    <string name="eventNotificationDescription">You set a event for current time, goodluck with that! :)</string>
+    <string name="taskNotificationDescription">Your maximum saved time for this task has expired and you have not taken any action yet!\n Refer to Expired Tasks section!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>

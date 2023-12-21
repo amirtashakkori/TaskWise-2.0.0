@@ -45,7 +45,7 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
     }
 
     @Override
-    public void saveButtonClicked(String title, String description, int timePeriod, int priority) {
+    public void saveButtonClicked(String title, String description, int timePeriod, int priority ) {
         if (task != null){
             task.setTitle(title);
             task.setDescription(description);
@@ -62,6 +62,7 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
             task.setImportance(priority);
             dao.addTask(task);
             view.setWorkManager(title , getExpireDate(timePeriod));
+            view.setAlarmManager(title , description , timePeriod);
         }
     }
 

@@ -3,6 +3,8 @@ package com.example.taskwise.SharedPreferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Locale;
+
 public class AppSettingContainer {
     SharedPreferences languageSp;
     SharedPreferences appModeSp;
@@ -33,7 +35,7 @@ public class AppSettingContainer {
     }
 
     public String getAppLanguage(){
-            return languageSp.getString("language"  , "en");
+            return languageSp.getString("language"  , Locale.getDefault().getLanguage());
     }
 
     public String getAppMode(){

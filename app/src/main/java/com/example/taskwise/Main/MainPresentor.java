@@ -14,24 +14,24 @@ public class MainPresentor implements MainContract.presentor {
     UserInfoContainer userInfoContainer;
     AppSettingContainer settingContainer;
     List<Task> todaysTasks;
-    List<Task> futureTasks;
     MainContract.view view;
 
     int appTheme;
     String userName;
     String fullName;
     String expertise;
+    String appLan;
 
     public MainPresentor(TaskDao dao , UserInfoContainer userInfoContainer , AppSettingContainer settingContainer) {
         this.dao = dao;
         this.userInfoContainer = userInfoContainer;
         this.settingContainer = settingContainer;
-        todaysTasks = dao.getTodayTaskList();
-        futureTasks = dao.getTaskList();
+        todaysTasks = dao.getTaskList();
         appTheme = settingContainer.getAppTheme();
         userName = userInfoContainer.getName().toString();
         fullName = userInfoContainer.getName() + " " + userInfoContainer.getFamily();
         expertise = userInfoContainer.getExpertise();
+        appLan = settingContainer.getAppLanguage();
     }
 
     @Override
@@ -70,6 +70,7 @@ public class MainPresentor implements MainContract.presentor {
     public void validatingUserInfo() {
         if (userName.equals("")){
             view.goToWelcomeActivity();
+
         }
     }
 

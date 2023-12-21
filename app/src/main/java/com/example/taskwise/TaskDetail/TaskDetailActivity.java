@@ -44,8 +44,9 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     RelativeLayout deleteTaskBtn , backBtn;
 
     int time_period , importance = 1;
-    AppSettingContainer settingContainer;
+    long notificationTime;
 
+    AppSettingContainer settingContainer;
     TaskDetailPresentor presentor;
 
     public void cast(){
@@ -81,7 +82,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 String taskDescription = descriptionEt.getText().toString();
 
                 if (taskTitle.length() > 0 && taskDescription.length() > 0){
-                    presentor.saveButtonClicked(taskTitle , taskDescription , time_period , importance);
+                    presentor.saveButtonClicked(taskTitle , taskDescription , time_period , importance );
                     finish();
                 }
                 else if (taskTitleEt.length() == 0)
@@ -189,9 +190,10 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     }
 
     @Override
-    public void setAlarmManager(String taskTitle, String taskDescription) {
+    public void setAlarmManager(String taskTitle, String taskDescription , int expiredDate) {
         Intent intent = new Intent(TaskDetailActivity.this , Remiders.class);
-        intent.putExtra("taskTitle" , taskTitle);
+        intent.putExtra("eventTitle" , taskTitle);
+        intent.putExtra("taskDescription" , taskDescription);
         PendingIntent pi;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
@@ -201,22 +203,22 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
             pi = PendingIntent.getBroadcast(TaskDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
         }
 
-        switch (notifyMe){
+        switch (expiredDate){
             case 0 :
-                subtractDate = 0;
+                notificationTime = TimeUnit.DAYS.toMillis(1);
                 break;
             case 1 :
-                subtractDate = TimeUnit.MINUTES.toMillis(15);
+                notificationTime = TimeUnit.DAYS.toMillis(3);
                 break;
             case 2 :
-                subtractDate = TimeUnit.MINUTES.toMillis(30);
+                notificationTime = TimeUnit.DAYS.toMillis(7);
                 break;
             case 3 :
-                subtractDate = TimeUnit.HOURS.toMillis(1);
+                notificationTime =TimeUnit.DAYS.toMillis(30);
                 break;
         }
 
-        long date = notificationDate - subtractDate;
+        long date = System.currentTimeMillis() + notificationTime;
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);

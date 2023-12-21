@@ -19,7 +19,6 @@ public class Task implements Parcelable {
     int is_completed;
     int importance;
 
-
     public long getId() {
         return id;
     }
