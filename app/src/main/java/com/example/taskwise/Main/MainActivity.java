@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +23,11 @@ import android.widget.TextView;
 
 import com.example.taskwise.Calendar.CalendarActivity;
 import com.example.taskwise.ContextWrapper;
-import com.example.taskwise.DataBase.TaskDao;
 import com.example.taskwise.DataBase.AppDataBase;
 import com.example.taskwise.EventDatail.EventDetailActivity;
+import com.example.taskwise.Main.Adapter.EventAdapter;
 import com.example.taskwise.Main.Adapter.TaskAdapter;
+import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.Setting.SettingActivity;
@@ -37,19 +39,17 @@ import com.example.taskwise.Welcome.WelcomeActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
+import com.google.android.material.tabs.TabLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener, MainContract.view {
+public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener, EventAdapter.changeListener,  MainContract.view {
 
-    RecyclerView tasksRv;
-    LinearLayout emptyState , taskList , singleListEmptyStateLay;
-    ZiresSwitchSegmentedControl taskListSwitch;
-    TextView headerTv , helloTv , plansCountTv , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
+    LinearLayout emptyState , taskList;
+    TextView headerTv , helloTv , plansMessage , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     ExtendedFloatingActionButton addPlanBtn;
     FloatingActionButton addEventBtn , addTaskBtn;
     ImageView drawerToggle, editBtn , singleListEmptyState , emptyStateImg;
@@ -58,35 +58,39 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     View navigationHeader;
     TextClock clockTv;
     RelativeLayout calendarBtn;
+    TabLayout tabLayout;
+    NestedScrollView nestedScrollView;
+    RecyclerView listRv;
 
-    TaskAdapter adapter;
+    TaskAdapter taskAdapter;
+    EventAdapter eventAdapter;
     AppSettingContainer settingContainer;
-
     MainPresentor presentor;
 
+    int selectedTab = 0;
     boolean allFabsVisible;
 
     public void cast(){
         taskList = findViewById(R.id.taskList);
         emptyState = findViewById(R.id.emptyState);
         helloTv = findViewById(R.id.helloTv);
-        plansCountTv = findViewById(R.id.plansCountTv);
+        plansMessage = findViewById(R.id.plansMessage);
         weekDayTv = findViewById(R.id.weekDayTv);
         monthTv = findViewById(R.id.monthTv);
         addPlanBtn = findViewById(R.id.addPlanBtn);
         addEventBtn = findViewById(R.id.addEventBtn);
         addTaskBtn = findViewById(R.id.addTaskBtn);
-        tasksRv = findViewById(R.id.tasksRv);
         clockTv = findViewById(R.id.clockTv);
-        taskListSwitch = findViewById(R.id.taskListSwitch);
         singleListEmptyState = findViewById(R.id.singleListEmptyState);
         headerTv = findViewById(R.id.headerTv);
         drawerToggle = findViewById(R.id.drawerToggle);
         drawerLayout_parent = findViewById(R.id.drawerLayout_parent);
         navigationMain = findViewById(R.id.navigationMain);
-        emptyStateImg = findViewById(R.id.emptyStateImg);
-        singleListEmptyStateLay = findViewById(R.id.singleListEmptyStateLay);
         calendarBtn = findViewById(R.id.calendarBtn);
+        tabLayout = findViewById(R.id.tabLayout);
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+        emptyStateImg = findViewById(R.id.emptyStateImg);
+        listRv = findViewById(R.id.listRv);
 
         //NavigationCasting
         navigationHeader = navigationMain.getHeaderView(0);
@@ -103,21 +107,34 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         setContentView(R.layout.activity_main);
 
         cast();
-        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
-        adapter = new TaskAdapter(this , this);
+        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        taskAdapter = new TaskAdapter(this , this);
+        eventAdapter = new EventAdapter(this , this);
         presentor.onAttach(this);
         presentor.validatingUserInfo();
 
-        extendedFab();
-
-        taskListSwitch.setRightToggleText(getString(R.string.allTasksSwitch));
-        taskListSwitch.setLeftToggleText(getString(R.string.todayTasksSwitch));
-        taskListSwitch.setOnToggleSwitchChangeListener(new ZiresSwitchSegmentedControl.OnSwitchChangeListener() {
+        listRv.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tasks));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.events));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onToggleSwitchChangeListener(boolean b) {
-                    presentor.listSwitch(b);
-                }
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedTab = tab.getPosition();
+                presentor.switchTab(selectedTab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
+
+        extendedFab();
 
         navigationDrawer();
 
@@ -139,22 +156,33 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     protected void onResume() {
         super.onResume();
-        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
         presentor.onAttach(this);
-        taskListSwitch.setChecked(false);
-    }
+        presentor.switchTab(selectedTab);
+        if (selectedTab==0){
+            listRv.setAdapter(taskAdapter);
+        } else
+            listRv.setAdapter(eventAdapter);
 
+    }
 
     @Override
     public void onUpdate(Task task) {
         presentor.updateTask(task);
-        adapter.updateTask(task);
+        taskAdapter.updateTask(task);
     }
 
     @Override
     public void onClick(Task task) {
         Intent onClickIntent = new Intent(MainActivity.this , TaskDetailActivity.class);
         onClickIntent.putExtra("task" , task);
+        startActivity(onClickIntent);
+    }
+
+    @Override
+    public void onClick(Event event) {
+        Intent onClickIntent = new Intent(MainActivity.this , EventDetailActivity.class);
+        onClickIntent.putExtra("event" , event);
         startActivity(onClickIntent);
     }
 
@@ -167,8 +195,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.deleteAllBtn:
-                        presentor.clearListClicked();
+                    case R.id.deleteAllTasksBtn:
+                        presentor.clearTaskListClicked();
                         drawerLayout_parent.close();
                         break;
 
@@ -186,9 +214,20 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                         drawerLayout_parent.close();
                         break;
 
+                    case R.id.deleteAllEventsBtn:
+                        presentor.clearEventListClicker();
+                        drawerLayout_parent.close();
+                        break;
+
                     case R.id.settingBtn:
                         Intent settingIntent = new Intent(MainActivity.this , SettingActivity.class);
                         startActivity(settingIntent);
+                        break;
+
+                    case R.id.contactDev:
+
+                        break;
+
                 }
                 return false;
             }
@@ -213,10 +252,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     @Override
-    public void setHeaderTexts(String name, int taskTime, int tasksCount) {
+    public void setHeaderTexts(String name , int plans) {
         helloTv.setText( getString(R.string.hi) + " " + name );
-        headerTv.setText(taskTime);
-        plansCountTv.setText("( " + tasksCount + " " + getString(R.string.plans) + " )");
+        plansMessage.setText(plans);
     }
 
     @Override
@@ -238,9 +276,16 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
     @Override
     public void showTasks(List<Task> tasks) {
-        tasksRv.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
-        adapter.setTasks(tasks);
-        tasksRv.setAdapter(adapter);
+        taskAdapter = new TaskAdapter(MainActivity.this , this);
+        taskAdapter.setTasks(tasks);
+        listRv.setAdapter(taskAdapter);
+    }
+
+    @Override
+    public void showEvents(List<Event> events) {
+        eventAdapter = new EventAdapter(MainActivity.this , this);
+        eventAdapter.setEvents(events);
+        listRv.setAdapter(eventAdapter);
     }
 
 
@@ -252,17 +297,17 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     @Override
-    public void setEmptyStateVisibility(boolean visible) {
+    public void setTaskEmptyStateVisibility(boolean visible) {
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
-        plansCountTv.setVisibility(visible ? View.GONE : View.VISIBLE);
-        taskList.setVisibility(visible ? View.GONE : View.VISIBLE);
-        headerTv.setText(getString(R.string.taskManager));
+        listRv.setVisibility(visible ? View.GONE : View.VISIBLE);
+        emptyStateImg.setImageResource(R.drawable.il_task_empty_state);
     }
 
     @Override
-    public void setListEmptyStateVisibility(boolean visibile , int theme) {
-        tasksRv.setVisibility(visibile ? View.GONE : View.VISIBLE);
-        singleListEmptyStateLay.setVisibility(visibile ? View.VISIBLE : View.GONE);
+    public void setEventEmptyStateVisibility(boolean visible) {
+        emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
+        listRv.setVisibility(visible ? View.GONE : View.VISIBLE);
+        emptyStateImg.setImageResource(R.drawable.il_event_empty_state);
     }
 
     public void extendedFab(){
@@ -320,5 +365,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         addEventBtn.show();
         addPlanBtn.extend();
     }
+
 
 }

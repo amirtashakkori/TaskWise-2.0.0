@@ -19,6 +19,15 @@ public class Event implements Parcelable {
     long firstDate , secondDate;
     String date;
     int notifyMe;
+    boolean outdated = false;
+
+    public boolean isOutdated() {
+        return outdated;
+    }
+
+    public void setOutdated(boolean outdated) {
+        this.outdated = outdated;
+    }
 
     public String getDate() {
         return date;

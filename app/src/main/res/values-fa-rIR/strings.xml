@@ -2,20 +2,22 @@
     <string name="app_name">Task Manager</string>
     //MainActivity
     <string name="hi">سلام</string>
-    <string name="todayTasks">برنامه های امروزت</string>
-    <string name="todayTasksSwitch">وظایف امروز</string>
-    <string name="futureTasks">برنامه های آیندت</string>
-    <string name="allTasksSwitch">وظایف آینده</string>
-    <string name="plans">برنامه</string>
-    <string name="taskManager">مدیریت وظایف</string>
+    <string name="empty">عجله کن، باید به کارا برسیم!</string>
+    <string name="notEmpty">بیا باهم برنامه هاتو سازماندهی و مدیریت کنیم :)</string>
+
+    <string name="tasks">وظایف</string>
+    <string name="events">رویداد ها</string>
 
     //NavigationDrawer
-    <string name="listOptions">گزینه های لیست</string>
+    <string name="taskOptions">گزینه های وظایف</string>
+    <string name="eventOptions">گزینه های رویداد ها</string>
     <string name="completedTasks">وظایف تکمیل شده</string>
     <string name="outDatedTasks">وظایف منقضی شده</string>
-    <string name="clearList">پاک کردن لیست</string>
+    <string name="clearTaskList">پاک کردن لیست وظایف</string>
+    <string name="clearEventList">پاک کردن لیست رویداد ها</string>
     <string name="setting">تنظیمات</string>
-    <string name="about">درباره توسعه دهنده</string>
+    <string name="contact">ارتباط با توسعه دهنده</string>
+
 
     <string name="openNavigation">Open navigation</string>
     <string name="closeNavigation">Open navigation</string>

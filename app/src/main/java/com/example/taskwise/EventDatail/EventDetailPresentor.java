@@ -1,7 +1,9 @@
 package com.example.taskwise.EventDatail;
 
+import android.widget.Toast;
+
 import com.example.taskmanager.R;
-import com.example.taskwise.DataBase.EventDao;
+import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Event;
 
 import java.sql.Time;
@@ -11,12 +13,12 @@ import java.util.Date;
 public class EventDetailPresentor implements EventDetailContract.presentor{
 
     EventDetailContract.view view;
-    EventDao dao;
+    DBDao dao;
     Event event;
 
     SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
 
-    public EventDetailPresentor(EventDao dao , Event event){
+    public EventDetailPresentor(DBDao dao , Event event){
         this.dao = dao;
         this.event = event;
     }
@@ -42,7 +44,7 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
     @Override
     public void deleteButtonClicked() {
         if (event != null){
-            int result = dao.delete(event);
+            int result = dao.deleteEvent(event);
             if (result > 0)
                 view.deleteEvent();
         }
@@ -56,9 +58,16 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             event.setSecondDate(secondDate);
             event.setDate(sdf.format(firstDate));
             event.setNotifyMe(notifyMe);
+
+            if (firstDate - System.currentTimeMillis() > 0 && secondDate - System.currentTimeMillis() > 0)
+                event.setOutdated(false);
+            else
+                event.setOutdated(true);
+
             int result = dao.update(event);
             if (result > 0) {
                 view.updateEvent();
+                view.setWorkManager(event.getId() , secondDate);
             }
         } else {
             event = new Event();
@@ -67,8 +76,18 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             event.setSecondDate(secondDate);
             event.setDate(sdf.format(firstDate));
             event.setNotifyMe(notifyMe);
-            dao.addEvent(event);
-            view.setAlarmManager(title , firstDate , notifyMe);
+
+            if (firstDate - System.currentTimeMillis() > 0 && secondDate - System.currentTimeMillis() > 0)
+                event.setOutdated(false);
+            else
+                event.setOutdated(true);
+
+            long id = dao.addEvent(event);
+            view.setWorkManager(id, secondDate);
+
+            if (event.isOutdated() == false)
+                view.setAlarmManager(title, firstDate, notifyMe);
+
         }
     }
 

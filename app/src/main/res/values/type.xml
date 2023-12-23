@@ -63,4 +63,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="listTabLayout" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item> <!-- Set your desired text size here -->
+    </style>
+
 </resources>

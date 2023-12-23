@@ -1,6 +1,7 @@
 package com.example.taskwise.Main;
 
-import com.example.taskwise.DataBase.TaskDao;
+import com.example.taskwise.DataBase.DBDao;
+import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
@@ -10,10 +11,11 @@ import java.util.List;
 
 public class MainPresentor implements MainContract.presentor {
 
-    TaskDao dao;
+    DBDao dao;
     UserInfoContainer userInfoContainer;
     AppSettingContainer settingContainer;
-    List<Task> todaysTasks;
+    List<Task> tasks;
+    List<Event> events;
     MainContract.view view;
 
     int appTheme;
@@ -22,11 +24,12 @@ public class MainPresentor implements MainContract.presentor {
     String expertise;
     String appLan;
 
-    public MainPresentor(TaskDao dao , UserInfoContainer userInfoContainer , AppSettingContainer settingContainer) {
+    public MainPresentor(DBDao dao , UserInfoContainer userInfoContainer , AppSettingContainer settingContainer) {
         this.dao = dao;
         this.userInfoContainer = userInfoContainer;
         this.settingContainer = settingContainer;
-        todaysTasks = dao.getTaskList();
+        tasks = dao.getTaskList();
+        events = dao.getEventList();
         appTheme = settingContainer.getAppTheme();
         userName = userInfoContainer.getName().toString();
         fullName = userInfoContainer.getName() + " " + userInfoContainer.getFamily();
@@ -39,25 +42,17 @@ public class MainPresentor implements MainContract.presentor {
         this.view = view;
         view.setDate();
         view.setNavigationDrawerText(fullName , expertise);
-        if (!todaysTasks.isEmpty() && !futureTasks.isEmpty()){
-            view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
-            view.showTasks(todaysTasks );
-            view.setEmptyStateVisibility(false);
-            view.setListEmptyStateVisibility(false , appTheme);
+        if (!tasks.isEmpty()){
+            view.showTasks(tasks);
+            view.setTaskEmptyStateVisibility(false);
+        } else {
+            view.setTaskEmptyStateVisibility(true);
         }
-        else if (!todaysTasks.isEmpty() && futureTasks.isEmpty()) {
-            view.setHeaderTexts(userName , R.string.todayTasks , todaysTasks.size());
-            view.showTasks(todaysTasks );
-            view.setEmptyStateVisibility(false);
-        }
-        else if (todaysTasks.isEmpty() && !futureTasks.isEmpty()){
-            view.setHeaderTexts(userName , R.string.futureTasks , futureTasks.size());
-            view.setListEmptyStateVisibility(true , appTheme);
-            view.setEmptyStateVisibility(false);
-        }
-        else if (todaysTasks.isEmpty() && futureTasks.isEmpty()){
-            view.setEmptyStateVisibility(true);
-            view.setHeaderTexts(userName, R.string.taskManager, todaysTasks.size());
+
+        if (tasks.isEmpty() && events.isEmpty()){
+            view.setHeaderTexts(userName , R.string.empty);
+        } else {
+            view.setHeaderTexts(userName , R.string.notEmpty);
         }
     }
 
@@ -75,35 +70,41 @@ public class MainPresentor implements MainContract.presentor {
     }
 
     @Override
-    public void listSwitch(boolean b) {
-        if (b == false){
-            if (!futureTasks.isEmpty()){
-                view.setListEmptyStateVisibility(false , settingContainer.getAppTheme());
-                view.showTasks(futureTasks);
-            } else {
-                view.setListEmptyStateVisibility(true , settingContainer.getAppTheme());
-            }
-        }
-        //This is the first one
-        else{
-            if (!todaysTasks.isEmpty()){
-                view.setListEmptyStateVisibility(false , settingContainer.getAppTheme());
-                view.showTasks(todaysTasks);
-            } else {
-                view.setListEmptyStateVisibility(true , appTheme);
-            }
-        }
+    public void clearTaskListClicked() {
+        dao.deleteAllTasks();
+        view.setTaskEmptyStateVisibility(true);
     }
 
     @Override
-    public void clearListClicked() {
-        dao.deleteAll();
-        view.setEmptyStateVisibility(true);
+    public void clearEventListClicker() {
+        dao.deleteAllEvents();
+        view.setEventEmptyStateVisibility(true);
+    }
+
+    @Override
+    public void switchTab(int tabPosition) {
+        if (tabPosition == 0 ){
+            if (!tasks.isEmpty()){
+                view.showTasks(tasks);
+                view.setTaskEmptyStateVisibility(false);
+            } else {
+                view.setTaskEmptyStateVisibility(true);
+            }
+        } else if (tabPosition == 1){
+            if (!events.isEmpty()){
+                view.showEvents(events);
+                view.setEventEmptyStateVisibility(false);
+            } else {
+                view.setEventEmptyStateVisibility(true);
+            }
+
+        }
     }
 
     @Override
     public void updateTask(Task task) {
         dao.update(task);
     }
+
 
 }

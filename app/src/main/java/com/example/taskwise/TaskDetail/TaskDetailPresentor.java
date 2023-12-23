@@ -1,16 +1,16 @@
 package com.example.taskwise.TaskDetail;
 
-import com.example.taskwise.DataBase.TaskDao;
+import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 
 public class TaskDetailPresentor implements TaskDetailContract.presentor
 {
-    TaskDao dao;
+    DBDao dao;
     TaskDetailContract.view view;
     Task task;
 
-    public TaskDetailPresentor(TaskDao dao , Task task) {
+    public TaskDetailPresentor(DBDao dao , Task task) {
         this.dao = dao;
         this.task = task;
     }
@@ -37,7 +37,7 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
     @Override
     public void deleteButtonClicked() {
         if (task != null){
-            int result = dao.delete(task);
+            int result = dao.deleteTask(task);
             if (result > 0){
                 view.deleteTask();
             }
@@ -60,8 +60,8 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
             task.setDescription(description);
             task.setTime_period(timePeriod);
             task.setImportance(priority);
-            dao.addTask(task);
-            view.setWorkManager(title , getExpireDate(timePeriod));
+            long id = dao.addTask(task);
+            view.setWorkManager(id , getExpireDate(timePeriod));
             view.setAlarmManager(title , description , timePeriod);
         }
     }

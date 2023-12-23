@@ -13,24 +13,17 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.taskmanager.R;
-import com.example.taskwise.Calendar.Adapter.EventAdapter;
+import com.example.taskwise.Main.Adapter.EventAdapter;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
-import com.example.taskwise.DataBase.EventDao;
-import com.example.taskwise.DataBase.TaskDao;
 import com.example.taskwise.EventDatail.EventDetailActivity;
-import com.example.taskwise.Main.MainActivity;
 import com.example.taskwise.Model.Event;
-import com.example.taskwise.Model.Task;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
-import com.example.taskwise.TaskDetail.TaskDetailActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class CalendarActivity extends AppCompatActivity implements EventAdapter.changeListener , CalendarContract.view {
@@ -62,7 +55,7 @@ public class CalendarActivity extends AppCompatActivity implements EventAdapter.
         setContentView(R.layout.activity_calendar);
         cast();
 
-        presentor = new CalendarPresentor(AppDataBase.getAppDataBase(this).getEventDataBaseDao() , sdf.format(calendar.getDate()));
+        presentor = new CalendarPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , sdf.format(calendar.getDate()));
         adapter = new EventAdapter(this , this );
         presentor.onAttach(this);
 
@@ -94,7 +87,7 @@ public class CalendarActivity extends AppCompatActivity implements EventAdapter.
     @Override
     protected void onResume() {
         super.onResume();
-        presentor = new CalendarPresentor(AppDataBase.getAppDataBase(CalendarActivity.this).getEventDataBaseDao() , sdf.format(calendar.getDate()));
+        presentor = new CalendarPresentor(AppDataBase.getAppDataBase(CalendarActivity.this).getDataBaseDao() , sdf.format(calendar.getDate()));
         calendar.setDate(Calendar.getInstance().getTime().getTime());
         presentor.onAttach(this);
     }

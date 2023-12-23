@@ -1,7 +1,7 @@
 package com.example.taskwise.Calendar;
 
 import com.example.taskwise.BaseView;
-import com.example.taskwise.DataBase.EventDao;
+import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Event;
 
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.List;
 public class CalendarPresentor implements CalendarContract.presentor {
 
     CalendarContract.view view;
-    EventDao dao;
+    DBDao dao;
     List<Event> events;
 
-    public CalendarPresentor(EventDao dao , String query) {
+    public CalendarPresentor(DBDao dao , String query) {
         this.dao = dao;
         events = dao.getDateEventList(query);
     }

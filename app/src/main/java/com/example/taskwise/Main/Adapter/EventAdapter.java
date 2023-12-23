@@ -1,4 +1,4 @@
-package com.example.taskwise.Calendar.Adapter;
+package com.example.taskwise.Main.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskmanager.R;
-import com.example.taskwise.Main.Adapter.TaskAdapter;
 import com.example.taskwise.Model.Event;
-import com.example.taskwise.Model.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

@@ -12,7 +12,7 @@ import com.example.taskwise.Model.Task;
 import java.util.List;
 
 @Dao
-public interface TaskDao {
+public interface DBDao {
     //Task DataBase
     @Insert
     long addTask(Task task);
@@ -26,8 +26,8 @@ public interface TaskDao {
     @Query("select * from table_task where is_completed = 1")
     List<Task> getCompletedTasks();
 
-    @Query("SELECT * FROM table_task WHERE task_title LIKE :query")
-    Task search(String query);
+    @Query("SELECT * FROM table_task WHERE id = :id")
+    Task searchTask(long id);
 
     @Delete
     int deleteTask(Task task);
@@ -48,7 +48,7 @@ public interface TaskDao {
     @Insert
     long addEvent(Event event);
 
-    @Query("select * from table_event ORDER BY firstDate + secondDate ")
+    @Query("select * from table_event WHERE outdated = 0 ORDER BY firstDate + secondDate ")
     List<Event> getEventList();
 
     @Query("select * from table_event Where date LIKE '%' || :query || '%'")
@@ -59,6 +59,9 @@ public interface TaskDao {
 
     @Query("DELETE FROM table_event")
     void deleteAllEvents();
+
+    @Query("SELECT * FROM table_event WHERE id = :id")
+    Event searchEvent(long id);
 
     @Update
     int update(Event event);

@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.taskwise.Main.MainActivity"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:background="@drawable/bg_dark2darker">
 
     <RelativeLayout
@@ -15,6 +13,7 @@
         android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -44,8 +43,7 @@
                             <RelativeLayout
                                 android:id="@+id/backBtn"
                                 android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_centerVertical="true">
+                                android:layout_height="36dp">
 
                                 <ImageView
                                     android:id="@+id/drawerToggle"
@@ -61,12 +59,12 @@
                                 android:id="@+id/helloTv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/hi"
-                                android:textSize="16sp"
-                                android:layout_weight="1"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="8dp"
-                                android:textColor="?colorSecondary" />
+                                android:layout_weight="1"
+                                android:text="@string/hi"
+                                android:textColor="?colorSecondary"
+                                android:textSize="16sp" />
 
                             <RelativeLayout
                                 android:id="@+id/calendarBtn"
@@ -90,32 +88,33 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/todayTasks"
+                            android:text="@string/app_name"
                             android:textColor="?colorOnSurface"
                             android:textSize="26sp" />
 
                         <TextView
-                            android:id="@+id/plansCountTv"
+                            android:id="@+id/plansMessage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/plans"
+                            android:lineSpacingExtra="8dp"
+                            android:text="@string/notEmpty"
                             android:textColor="?colorOnSurface"
-                            android:textSize="26sp" />
+                            android:textSize="18sp"/>
 
                     </LinearLayout>
 
 
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_light2darker"
-                    android:fitsSystemWindows="true"
                     android:paddingTop="16dp"
-                    android:paddingBottom="56dp"
-                    app:layout_collapseMode="parallax">
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax"
+                    android:gravity="center_horizontal">
 
                     <TextView
                         android:id="@+id/weekDayTv"
@@ -144,39 +143,61 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/clockTv"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="14dp"
                         android:text="September"
                         android:textColor="?colorPrimary"
                         android:textSize="26sp" />
 
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:tabBackground="@drawable/bg_tabs_selector"
+                        android:background="@android:color/transparent"
+                        app:tabGravity="fill"
+                        app:tabSelectedTextColor="?colorPrimary"
+                        app:tabTextColor="?colorOnPrimary"
+                        android:layout_gravity="center_horizontal"
+                        app:tabTextAppearance="@style/listTabLayout"
+                        app:tabSelectedTextAppearance="@style/listTabLayout"
+                        app:tabIndicator="@null"
+                        android:layout_marginTop="16dp"/>
 
-                </RelativeLayout>
-                
-                <TableLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:tabMode="fixed"
-                    app:tabGravity="fill"
-                    app:tabBackground="@drawable/bg_tabs_selector"/>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible"
-                    android:layout_marginTop="-36dp"
-                    android:background="@drawable/bg_white2white"
-                    android:paddingTop="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingLeft="8dp">
+                    android:background="?colorOnPrimary"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/viewPager"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/listRv"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="false"/>
 
+                    <LinearLayout
+                        android:id="@+id/emptyState"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="visible"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="28dp">
 
-                </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/emptyStateImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="220dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/il_event_empty_state" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -186,9 +207,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="end"
             android:layout_marginEnd="20dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -198,7 +220,6 @@
                 android:backgroundTint="?colorPrimary"
                 app:fabSize="mini"
                 app:tint="?colorOnSurface"
-                android:layout_gravity="end"
                 android:layout_marginBottom="12dp"
                 android:src="@drawable/ic_event"/>
 
@@ -210,7 +231,6 @@
                 app:fabSize="mini"
                 android:src="@drawable/ic_check"
                 app:tint="?colorOnSurface"
-                android:layout_gravity="end"
                 android:layout_marginBottom="16dp"/>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

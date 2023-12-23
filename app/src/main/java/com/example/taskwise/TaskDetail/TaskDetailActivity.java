@@ -25,11 +25,10 @@ import android.widget.Toast;
 import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
-import com.example.taskwise.EventDatail.EventDetailActivity;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
-import com.example.taskwise.TaskDetail.WorkManager.TaskListStatusUpdater;
+import com.example.taskwise.BroadCastReceivers.ListStatusUpdater;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -69,7 +68,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_detail);
         cast();
-        presentor = new TaskDetailPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , getIntent().getParcelableExtra("task"));
+        presentor = new TaskDetailPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getParcelableExtra("task"));
         presentor.onAttach(this);
 
         setSpinners();
@@ -176,11 +175,11 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     }
 
     @Override
-    public void setWorkManager(String taskTitle , int expiredDate) {
-        Data data = new Data.Builder().putString("taskInfo" , taskTitle ).build();
+    public void setWorkManager(long taskId , int expiredDate) {
+        Data data = new Data.Builder().putLong("taskId" , taskId ).build();
 
         WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
-        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(TaskListStatusUpdater.class)
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
                 .setInputData(data)
                 .setInitialDelay(expiredDate , TimeUnit.DAYS)
                 .build();

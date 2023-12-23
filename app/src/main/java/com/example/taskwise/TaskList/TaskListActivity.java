@@ -54,7 +54,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_list);
         cast();
-        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
         adapter = new TaskAdapter(this , this);
         presentor.onAttach(this);
 
@@ -78,7 +78,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     @Override
     protected void onResume() {
         super.onResume();
-        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
         presentor.onAttach(this);
     }
 
@@ -87,7 +87,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         presentor.updateTask(task);
         adapter.updateTask(task);
 
-        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getTaskDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
+        presentor = new TaskListPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getIntExtra("listNum" , 0) , new AppSettingContainer(this));
         presentor.onAttach(this);
     }
 

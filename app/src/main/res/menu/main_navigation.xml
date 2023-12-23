@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:title="@string/listOptions">
+    <item android:title="@string/taskOptions">
         <menu>
             <item android:id="@+id/completedBtn" android:title="@string/completedTasks" android:icon="@drawable/ic_checklist" />
             <item android:id="@+id/unspecifiedBtn" android:title="@string/outDatedTasks" android:icon="@drawable/ic_question_mark" />
-            <item android:id="@+id/deleteAllBtn" android:title="@string/clearList" android:icon="@drawable/ic_delete"/>
+            <item android:id="@+id/deleteAllTasksBtn" android:title="@string/clearTaskList" android:icon="@drawable/ic_delete"/>
+        </menu>
+    </item>
+    <item android:title="@string/eventOptions">
+        <menu>
+            <item android:id="@+id/deleteAllEventsBtn" android:title="@string/clearEventList" android:icon="@drawable/ic_delete"/>
         </menu>
     </item>
     <item  android:id="@+id/settingBtn" android:title="@string/setting" android:icon="@drawable/ic_settings"/>
+    <item  android:id="@+id/contactDev" android:title="@string/contact" android:icon="@drawable/ic_info"/>
 </menu>

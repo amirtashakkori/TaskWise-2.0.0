@@ -1,27 +1,31 @@
 package com.example.taskwise.Main;
 
+import androidx.annotation.Nullable;
+
 import com.example.taskwise.BasePresentor;
 import com.example.taskwise.BaseView;
+import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 
 import java.util.List;
 
 public interface MainContract {
     interface view extends BaseView{
-        void setHeaderTexts(String name , int taskTime , int tasksCount);
+        void setHeaderTexts(String name , int plans);
         void setNavigationDrawerText(String fullName , String expertise);
         void setDate();
         void showTasks(List<Task> tasks);
+        void showEvents(List<Event> events);
         void goToWelcomeActivity();
-        void setEmptyStateVisibility(boolean visible);
-        void setListEmptyStateVisibility(boolean visible , int theme);
-
+        void setTaskEmptyStateVisibility(boolean visible);
+        void setEventEmptyStateVisibility(boolean visible);
     }
 
     interface presentor extends BasePresentor<view>{
         void validatingUserInfo();
-        void listSwitch(boolean b);
-        void clearListClicked();
+        void clearTaskListClicked();
+        void clearEventListClicker();
+        void switchTab(int tabPosition);
         void updateTask(Task task);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.taskwise.TaskList;
 
-import com.example.taskwise.DataBase.TaskDao;
+import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Task;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TaskListPresentor implements TaskListContract.presentor {
 
-    TaskDao dao;
+    DBDao dao;
     List<Task> completedTasks;
     List<Task> outDatedTasks;
     AppSettingContainer container;
@@ -17,7 +17,7 @@ public class TaskListPresentor implements TaskListContract.presentor {
 
     int appTheme;
 
-    public TaskListPresentor(TaskDao dao, int position , AppSettingContainer container) {
+    public TaskListPresentor(DBDao dao, int position , AppSettingContainer container) {
         this.dao = dao;
         this.position = position;
         this.container = container;

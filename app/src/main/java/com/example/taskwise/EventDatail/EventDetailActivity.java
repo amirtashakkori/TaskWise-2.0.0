@@ -3,6 +3,9 @@ package com.example.taskwise.EventDatail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.DialogFragment;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -24,6 +27,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.taskmanager.R;
+import com.example.taskwise.BroadCastReceivers.ListStatusUpdater;
 import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
@@ -33,6 +37,7 @@ import com.example.taskwise.Main.MainPresentor;
 import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
+import com.example.taskwise.TaskDetail.TaskDetailActivity;
 import com.google.android.material.internal.ViewOverlayImpl;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -87,7 +92,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         setContentView(R.layout.activity_event_detail);
         cast();
 
-        presentor = new EventDetailPresentor(AppDataBase.getAppDataBase(this).getEventDataBaseDao() , getIntent().getParcelableExtra("event"));
+        presentor = new EventDetailPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getParcelableExtra("event"));
         presentor.onAttach(this);
 
         setSpinner();
@@ -183,6 +188,23 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     public void setDeleteButtonVisibility(boolean visible) {
         deleteEventBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
+
+    @Override
+    public void setWorkManager(long eventId, long expiredDate) {
+        Data data = new Data.Builder().putLong("eventId" ,  eventId).build();
+
+        long date = expiredDate - System.currentTimeMillis();
+
+        WorkManager manager = WorkManager.getInstance(EventDetailActivity.this);
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
+                .setInputData(data)
+                .setInitialDelay(date , TimeUnit.MILLISECONDS)
+                .build();
+        manager.enqueue(request);
+
+        finish();
+    }
+
 
     @Override
     public void setAlarmManager(String eventTitle, long notificationDate , int notifyMe) {
