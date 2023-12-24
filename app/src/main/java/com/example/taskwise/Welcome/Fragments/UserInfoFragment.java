@@ -64,6 +64,8 @@ public class UserInfoFragment extends Fragment {
             userInfoTv.setText(getString(R.string.editUserInfoText));
             submitBtn.setText(getString(R.string.saveChanges));
             backBtn.setVisibility(View.VISIBLE);
+        } else {
+            backBtn.setVisibility(View.GONE);
         }
 
         submitBtn.setOnClickListener(new View.OnClickListener() {

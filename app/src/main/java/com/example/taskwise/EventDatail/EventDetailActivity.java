@@ -152,6 +152,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
 
         if (create){
             selectedCalendar = Calendar.getInstance();
+            selectedCalendar.add(Calendar.MINUTE , 2);
             selectedDate = selectedCalendar.getTime();
 
             futureCalendar = Calendar.getInstance();
@@ -162,7 +163,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
             startTimeTv.setText(timeSdf.format(selectedDate));
             endTimeTv.setText(timeSdf.format(futureDate));
 
-            notifySpinner.setSelection(notify);
         }
     }
 
@@ -171,6 +171,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         eventTitleEt.setText(event.getTitle());
         selectedDate = new Date(event.getFirstDate());
         futureDate = new Date(event.getSecondDate());
+        notify = event.getNotifyMe();
         notifySpinner.setSelection(event.getNotifyMe());
 
         selectedCalendar = Calendar.getInstance();

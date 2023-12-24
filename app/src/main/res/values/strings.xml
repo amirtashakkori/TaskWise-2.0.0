@@ -128,6 +128,8 @@
     <string name="eventNotificationDescription">You set an event for current time, goodluck with that! :)</string>
     <string name="taskNotificationDescription">Your maximum saved time for this task has expired and you have not taken any action yet!\n Refer to Expired Tasks section!</string>
 
+    //Contact Developer
+    <string name="greeting_message">Hello!\nI'm Amirhossein Tashakkori, an Android developer, and the creator of TaskWise! I would be delighted to hear your suggestions, criticisms, or even engage in a friendly conversation about the software!\nThis not only contributes to the growth here but also enhances your user experience, fostering a more beneficial and professional collaboration between us!\nI'm looking forward to your emails 😊¬¬</string>
 
 
 </resources>

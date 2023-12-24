@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.taskwise.Calendar.CalendarActivity;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
+import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.EventDatail.EventDetailActivity;
 import com.example.taskwise.Main.Adapter.EventAdapter;
 import com.example.taskwise.Main.Adapter.TaskAdapter;
@@ -64,8 +65,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
     TaskAdapter taskAdapter;
     EventAdapter eventAdapter;
-    AppSettingContainer settingContainer;
     MainPresentor presentor;
+    DBDao dao;
+    AppSettingContainer settingContainer;
+    UserInfoContainer userInfoContainer;
 
     int selectedTab = 0;
     boolean allFabsVisible;
@@ -107,7 +110,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         setContentView(R.layout.activity_main);
 
         cast();
-        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+
+        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
+        settingContainer = new AppSettingContainer(this);
+        userInfoContainer = new UserInfoContainer(this);
+
+        presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
         taskAdapter = new TaskAdapter(this , this);
         eventAdapter = new EventAdapter(this , this);
         presentor.onAttach(this);
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     protected void onResume() {
         super.onResume();
-        presentor = new MainPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , new UserInfoContainer(this) , new AppSettingContainer(this));
+        presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
         presentor.onAttach(this);
         presentor.switchTab(selectedTab);
         if (selectedTab==0){
@@ -197,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                 switch (item.getItemId()){
                     case R.id.deleteAllTasksBtn:
                         presentor.clearTaskListClicked();
+                        presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
+                        presentor.onAttach(MainActivity.this);
                         drawerLayout_parent.close();
                         break;
 
@@ -216,6 +226,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
                     case R.id.deleteAllEventsBtn:
                         presentor.clearEventListClicker();
+                        presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
+                        presentor.onAttach(MainActivity.this);
+                        presentor.switchTab(selectedTab);
                         drawerLayout_parent.close();
                         break;
 
