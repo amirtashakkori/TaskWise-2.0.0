@@ -46,8 +46,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingTop="20dp"
-        android:paddingStart="28dp"
-        android:paddingEnd="28dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:background="@drawable/bg_white2white">
 
         <TextView
@@ -56,10 +56,11 @@
             android:layout_height="wrap_content"
             android:text="@string/selectLanguage"
             android:textAppearance="@style/settingOptions"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"/>
 
-        <ListView
-            android:id="@+id/languageList"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/languageRv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

@@ -5,22 +5,26 @@ import android.widget.Toast;
 import com.example.taskmanager.R;
 import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Event;
+import com.example.taskwise.SharedPreferences.AppSettingContainer;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class EventDetailPresentor implements EventDetailContract.presentor{
 
     EventDetailContract.view view;
     DBDao dao;
     Event event;
+    AppSettingContainer settingContainer;
 
     SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
 
-    public EventDetailPresentor(DBDao dao , Event event){
+    public EventDetailPresentor(DBDao dao , Event event , AppSettingContainer settingContainer){
         this.dao = dao;
         this.event = event;
+        this.settingContainer = settingContainer;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
     }
 
     @Override
-    public void saveButtonClicked(String title, long firstDate , long secondDate , String date , int notifyMe) {
+    public void saveButtonClicked(String title, long firstDate , long secondDate , String date , int notifyMe ) {
         if (event != null){
             event.setTitle(title);
             event.setFirstDate(firstDate);
@@ -59,15 +63,18 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             event.setDate(sdf.format(firstDate));
             event.setNotifyMe(notifyMe);
 
-            if (firstDate - System.currentTimeMillis() > 0 && secondDate - System.currentTimeMillis() > 0)
-                event.setOutdated(false);
-            else
-                event.setOutdated(true);
+            if (firstDate - System.currentTimeMillis() < 0 && secondDate - System.currentTimeMillis() < 0) event.setOutdated(true);
+            else event.setOutdated(false);
 
             int result = dao.update(event);
+
             if (result > 0) {
                 view.updateEvent();
-                view.setWorkManager(event.getId() , secondDate);
+                if (event.isOutdated() == false && settingContainer.isEventNotificationEnabled()){
+                    view.setAlarmManager(title, firstDate, notifyMe);
+                    view.cancelWorkManger(event.getWorkmanagerId());
+                    view.setWorkManager(event.getId() , secondDate);
+                }
             }
         } else {
             event = new Event();
@@ -77,16 +84,15 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             event.setDate(sdf.format(firstDate));
             event.setNotifyMe(notifyMe);
 
-            if (firstDate - System.currentTimeMillis() > 0 && secondDate - System.currentTimeMillis() > 0)
-                event.setOutdated(false);
-            else
-                event.setOutdated(true);
+            if (firstDate - System.currentTimeMillis() < 0 && secondDate - System.currentTimeMillis() < 0) event.setOutdated(true);
+            else event.setOutdated(false);
 
             long id = dao.addEvent(event);
-            view.setWorkManager(id, secondDate);
 
-            if (event.isOutdated() == false)
+            if (event.isOutdated() == false && settingContainer.isEventNotificationEnabled()){
                 view.setAlarmManager(title, firstDate, notifyMe);
+                view.setWorkManager(id , secondDate);
+            }
 
         }
     }

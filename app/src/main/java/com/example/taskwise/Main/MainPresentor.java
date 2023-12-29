@@ -1,5 +1,7 @@
 package com.example.taskwise.Main;
 
+import android.os.Build;
+
 import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
@@ -18,11 +20,11 @@ public class MainPresentor implements MainContract.presentor {
     List<Event> events;
     MainContract.view view;
 
-    int appTheme;
     String userName;
     String fullName;
     String expertise;
-    String appLan;
+    String appLanguage;
+    boolean firstUse;
 
     public MainPresentor(DBDao dao , UserInfoContainer userInfoContainer , AppSettingContainer settingContainer) {
         this.dao = dao;
@@ -30,18 +32,24 @@ public class MainPresentor implements MainContract.presentor {
         this.settingContainer = settingContainer;
         tasks = dao.getTaskList();
         events = dao.getEventList();
-        appTheme = settingContainer.getAppTheme();
         userName = userInfoContainer.getName().toString();
         fullName = userInfoContainer.getName() + " " + userInfoContainer.getFamily();
         expertise = userInfoContainer.getExpertise();
-        appLan = settingContainer.getAppLanguage();
+        appLanguage = settingContainer.getAppLanguage();
+        firstUse = settingContainer.getFirstUse();
     }
 
     @Override
     public void onAttach(MainContract.view view) {
         this.view = view;
         view.setDate();
+
+        if (userName.equals("")){
+            view.goToWelcomeActivity();
+        }
+
         view.setNavigationDrawerText(fullName , expertise);
+
         if (!tasks.isEmpty()){
             view.showTasks(tasks);
             view.setTaskEmptyStateVisibility(false);
@@ -62,14 +70,6 @@ public class MainPresentor implements MainContract.presentor {
     }
 
     @Override
-    public void validatingUserInfo() {
-        if (userName.equals("")){
-            view.goToWelcomeActivity();
-
-        }
-    }
-
-    @Override
     public void clearTaskListClicked() {
         dao.deleteAllTasks();
         view.setTaskEmptyStateVisibility(true);
@@ -79,6 +79,15 @@ public class MainPresentor implements MainContract.presentor {
     public void clearEventListClicker() {
         dao.deleteAllEvents();
         view.setEventEmptyStateVisibility(true);
+    }
+
+    @Override
+    public void validatingFirstUse(boolean firsUse) {
+        if (firsUse){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                view.showPermissionDialog();
+            }
+        }
     }
 
     @Override

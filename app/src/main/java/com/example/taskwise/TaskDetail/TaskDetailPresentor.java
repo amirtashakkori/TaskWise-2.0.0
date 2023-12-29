@@ -3,16 +3,19 @@ package com.example.taskwise.TaskDetail;
 import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
+import com.example.taskwise.SharedPreferences.AppSettingContainer;
 
 public class TaskDetailPresentor implements TaskDetailContract.presentor
 {
     DBDao dao;
     TaskDetailContract.view view;
     Task task;
+    AppSettingContainer settingContainer;
 
-    public TaskDetailPresentor(DBDao dao , Task task) {
+    public TaskDetailPresentor(DBDao dao , Task task , AppSettingContainer settingContainer) {
         this.dao = dao;
         this.task = task;
+        this.settingContainer = settingContainer;
     }
 
 
@@ -62,7 +65,8 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
             task.setImportance(priority);
             long id = dao.addTask(task);
             view.setWorkManager(id , getExpireDate(timePeriod));
-            view.setAlarmManager(title , description , timePeriod);
+            if (settingContainer.isTaskNotificationEnabled())
+                view.setAlarmManager(title , description , timePeriod);
         }
     }
 

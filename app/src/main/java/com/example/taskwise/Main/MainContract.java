@@ -17,14 +17,15 @@ public interface MainContract {
         void showTasks(List<Task> tasks);
         void showEvents(List<Event> events);
         void goToWelcomeActivity();
+        void showPermissionDialog();
         void setTaskEmptyStateVisibility(boolean visible);
         void setEventEmptyStateVisibility(boolean visible);
     }
 
     interface presentor extends BasePresentor<view>{
-        void validatingUserInfo();
         void clearTaskListClicked();
         void clearEventListClicker();
+        void validatingFirstUse(boolean firsUse);
         void switchTab(int tabPosition);
         void updateTask(Task task);
     }

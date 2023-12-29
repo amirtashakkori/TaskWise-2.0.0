@@ -19,8 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="2"
             android:paddingTop="12dp"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
             android:paddingBottom="12dp">
 
             <TextView
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="02"
-                android:textColor="?colorPrimary"
+                android:textColor="?colorAccent"
                 android:textSize="22sp" />
 
             <TextView
@@ -70,12 +71,12 @@
             <TextView
                 android:id="@+id/eventTitleTv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:maxLines="1"
                 android:layout_weight="1"
                 android:textSize="20sp"
-                android:textColor="?colorPrimary"
+                android:textColor="?colorAccent"
                 android:layout_marginRight="4dp" />
 
             <LinearLayout
@@ -95,7 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="12:00"
-                        android:textColor="?colorPrimary"
+                        android:textColor="?colorAccent"
                         android:textSize="16sp"
                         android:layout_gravity="center_horizontal"/>
 
@@ -127,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="02:00"
-                        android:textColor="?colorPrimary"
+                        android:textColor="?colorAccent"
                         android:textSize="16sp"
                         android:layout_gravity="center_horizontal"/>
 

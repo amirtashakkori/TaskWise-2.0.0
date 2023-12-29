@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity(tableName = "table_event")
 public class Event implements Parcelable {
@@ -19,6 +20,16 @@ public class Event implements Parcelable {
     long firstDate , secondDate;
     String date;
     int notifyMe;
+    UUID workmanagerId;
+
+    public UUID getWorkmanagerId() {
+        return workmanagerId;
+    }
+
+    public void setWorkmanagerId(UUID workmanagerId) {
+        this.workmanagerId = workmanagerId;
+    }
+
     boolean outdated = false;
 
     public boolean isOutdated() {

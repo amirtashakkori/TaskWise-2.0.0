@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -19,13 +20,17 @@
         android:theme="@style/Theme.GreenTaskManager"
         android:windowSoftInputMode="adjustUnspecified"
         tools:targetApi="31">
+
+        <activity
+            android:name="com.example.taskwise.FeedBack.FeedBackActivity"
+            android:exported="false" />
         <activity
             android:name="com.example.taskwise.EventDatail.EventDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.example.taskwise.Calendar.CalendarActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="com.example.taskwise.Setting.SettingActivity"
             android:exported="false" />
@@ -62,7 +67,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <receiver android:name="com.example.taskwise.BroadCastReceivers.Remiders"/>
+
+        <receiver android:name="com.example.taskwise.BroadCastReceivers.Remiders" />
     </application>
 
 </manifest>

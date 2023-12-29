@@ -3,29 +3,44 @@ package com.example.taskwise.Main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.taskwise.Calendar.CalendarActivity;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
 import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.EventDatail.EventDetailActivity;
+import com.example.taskwise.FeedBack.FeedBackActivity;
 import com.example.taskwise.Main.Adapter.EventAdapter;
 import com.example.taskwise.Main.Adapter.TaskAdapter;
 import com.example.taskwise.Model.Event;
@@ -47,7 +62,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener, EventAdapter.changeListener,  MainContract.view {
+public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener, EventAdapter.changeListener,  MainContract.view  {
 
     LinearLayout emptyState , taskList;
     TextView headerTv , helloTv , plansMessage , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
@@ -62,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     TabLayout tabLayout;
     NestedScrollView nestedScrollView;
     RecyclerView listRv;
+    Dialog dialog;
 
     TaskAdapter taskAdapter;
     EventAdapter eventAdapter;
@@ -72,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
     int selectedTab = 0;
     boolean allFabsVisible;
+    public static final int NOTIFICATION_REQUEST_CODE = 101;
 
     public void cast(){
         taskList = findViewById(R.id.taskList);
@@ -108,42 +125,20 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         settingContainer = new AppSettingContainer(this);
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_main);
-
         cast();
 
         dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
-        settingContainer = new AppSettingContainer(this);
         userInfoContainer = new UserInfoContainer(this);
 
         presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
         taskAdapter = new TaskAdapter(this , this);
         eventAdapter = new EventAdapter(this , this);
-        presentor.onAttach(this);
-        presentor.validatingUserInfo();
-
         listRv.setLayoutManager(new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tasks));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.events));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                selectedTab = tab.getPosition();
-                presentor.switchTab(selectedTab);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        presentor.onAttach(this);
+        presentor.validatingFirstUse(settingContainer.getFirstUse());
 
         extendedFab();
-
+        setUpTabLayout();
         navigationDrawer();
 
         calendarBtn.setOnClickListener(new View.OnClickListener() {
@@ -156,11 +151,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(ContextWrapper.wrap(newBase));
-    }
-
+    //Activity Cycle
     @Override
     protected void onResume() {
         super.onResume();
@@ -172,8 +163,17 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         } else
             listRv.setAdapter(eventAdapter);
 
+        if (settingContainer.getFirstUse())
+            settingContainer.saveUserFirstUse(false);
+
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
+    }
+
+    //Item's Events
     @Override
     public void onUpdate(Task task) {
         presentor.updateTask(task);
@@ -194,6 +194,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         startActivity(onClickIntent);
     }
 
+    //Home Page Interface
+    @Override
+    public void setHeaderTexts(String name , int plans) {
+        helloTv.setText( getString(R.string.hi) + " " + name );
+        plansMessage.setText(plans);
+    }
 
     public void navigationDrawer(){
 
@@ -238,7 +244,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                         break;
 
                     case R.id.contactDev:
-
+                        Intent intent = new Intent(MainActivity.this , FeedBackActivity.class);
+                        startActivity(intent);
                         break;
 
                 }
@@ -265,12 +272,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     @Override
-    public void setHeaderTexts(String name , int plans) {
-        helloTv.setText( getString(R.string.hi) + " " + name );
-        plansMessage.setText(plans);
-    }
-
-    @Override
     public void setNavigationDrawerText(String fullName, String expertise) {
         userNameTv.setText(fullName);
         userExpertiseTv.setText(expertise);
@@ -287,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         monthTv.setText( monthNameFormat.format(calendar.getTime()));
     }
 
+    //Showing Lists
     @Override
     public void showTasks(List<Task> tasks) {
         taskAdapter = new TaskAdapter(MainActivity.this , this);
@@ -301,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         listRv.setAdapter(eventAdapter);
     }
 
-
+    //FirsUse Impression
     @Override
     public void goToWelcomeActivity() {
         Intent intent = new Intent(this , WelcomeActivity.class);
@@ -309,6 +311,30 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         finish();
     }
 
+    @Override
+    public void showPermissionDialog() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, "android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED){
+            dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.activity_permission_dialog);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            AppCompatButton permissionBtn = dialog.findViewById(R.id.permissionBtn);
+
+            permissionBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[] {"android.permission.POST_NOTIFICATIONS"}, NOTIFICATION_REQUEST_CODE);
+                    dialog.dismiss();
+                    settingContainer.saveUserFirstUse(false);
+                    presentor.validatingFirstUse(false);
+                }
+            });
+
+            dialog.show();
+        }
+    }
+
+    //Empty States
     @Override
     public void setTaskEmptyStateVisibility(boolean visible) {
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
@@ -323,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         emptyStateImg.setImageResource(R.drawable.il_event_empty_state);
     }
 
+    //Extended Floating Action Buttons
     public void extendedFab(){
         allFabsVisible = false;
         addPlanBtn.shrink();
@@ -379,5 +406,61 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         addPlanBtn.extend();
     }
 
+    //TabLayout
+    public void setUpTabLayout(){
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tasks));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.events));
+        TabLayout.Tab tab = tabLayout.getTabAt(selectedTab);
+        animateTab(tab , true);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedTab = tab.getPosition();
+                presentor.switchTab(selectedTab);
+                animateTab(tab , true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                animateTab(tab , false);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    public void animateTab(@NonNull TabLayout.Tab tab, boolean isSelected) {
+        View tabView = tab.view;
+
+        float scaleFactor = isSelected ? 1.2f : 1f;
+        float alphaValue = isSelected ? 1f : 0.7f;
+
+        // Set up the ObjectAnimator for scale property
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(tabView, View.SCALE_X, scaleFactor);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(tabView, View.SCALE_Y, scaleFactor);
+
+        // Set up the ObjectAnimator for alpha property
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(tabView, View.ALPHA, alphaValue);
+
+        // Set the interpolators for smooth acceleration and deceleration
+        scaleXAnimator.setInterpolator(isSelected ? new AccelerateInterpolator() : new DecelerateInterpolator());
+        scaleYAnimator.setInterpolator(isSelected ? new AccelerateInterpolator() : new DecelerateInterpolator());
+
+        // Set the duration for the animations
+        int animationDuration = 200;
+        scaleXAnimator.setDuration(animationDuration);
+        scaleYAnimator.setDuration(animationDuration);
+        alphaAnimator.setDuration(animationDuration);
+
+        // Create an AnimatorSet to play all animations together
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator, alphaAnimator);
+
+        // Start the animation
+        animatorSet.start();
+    }
 
 }

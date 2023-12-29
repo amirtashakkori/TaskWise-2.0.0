@@ -7,13 +7,15 @@ import com.example.taskwise.Model.Task;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.UUID;
 
 public interface EventDetailContract {
     public interface view extends BaseView {
         void setTexts(int headerText, int buttonTv , boolean create);
         void showEvent(Event event);
         void setDeleteButtonVisibility(boolean visible);
-        void setWorkManager(long eventId , long expiredDate);
+        void setWorkManager(long id , long expiredDate);
+        void cancelWorkManger(UUID workId);
         void setAlarmManager(String eventTitle , long notificationDate , int notifyMe);
         void updateEvent();
         void deleteEvent();

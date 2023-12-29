@@ -29,6 +29,7 @@ public interface DBDao {
     @Query("SELECT * FROM table_task WHERE id = :id")
     Task searchTask(long id);
 
+
     @Delete
     int deleteTask(Task task);
 
@@ -62,6 +63,10 @@ public interface DBDao {
 
     @Query("SELECT * FROM table_event WHERE id = :id")
     Event searchEvent(long id);
+
+    @Query("SELECT * FROM table_event WHERE event_title = :title AND date = :date")
+    Event searchByString(String title , String date);
+
 
     @Update
     int update(Event event);

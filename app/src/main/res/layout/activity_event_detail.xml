@@ -234,7 +234,7 @@
                 <TextView
                     android:id="@+id/timePeriodTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="13dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:text="@string/notifyMe"
                     android:textColor="@color/middleGray"

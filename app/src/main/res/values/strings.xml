@@ -85,6 +85,12 @@
     <string name="lightMode">Light mode</string>
     <string name="themeSelector">Select your theme :</string>
 
+    <string name="notifications">Notifications</string>
+    <string name="taskNotification">Task notifications</string>
+    <string name="taskNotificationDesc">This one is for reminding outdated tasks!</string>
+    <string name="eventNotification">Event notifications</string>
+    <string name="eventNotificationDesc">This one is for notifying your events!</string>
+
     //TaskCategory
     <string name="category">Category</string>
     <string name="personal">Personal</string>
@@ -128,8 +134,12 @@
     <string name="eventNotificationDescription">You set an event for current time, goodluck with that! :)</string>
     <string name="taskNotificationDescription">Your maximum saved time for this task has expired and you have not taken any action yet!\n Refer to Expired Tasks section!</string>
 
+    <string name="allowAccess">Allow access</string>
+    <string name="notificationDialog">Dear user, we need your permission to remind you of your tasks and events through notifications, if you don\'t want to, there will be no change in performance, you just won\'t receive the notifications!</string>
+
     //Contact Developer
-    <string name="greeting_message">Hello!\nI'm Amirhossein Tashakkori, an Android developer, and the creator of TaskWise! I would be delighted to hear your suggestions, criticisms, or even engage in a friendly conversation about the software!\nThis not only contributes to the growth here but also enhances your user experience, fostering a more beneficial and professional collaboration between us!\nI'm looking forward to your emails 😊¬¬</string>
+    <string name="greeting_message">Hello!\n I\'m Amirhossein Tashakkori, an Android developer, and the creator of TaskWise!\nI would be delighted to hear your suggestions, criticisms, or even engage in a friendly conversation about the software!\nThis not only contributes to the growth here but also enhances your user experience, fostering a more beneficial and professional collaboration between us!\nI\'m looking forward to your emails. :)</string>
+    <string name="sendEmail">Send email</string>
 
 
 </resources>

@@ -155,11 +155,11 @@
                         app:tabBackground="@drawable/bg_tabs_selector"
                         android:background="@android:color/transparent"
                         app:tabGravity="fill"
-                        app:tabSelectedTextColor="?colorPrimary"
-                        app:tabTextColor="?colorOnPrimary"
+                        app:tabSelectedTextColor="?colorAccent"
+                        app:tabTextColor="?colorOnPrimarySurface"
                         android:layout_gravity="center_horizontal"
-                        app:tabTextAppearance="@style/listTabLayout"
-                        app:tabSelectedTextAppearance="@style/listTabLayout"
+                        app:tabTextAppearance="@style/tabLayoutText"
+                        app:tabSelectedTextAppearance="@style/selectedTabLayoutText"
                         app:tabIndicator="@null"
                         android:layout_marginTop="16dp"/>
 
@@ -170,7 +170,7 @@
                     android:layout_height="match_parent"
                     android:background="?colorOnPrimary"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="8dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/listRv"
@@ -185,8 +185,7 @@
                         android:layout_gravity="center_vertical"
                         android:visibility="visible"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="28dp">
+                        android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/emptyStateImg"

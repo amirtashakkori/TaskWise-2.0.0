@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="24dp"
+    android:elevation="8dp"
+    app:cardBackgroundColor="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:background="?colorOnPrimary"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:lineSpacingExtra="12dp"
+            android:textColor="?colorAccent"
+            android:textAlignment="center"
+            android:text="@string/notificationDialog"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/permissionBtn"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_buttons"
+            android:text="@string/allowAccess"
+            android:layout_marginTop="24dp"
+            android:textColor="?colorOnSurface"
+            android:layout_alignParentBottom="true"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

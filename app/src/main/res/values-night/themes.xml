@@ -11,6 +11,7 @@
         <item name="colorSecondaryVariant">@color/darkerLightGreen</item>
         <item name="colorOnSecondary">#3C3C3C</item>
         <item name="colorAccent">@color/white</item>
+        <item name="colorOnPrimarySurface">@color/darkerGreen</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

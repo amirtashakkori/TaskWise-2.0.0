@@ -31,6 +31,7 @@ import com.example.taskwise.BroadCastReceivers.ListStatusUpdater;
 import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
+import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.EventDatail.EventDetailContract;
 import com.example.taskwise.Main.MainContract;
 import com.example.taskwise.Main.MainPresentor;
@@ -50,6 +51,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class EventDetailActivity extends AppCompatActivity implements EventDetailContract.view {
@@ -62,12 +64,12 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
 
     EventDetailPresentor presentor;
     AppSettingContainer settingContainer;
+    Calendar selectedCalendar , futureCalendar;
+    Date selectedDate , futureDate;
+    DBDao dao;
 
     int notify = 2 ;
     long subtractDate;
-
-    Calendar selectedCalendar , futureCalendar;
-    Date selectedDate , futureDate;
 
     SimpleDateFormat dateSdf = new SimpleDateFormat("MMM dd, yyyy");
     SimpleDateFormat timeSdf = new SimpleDateFormat("hh:mm a");
@@ -91,30 +93,11 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_event_detail);
         cast();
-
-        presentor = new EventDetailPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getParcelableExtra("event"));
+        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
+        presentor = new EventDetailPresentor(dao , getIntent().getParcelableExtra("event") , settingContainer);
         presentor.onAttach(this);
 
         setSpinner();
-
-        submitEventBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!eventTitleEt.getText().toString().equals("")){
-                    presentor.saveButtonClicked(eventTitleEt.getText().toString() , selectedDate.getTime() , futureDate.getTime() , dateTv.getText().toString() , notify);
-                    finish();
-                } else {
-                    eventTitleEt.setError(R.string.eventTitleError + "");
-                }
-            }
-        });
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         dateTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +126,36 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
                 presentor.deleteButtonClicked();
             }
         });
+
+        submitEventBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!eventTitleEt.getText().toString().equals("")){
+                    String eventTitle = eventTitleEt.getText().toString();
+                    String date = dateTv.getText().toString();
+                    presentor.saveButtonClicked(eventTitle , selectedDate.getTime() , futureDate.getTime() , date , notify );
+                    finish();
+                } else {
+                    eventTitleEt.setError(R.string.eventTitleError + "");
+                }
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presentor.onDetach();
+    }
+
+    //Setup the interface
     @Override
     public void setTexts(int headerText, int buttonTv , boolean create) {
         headerTv.setText(headerText);
@@ -164,123 +175,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
             endTimeTv.setText(timeSdf.format(futureDate));
 
         }
-    }
-
-    @Override
-    public void showEvent(Event event) {
-        eventTitleEt.setText(event.getTitle());
-        selectedDate = new Date(event.getFirstDate());
-        futureDate = new Date(event.getSecondDate());
-        notify = event.getNotifyMe();
-        notifySpinner.setSelection(event.getNotifyMe());
-
-        selectedCalendar = Calendar.getInstance();
-        futureCalendar = Calendar.getInstance();
-
-        selectedCalendar.setTime(selectedDate);
-        futureCalendar.setTime(futureDate);
-
-        dateTv.setText(dateSdf.format(selectedDate));
-        startTimeTv.setText(timeSdf.format(selectedDate));
-        endTimeTv.setText(timeSdf.format(futureDate));
-    }
-
-    @Override
-    public void setDeleteButtonVisibility(boolean visible) {
-        deleteEventBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void setWorkManager(long eventId, long expiredDate) {
-        Data data = new Data.Builder().putLong("eventId" ,  eventId).build();
-
-        long date = expiredDate - System.currentTimeMillis();
-
-        WorkManager manager = WorkManager.getInstance(EventDetailActivity.this);
-        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
-                .setInputData(data)
-                .setInitialDelay(date , TimeUnit.MILLISECONDS)
-                .build();
-        manager.enqueue(request);
-
-        finish();
-    }
-
-
-    @Override
-    public void setAlarmManager(String eventTitle, long notificationDate , int notifyMe) {
-        Intent intent = new Intent(EventDetailActivity.this , Remiders.class);
-        intent.putExtra("eventTitle" , eventTitle);
-        PendingIntent pi;
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
-            pi = PendingIntent.getBroadcast(getApplicationContext() , 0 , intent , PendingIntent.FLAG_IMMUTABLE );
-        }
-        else {
-            pi = PendingIntent.getBroadcast(EventDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
-        }
-
-        switch (notifyMe){
-            case 0 :
-                subtractDate = 0;
-                break;
-            case 1 :
-                subtractDate = TimeUnit.MINUTES.toMillis(15);
-                break;
-            case 2 :
-                subtractDate = TimeUnit.MINUTES.toMillis(30);
-                break;
-            case 3 :
-                subtractDate = TimeUnit.HOURS.toMillis(1);
-                break;
-        }
-
-        long date = notificationDate - subtractDate;
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(date);
-
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        manager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() , pi);
-    }
-
-    @Override
-    public void updateEvent() {
-        Toast.makeText(this, "Successfuly Edited.!", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    @Override
-    public void deleteEvent() {
-        Toast.makeText(this, "Seccessfuly Deleted.!", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    public void setSpinner(){
-        String[] notify_spinner_items = {getString(R.string.atTheTime) , getString(R.string.quarterHour) , getString(R.string.halfHour) , getString(R.string.hourBefore)};
-        ArrayAdapter<String> periodSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_period_spinner , R.id.spinnerTv , notify_spinner_items);
-        periodSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
-        notifySpinner.setAdapter(periodSpinnerAdapter);
-        notifySpinner.setSelection(notify);
-
-        notifySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                notify = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presentor.onDetach();
     }
 
     public void setDate(){
@@ -362,6 +256,127 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         timePickerDialog.setCancelColor(colorPrimary);
         timePickerDialog.setOkText(R.string.ok);
         timePickerDialog.setCancelText(R.string.cancel);
+    }
+
+    public void setSpinner(){
+        String[] notify_spinner_items = {getString(R.string.atTheTime) , getString(R.string.quarterHour) , getString(R.string.halfHour) , getString(R.string.hourBefore)};
+        ArrayAdapter<String> periodSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_period_spinner , R.id.spinnerTv , notify_spinner_items);
+        periodSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
+        notifySpinner.setAdapter(periodSpinnerAdapter);
+        notifySpinner.setSelection(notify);
+
+        notifySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                notify = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    @Override
+    public void setDeleteButtonVisibility(boolean visible) {
+        deleteEventBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    //Getting Event
+    @Override
+    public void showEvent(Event event) {
+        eventTitleEt.setText(event.getTitle());
+        selectedDate = new Date(event.getFirstDate());
+        futureDate = new Date(event.getSecondDate());
+        notify = event.getNotifyMe();
+        notifySpinner.setSelection(event.getNotifyMe());
+
+        selectedCalendar = Calendar.getInstance();
+        futureCalendar = Calendar.getInstance();
+
+        selectedCalendar.setTime(selectedDate);
+        futureCalendar.setTime(futureDate);
+
+        dateTv.setText(dateSdf.format(selectedDate));
+        startTimeTv.setText(timeSdf.format(selectedDate));
+        endTimeTv.setText(timeSdf.format(futureDate));
+    }
+
+    @Override
+    public void updateEvent() {
+        Toast.makeText(this, "Successfuly Edited.!", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void deleteEvent() {
+        Toast.makeText(this, "Seccessfuly Deleted.!", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+
+    //WorkManager & AlarmManager
+    @Override
+    public void setWorkManager(long id , long expiredDate) {
+        Data data = new Data.Builder().putLong("eventId" , id) .build();
+
+        long date = expiredDate - System.currentTimeMillis();
+
+        WorkManager manager = WorkManager.getInstance(EventDetailActivity.this);
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
+                .setInputData(data)
+                .setInitialDelay(date , TimeUnit.MILLISECONDS)
+                .build();
+        manager.enqueue(request);
+        UUID workManagerId = request.getId();
+        Event event = dao.searchEvent(id);
+        event.setWorkmanagerId(workManagerId);
+        dao.update(event);
+        finish();
+    }
+
+    @Override
+    public void cancelWorkManger(UUID workId) {
+        WorkManager.getInstance(EventDetailActivity.this).cancelWorkById(workId);
+    }
+
+    @Override
+    public void setAlarmManager(String eventTitle, long notificationDate , int notifyMe) {
+        Intent intent = new Intent(EventDetailActivity.this , Remiders.class);
+        intent.putExtra("eventTitle" , eventTitle);
+        PendingIntent pi;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            pi = PendingIntent.getBroadcast(getApplicationContext() , 0 , intent , PendingIntent.FLAG_IMMUTABLE );
+        }
+        else {
+            pi = PendingIntent.getBroadcast(EventDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+        }
+
+        switch (notifyMe){
+            case 0 :
+                subtractDate = 0;
+                break;
+            case 1 :
+                subtractDate = TimeUnit.MINUTES.toMillis(15);
+                break;
+            case 2 :
+                subtractDate = TimeUnit.MINUTES.toMillis(30);
+                break;
+            case 3 :
+                subtractDate = TimeUnit.HOURS.toMillis(1);
+                break;
+        }
+
+        long date = notificationDate - subtractDate;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        manager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() , pi);
     }
 
 }

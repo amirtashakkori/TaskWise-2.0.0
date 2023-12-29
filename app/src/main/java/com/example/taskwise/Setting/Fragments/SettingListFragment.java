@@ -51,6 +51,7 @@ public class SettingListFragment extends Fragment implements SettingAdapter.onCL
         optionList = new ArrayList<>();
         optionList.add(new Option(getString(R.string.language),R.drawable.ic_language));
         optionList.add(new Option(getString(R.string.theme) , R.drawable.ic_theme));
+        optionList.add(new Option(getString(R.string.notifications) , R.drawable.ic_notification));
 
         settingRv.setLayoutManager(new LinearLayoutManager(getActivity() , LinearLayoutManager.VERTICAL , false));
         adapter = new SettingAdapter(getActivity() , optionList , this);
@@ -87,9 +88,14 @@ public class SettingListFragment extends Fragment implements SettingAdapter.onCL
             transaction.replace(R.id.fragment_container , new LanguageFragment());
             transaction.addToBackStack(null);
             transaction.commit();
-        } else {
+        } else if (position == 1){
             transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container , new ThemeFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
+            transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container , new NotificationFragment());
             transaction.addToBackStack(null);
             transaction.commit();
         }
