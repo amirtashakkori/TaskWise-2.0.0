@@ -9,6 +9,7 @@
     android:background="@drawable/bg_dark2darker">
 
     <RelativeLayout
+        android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -166,17 +167,24 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/tap"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?colorOnPrimary"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:paddingStart="8dp"
+                    android:padding="8dp"
+                    android:paddingEnd="8dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/listRv"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:nestedScrollingEnabled="false"/>
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:clickable="true"
+                        android:paddingBottom="56dp"
+                        android:paddingTop="4dp"
+                        android:contextClickable="true"/>
 
                     <LinearLayout
                         android:id="@+id/emptyState"
@@ -206,7 +214,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="20dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:gravity="end"
@@ -218,6 +225,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="?colorPrimary"
                 app:fabSize="mini"
+                android:elevation="0dp"
                 app:tint="?colorOnSurface"
                 android:layout_marginBottom="12dp"
                 android:src="@drawable/ic_event"/>
@@ -228,6 +236,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="?colorPrimary"
                 app:fabSize="mini"
+                android:elevation="0dp"
                 android:src="@drawable/ic_check"
                 app:tint="?colorOnSurface"
                 android:layout_marginBottom="16dp"/>
@@ -241,8 +250,11 @@
                 android:textColor="?colorOnSurface"
                 app:iconTint="?colorOnSurface"
                 android:text="@string/extendedFab"
+                android:layout_marginBottom="20dp"
                 android:textSize="12sp"
-                android:textAlignment="center"/>
+                app:elevation="0dp"
+                android:textAlignment="center"
+                android:elevation="0dp"/>
 
         </LinearLayout>
 

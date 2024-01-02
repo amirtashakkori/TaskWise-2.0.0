@@ -20,24 +20,26 @@ import java.util.Random;
 public class Remiders extends BroadcastReceiver {
 
     String eventTitle;
+    long eventId;
     String taskTitle , taskDescription;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         eventTitle = intent.getStringExtra("eventTitle");
+        eventId = intent.getLongExtra("eventId" , -1);
         taskTitle = intent.getStringExtra("taskTitle");
         taskDescription = intent.getStringExtra("taskDescription");
 
-        if (eventTitle != null){
-            showEventNotification(context , eventTitle);
+        if (eventId != -1 && eventTitle != null){
+            showEventNotification(context , eventId , eventTitle);
         }
         if (taskTitle != null && taskDescription != null){
             showTaskNotification(context , taskTitle , taskDescription);
         }
     }
 
-    public void showEventNotification(Context context , String eventTitle){
+    public void showEventNotification(Context context , long eventId, String eventTitle){
         Notification notification = new NotificationCompat.Builder(context, ApplicationClass.eventReminderChannel)
                 .setSmallIcon(R.drawable.ic_event)
                 .setContentTitle(eventTitle)
@@ -46,7 +48,7 @@ public class Remiders extends BroadcastReceiver {
                 .build();
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(new Random().nextInt() , notification);
+        manager.notify((int) eventId, notification);
     }
 
     public void showTaskNotification(Context context , String taskTitle , String taskDescription){

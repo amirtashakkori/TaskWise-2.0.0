@@ -30,6 +30,7 @@
         <item name="colorSecondaryVariant">@color/darkerIvory</item>
         <item name="colorOnSecondary">#3C3C3C</item>
         <item name="colorAccent">@color/white</item>
+        <item name="colorOnPrimarySurface">@color/darkRed</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/darkerRed</item>
         <!-- Customize your theme here. -->
@@ -48,6 +49,7 @@
         <item name="colorSecondaryVariant">@color/darkerLightBlue</item>
         <item name="colorOnSecondary">#3C3C3C</item>
         <item name="colorAccent">@color/white</item>
+        <item name="colorOnPrimarySurface">@color/darkBlue</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/darkerBlue</item>
         <!-- Customize your theme here. -->
@@ -65,6 +67,35 @@
         <item name="android:textColorPrimary">@color/darkGreen</item>
         <item name="android:textColorSecondaryInverse">@color/white</item>
         <item name="android:headerDayOfMonthTextAppearance">@style/TextAppearance.MyTheme.calendarWeekDays</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:popupBackground">@drawable/bg_spinner</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <style name="MyCalendar" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorControlActivated">?android:attr/colorPrimary</item>
+        <item name="android:windowBackground">?android:attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?android:attr/colorPrimary</item>
+        <item name="android:textColorSecondaryInverse">?android:attr/colorPrimary</item>
+    </style>
+
+    <style name="MyDatePickerStyle" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/colorPrimary</item>
+    </style>
+
+    <style name="customAppCompatButton" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="fontFamily">@font/gilroy_samibold_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="borderWidth">1dp</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="borderRound">8dp</item>
+    </style>
+
+    <style name="popUpMenuStyle" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_item_popup_menue</item>
     </style>
 
 

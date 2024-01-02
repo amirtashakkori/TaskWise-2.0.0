@@ -1,10 +1,15 @@
 package com.example.taskwise.Main.Adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,6 +52,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
         TextView taskTitleTv , taskDescriptionTv;
         LinearLayout btnCheck;
         AppCompatButton importanceBtn;
+        ImageView checkImg;
         public item(@NonNull View itemView) {
             super(itemView);
 
@@ -54,6 +60,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
             taskDescriptionTv = itemView.findViewById(R.id.taskDescriptionTv);
             btnCheck = itemView.findViewById(R.id.btnCheck);
             importanceBtn = itemView.findViewById(R.id.importanceBtn);
+            checkImg = itemView.findViewById(R.id.checkImg);
 
         }
 
@@ -73,10 +80,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
                 importanceBtn.setVisibility(View.GONE);
             }
 
-            if (task.getIs_completed() == 0)
-                btnCheck.setBackgroundResource(R.drawable.bg_checkbox);
-            else
+            if (task.getIs_completed() == 0){
+                btnCheck.setBackgroundResource(R.drawable.bg_checkbox);}
+            else {
                 btnCheck.setBackgroundResource(R.drawable.bg_checkbox_checked);
+                checkImg.setImageResource(R.drawable.ic_check);
+            }
 
             btnCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,12 +110,43 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
                     listener.onClick(task);
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    PopupMenu popupMenu = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        popupMenu = new PopupMenu(c, v , Gravity.END , 0 , R.style.popUpMenuStyle);
+                        MenuInflater inflater = popupMenu.getMenuInflater();
+                        inflater.inflate(R.menu.hold_item_menu, popupMenu.getMenu());
+                        popupMenu.show();
+
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case R.id.deleteBtn:
+                                        listener.onDelete(task);
+                                        return true;
+
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
 
     }
 
     public interface changeListener{
         public void onUpdate(Task task);
+
+        public void onDelete(Task task);
 
         public void onClick(Task task);
     }
@@ -121,6 +161,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
             if (tasks.get(i).getId() == task.getId()){
                 tasks.set(i , task);
                 notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
+    public void deleteTask(Task task){
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId() == task.getId()) {
+                tasks.remove(i);
+                notifyItemRemoved(i);
                 break;
             }
         }

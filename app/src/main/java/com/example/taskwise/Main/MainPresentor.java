@@ -33,7 +33,7 @@ public class MainPresentor implements MainContract.presentor {
         tasks = dao.getTaskList();
         events = dao.getEventList();
         userName = userInfoContainer.getName().toString();
-        fullName = userInfoContainer.getName() + " " + userInfoContainer.getFamily();
+        fullName = userInfoContainer.getName() + userInfoContainer.getFamily();
         expertise = userInfoContainer.getExpertise();
         appLanguage = settingContainer.getAppLanguage();
         firstUse = settingContainer.getFirstUse();
@@ -113,6 +113,22 @@ public class MainPresentor implements MainContract.presentor {
     @Override
     public void updateTask(Task task) {
         dao.update(task);
+    }
+
+    @Override
+    public void deleteTask(Task task) {
+        dao.deleteTask(task);
+        tasks = dao.getTaskList();
+        if (tasks.isEmpty())
+            view.setTaskEmptyStateVisibility(true);
+    }
+
+    @Override
+    public void deleteEvent(Event event) {
+        dao.deleteEvent(event);
+        events = dao.getEventList();
+        if (events.isEmpty())
+            view.setEventEmptyStateVisibility(true);
     }
 
 

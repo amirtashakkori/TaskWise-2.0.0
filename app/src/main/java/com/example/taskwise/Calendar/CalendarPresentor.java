@@ -47,7 +47,10 @@ public class CalendarPresentor implements CalendarContract.presentor {
     }
 
     @Override
-    public void updateEvent(Event event) {
-        dao.update(event);
+    public void deleteEvent(Event event , String query) {
+        dao.deleteEvent(event);
+        events = dao.getDateEventList(query);
+        if (events.isEmpty())
+            view.setEmptyStateVisibility(true);
     }
 }

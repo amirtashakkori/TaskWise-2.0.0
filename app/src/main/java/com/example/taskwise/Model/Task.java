@@ -7,6 +7,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
 @Entity(tableName = "table_task")
 public class Task implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -18,6 +20,15 @@ public class Task implements Parcelable {
     int time_period;
     int is_completed;
     int importance;
+    UUID workManagerId;
+
+    public UUID getWorkManagerId() {
+        return workManagerId;
+    }
+
+    public void setWorkManagerId(UUID workManagerId) {
+        this.workManagerId = workManagerId;
+    }
 
     public long getId() {
         return id;

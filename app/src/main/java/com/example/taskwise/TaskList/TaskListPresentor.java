@@ -29,22 +29,23 @@ public class TaskListPresentor implements TaskListContract.presentor {
 
     @Override
     public void onAttach(TaskListContract.view view) {
+        this.view = view;
         if (position == 1){
             if (!completedTasks.isEmpty()){
                 view.showList(completedTasks);
-                view.setEmptyStateVisibility(false , 1 , appTheme);
+                view.setEmptyStateVisibility(false , 1);
                 view.setDeleteButtonVisibility(true);
             } else {
-                view.setEmptyStateVisibility(true , 1 , appTheme);
+                view.setEmptyStateVisibility(true , 1 );
                 view.setDeleteButtonVisibility(false);
             }
         } else {
             if (!outDatedTasks.isEmpty()){
                 view.showList(outDatedTasks);
-                view.setEmptyStateVisibility(false , 2 , appTheme);
+                view.setEmptyStateVisibility(false , 2 );
                 view.setDeleteButtonVisibility(true);
             } else {
-                view.setEmptyStateVisibility(true , 2 , appTheme);
+                view.setEmptyStateVisibility(true , 2 );
                 view.setDeleteButtonVisibility(false);
             }
         }
@@ -57,14 +58,31 @@ public class TaskListPresentor implements TaskListContract.presentor {
 
     @Override
     public void deleteAllButtonClicked() {
-        if (position == 1)
+        if (position == 1) {
             dao.deleteCompletedTasks();
-        else
+            view.setEmptyStateVisibility(true , 1);
+        } else {
             dao.deleteOutDatedTasks();
+            view.setEmptyStateVisibility(true , 0);
+        }
     }
 
     @Override
     public void updateTask(Task task) {
         dao.update(task);
+    }
+
+    @Override
+    public void deleteTask(Task task) {
+        dao.deleteTask(task);
+        if (position == 1){
+            completedTasks = dao.getCompletedTasks();
+            if (completedTasks.isEmpty())
+                view.setEmptyStateVisibility(true , 1 );
+        } else{
+            outDatedTasks = dao.getOutDatedTasks();
+            if (outDatedTasks.isEmpty())
+                view.setEmptyStateVisibility(true , 0 );
+        }
     }
 }

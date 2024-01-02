@@ -158,23 +158,20 @@
                 android:paddingStart="28dp"
                 android:paddingEnd="28dp"
                 android:paddingTop="24dp"
-                android:paddingBottom="20dp"
                 android:background="@drawable/bg_white2white"
-                android:layout_marginTop="8dp"
-                android:elevation="2dp">
+                android:layout_marginTop="8dp">
 
                 <LinearLayout
                     android:id="@+id/first_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:weightSum="2">
+                    android:paddingBottom="60dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/timePeriodTv"
@@ -202,6 +199,7 @@
                                 android:backgroundTint="?colorAccent"
                                 android:contextClickable="true"
                                 android:textSize="19sp"
+                                android:popupElevation="8dp"
                                 android:layout_marginStart="-4dp"
                                 style="@style/SpinnerTheme"/>
 
@@ -218,9 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="24dp"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="60dp">
+                        android:layout_marginTop="24dp">
 
                         <TextView
                             android:id="@+id/importanceTv"
@@ -248,6 +244,7 @@
                                 android:backgroundTint="?colorAccent"
                                 android:contextClickable="true"
                                 android:textSize="19sp"
+                                android:popupElevation="8dp"
                                 android:layout_marginStart="-4dp"
                                 style="@style/SpinnerTheme"/>
 

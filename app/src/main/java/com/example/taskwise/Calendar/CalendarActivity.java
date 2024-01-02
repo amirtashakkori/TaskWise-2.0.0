@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -78,6 +79,10 @@ public class CalendarActivity extends AppCompatActivity implements EventAdapter.
 
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onDestroy() {
@@ -90,6 +95,12 @@ public class CalendarActivity extends AppCompatActivity implements EventAdapter.
         presentor = new CalendarPresentor(AppDataBase.getAppDataBase(CalendarActivity.this).getDataBaseDao() , sdf.format(calendar.getDate()));
         calendar.setDate(Calendar.getInstance().getTime().getTime());
         presentor.onAttach(this);
+    }
+
+    @Override
+    public void onDelete(Event event) {
+        presentor.deleteEvent(event , sdf.format(calendar.getDate()));
+        adapter.deleteEvent(event);
     }
 
     @Override

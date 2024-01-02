@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -64,7 +66,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.changeListener, EventAdapter.changeListener,  MainContract.view  {
 
-    LinearLayout emptyState , taskList;
+    LinearLayout emptyState , taskList , tap;
     TextView headerTv , helloTv , plansMessage , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     ExtendedFloatingActionButton addPlanBtn;
     FloatingActionButton addEventBtn , addTaskBtn;
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     NavigationView navigationMain;
     View navigationHeader;
     TextClock clockTv;
-    RelativeLayout calendarBtn;
+    RelativeLayout calendarBtn , parent;
     TabLayout tabLayout;
     NestedScrollView nestedScrollView;
     RecyclerView listRv;
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         nestedScrollView = findViewById(R.id.nestedScrollView);
         emptyStateImg = findViewById(R.id.emptyStateImg);
         listRv = findViewById(R.id.listRv);
+        tap = findViewById(R.id.tap);
 
         //NavigationCasting
         navigationHeader = navigationMain.getHeaderView(0);
@@ -155,6 +158,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     protected void onResume() {
         super.onResume();
+        //Setting the view settings
+        ContextWrapper.wrap(this);
+        ContextWrapper.setTheme(this , settingContainer.getAppTheme());
+        //When we get back to activity fab should shrink
+        extendedFabShrink();
         presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
         presentor.onAttach(this);
         presentor.switchTab(selectedTab);
@@ -178,6 +186,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     public void onUpdate(Task task) {
         presentor.updateTask(task);
         taskAdapter.updateTask(task);
+        extendedFabShrink();
+    }
+
+    @Override
+    public void onDelete(Task task) {
+        presentor.deleteTask(task);
+        taskAdapter.deleteTask(task);
     }
 
     @Override
@@ -185,6 +200,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         Intent onClickIntent = new Intent(MainActivity.this , TaskDetailActivity.class);
         onClickIntent.putExtra("task" , task);
         startActivity(onClickIntent);
+    }
+
+    @Override
+    public void onDelete(Event event) {
+        presentor.deleteEvent(event);
+        eventAdapter.deleteEvent(event);
     }
 
     @Override
@@ -202,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     public void navigationDrawer(){
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this , drawerLayout_parent , R.string.openNavigation , R.string.closeNavigation);
         drawerLayout_parent.addDrawerListener(toggle);
         navigationMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -213,6 +233,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                         presentor.clearTaskListClicked();
                         presentor = new MainPresentor(dao , userInfoContainer , settingContainer);
                         presentor.onAttach(MainActivity.this);
+                        if (selectedTab == 1)
+                            presentor.switchTab(1);
+                        else
+                            presentor.switchTab(0);
                         drawerLayout_parent.close();
                         break;
 
@@ -241,11 +265,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                     case R.id.settingBtn:
                         Intent settingIntent = new Intent(MainActivity.this , SettingActivity.class);
                         startActivity(settingIntent);
+                        drawerLayout_parent.close();
                         break;
 
                     case R.id.contactDev:
                         Intent intent = new Intent(MainActivity.this , FeedBackActivity.class);
                         startActivity(intent);
+                        drawerLayout_parent.close();
                         break;
 
                 }
@@ -257,6 +283,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             @Override
             public void onClick(View v) {
                 drawerLayout_parent.openDrawer(GravityCompat.START);
+                extendedFabShrink();
+            }
+        });
+
+        tap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                extendedFabShrink();
             }
         });
 
@@ -373,8 +407,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         addTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                extendedFabShrink();
-
                 Intent intent = new Intent(MainActivity.this , TaskDetailActivity.class);
                 startActivity(intent);
             }
@@ -383,8 +415,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         addEventBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                extendedFabShrink();
-
                 Intent intent = new Intent(MainActivity.this , EventDetailActivity.class);
                 startActivity(intent);
             }
@@ -423,6 +453,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 animateTab(tab , false);
+                extendedFabShrink();
             }
 
             @Override
@@ -433,17 +464,45 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     }
 
     public void animateTab(@NonNull TabLayout.Tab tab, boolean isSelected) {
+        //Old version with default ripple effect on!
+//        View tabView = tab.view;
+//
+//        float scaleFactor = isSelected ? 1.2f : 1f;
+//        float alphaValue = isSelected ? 1f : 0.7f;
+//
+//        // Set up the ObjectAnimator for scale property
+//        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(tabView, View.SCALE_X, scaleFactor);
+//        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(tabView, View.SCALE_Y, scaleFactor);
+//
+//        // Set up the ObjectAnimator for alpha property
+//        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(tabView, View.ALPHA, alphaValue);
+//
+//        // Set the interpolators for smooth acceleration and deceleration
+//        scaleXAnimator.setInterpolator(isSelected ? new AccelerateInterpolator() : new DecelerateInterpolator());
+//        scaleYAnimator.setInterpolator(isSelected ? new AccelerateInterpolator() : new DecelerateInterpolator());
+//        alphaAnimator.setInterpolator(isSelected ? new AccelerateInterpolator() : new DecelerateInterpolator());
+//
+//        // Set the duration for the animations
+//        int animationDuration = 200;
+//        scaleXAnimator.setDuration(animationDuration);
+//        scaleYAnimator.setDuration(animationDuration);
+//        alphaAnimator.setDuration(animationDuration);
+//
+//        // Create an AnimatorSet to play all animations together
+//        AnimatorSet animatorSet = new AnimatorSet();
+//        animatorSet.playTogether(scaleXAnimator, scaleYAnimator, alphaAnimator);
+//
+//        // Start the animation
+//        animatorSet.start();
+
+
         View tabView = tab.view;
 
         float scaleFactor = isSelected ? 1.2f : 1f;
-        float alphaValue = isSelected ? 1f : 0.7f;
 
         // Set up the ObjectAnimator for scale property
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(tabView, View.SCALE_X, scaleFactor);
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(tabView, View.SCALE_Y, scaleFactor);
-
-        // Set up the ObjectAnimator for alpha property
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(tabView, View.ALPHA, alphaValue);
 
         // Set the interpolators for smooth acceleration and deceleration
         scaleXAnimator.setInterpolator(isSelected ? new AccelerateInterpolator() : new DecelerateInterpolator());
@@ -453,11 +512,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         int animationDuration = 200;
         scaleXAnimator.setDuration(animationDuration);
         scaleYAnimator.setDuration(animationDuration);
-        alphaAnimator.setDuration(animationDuration);
 
-        // Create an AnimatorSet to play all animations together
+        // Create an AnimatorSet to play scale animations together
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(scaleXAnimator, scaleYAnimator, alphaAnimator);
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
+
+        // Set a transparent background to remove the ripple effect
+        tabView.setBackgroundResource(0);
 
         // Start the animation
         animatorSet.start();

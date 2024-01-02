@@ -18,7 +18,6 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
         this.settingContainer = settingContainer;
     }
 
-
     @Override
     public void onAttach(TaskDetailContract.view view) {
         this.view = view;
@@ -55,8 +54,19 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
             task.setTime_period(timePeriod);
             task.setImportance(priority);
             int res = dao.update(task);
-            if (res > 0)
+            if (res > 0){
                 view.updateTask();
+                //Cancel previous alarmManager then add new one if task notification is enabled
+                if (settingContainer.isTaskNotificationEnabled()){
+                    view.cancelAlarmManager(task.getId());
+                    view.setAlarmManager(task.getTitle() , task.getDescription() , timePeriod);
+                }
+
+                //Cancel previous workManager then add new one
+                view.cancelWorkManger(task.getWorkManagerId());
+                view.setWorkManager(task.getId() , timePeriod);
+            }
+
         } else {
             task = new Task();
             task.setTitle(title);

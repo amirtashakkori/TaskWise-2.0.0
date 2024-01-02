@@ -10,11 +10,12 @@ public interface TaskListContract {
     interface view extends BaseView {
         void showList(List<Task> tasks);
         void setDeleteButtonVisibility(boolean visible);
-        void setEmptyStateVisibility(boolean visible ,int es , int appTheme);
+        void setEmptyStateVisibility(boolean visible ,int es);
     }
 
     interface presentor extends BasePresentor<view> {
         void deleteAllButtonClicked();
         void updateTask(Task task);
+        void deleteTask(Task task);
     }
 }

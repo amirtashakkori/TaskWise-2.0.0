@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Task Manager</string>
+    <string name="app_name">تسک وایز</string>
     //MainActivity
     <string name="hi">سلام</string>
     <string name="empty">بیا باهم برنامه هاتو سازماندهی و مدیریت کنیم :)</string>
@@ -7,6 +7,8 @@
 
     <string name="tasks">وظایف</string>
     <string name="events">رویداد ها</string>
+
+    <string name="delete">حذف</string>
 
     //NavigationDrawer
     <string name="taskOptions">گزینه های وظایف</string>

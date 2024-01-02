@@ -31,6 +31,7 @@
         <item name="colorSecondaryVariant">@color/darkerIvory</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorAccent">@color/darkerRed</item>
+        <item name="colorOnPrimarySurface">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/darkerRed</item>
         <!-- Customize your theme here. -->
@@ -50,6 +51,7 @@
         <item name="colorSecondaryVariant">@color/darkerLightBlue</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorAccent">@color/darkerBlue</item>
+        <item name="colorOnPrimarySurface">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/darkerBlue</item>
         <!-- Customize your theme here. -->
@@ -94,6 +96,8 @@
         <item name="borderRound">8dp</item>
     </style>
 
-
+    <style name="popUpMenuStyle" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_item_popup_menue</item>
+    </style>
 
 </resources>

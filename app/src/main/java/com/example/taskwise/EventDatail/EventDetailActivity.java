@@ -10,6 +10,7 @@ import androidx.work.WorkManager;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -150,6 +151,11 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         presentor.onDetach();
@@ -163,11 +169,11 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
 
         if (create){
             selectedCalendar = Calendar.getInstance();
-            selectedCalendar.add(Calendar.MINUTE , 2);
+            selectedCalendar.add(Calendar.MINUTE , (30 - selectedCalendar.get(Calendar.MINUTE) % 30));
             selectedDate = selectedCalendar.getTime();
 
             futureCalendar = Calendar.getInstance();
-            futureCalendar.add(Calendar.HOUR_OF_DAY , 2);
+            futureCalendar.add(Calendar.MINUTE , (30 - futureCalendar.get(Calendar.MINUTE) % 30 + 90));
             futureDate = futureCalendar.getTime();
 
             dateTv.setText(dateSdf.format(selectedDate));
@@ -342,16 +348,17 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     }
 
     @Override
-    public void setAlarmManager(String eventTitle, long notificationDate , int notifyMe) {
+    public void setAlarmManager(long eventId , String eventTitle, long notificationDate , int notifyMe , long requestCode) {
         Intent intent = new Intent(EventDetailActivity.this , Remiders.class);
         intent.putExtra("eventTitle" , eventTitle);
+        intent.putExtra("eventId" , eventId);
         PendingIntent pi;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
-            pi = PendingIntent.getBroadcast(getApplicationContext() , 0 , intent , PendingIntent.FLAG_IMMUTABLE );
+            pi = PendingIntent.getBroadcast(getApplicationContext() , (int) requestCode , intent , PendingIntent.FLAG_IMMUTABLE );
         }
         else {
-            pi = PendingIntent.getBroadcast(EventDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+            pi = PendingIntent.getBroadcast(EventDetailActivity.this , (int) requestCode , intent , PendingIntent.FLAG_UPDATE_CURRENT );
         }
 
         switch (notifyMe){
@@ -375,8 +382,29 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         calendar.setTimeInMillis(date);
 
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (manager != null) {
+            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+        }
+    }
 
-        manager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() , pi);
+    @Override
+    public void cancelAlarmManager(long requestCode) {
+        Intent intent = new Intent(this, Remiders.class);
+        PendingIntent pendingIntent;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            pendingIntent = PendingIntent.getBroadcast(this  , (int) requestCode , intent , PendingIntent.FLAG_IMMUTABLE );
+        }
+        else {
+            pendingIntent = PendingIntent.getBroadcast(this , (int) requestCode , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+        }
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (manager != null){
+            manager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
+
     }
 
 }

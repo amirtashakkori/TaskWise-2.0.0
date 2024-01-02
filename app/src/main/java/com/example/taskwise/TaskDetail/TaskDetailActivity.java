@@ -25,12 +25,16 @@ import android.widget.Toast;
 import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
+import com.example.taskwise.DataBase.DBDao;
+import com.example.taskwise.EventDatail.EventDetailActivity;
+import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
 import com.example.taskwise.BroadCastReceivers.ListStatusUpdater;
 
 import java.util.Calendar;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 
@@ -42,11 +46,14 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     Spinner timePeriodSpinner , importanceSpinner ;
     RelativeLayout deleteTaskBtn , backBtn;
 
-    int time_period , importance = 1;
+    int expiredDate , importance = 1;
     long notificationTime;
 
     AppSettingContainer settingContainer;
     TaskDetailPresentor presentor;
+    DBDao dao;
+    ArrayAdapter<String> periodSpinnerAdapter;
+    ArrayAdapter<String> importanceSpinnerAdapter;
 
     public void cast(){
 
@@ -68,7 +75,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_task_detail);
         cast();
-        presentor = new TaskDetailPresentor(AppDataBase.getAppDataBase(this).getDataBaseDao() , getIntent().getParcelableExtra("task") , settingContainer);
+        dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
+        presentor = new TaskDetailPresentor(dao , getIntent().getParcelableExtra("task") , settingContainer);
         presentor.onAttach(this);
 
         setSpinners();
@@ -80,14 +88,14 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 String taskTitle = taskTitleEt.getText().toString();
                 String taskDescription = descriptionEt.getText().toString();
 
-                if (taskTitle.length() > 0 && taskDescription.length() > 0){
-                    presentor.saveButtonClicked(taskTitle , taskDescription , time_period , importance );
+                if (!taskTitle.isEmpty() && !taskDescription.isEmpty()){
+                    presentor.saveButtonClicked(taskTitle , taskDescription , expiredDate , importance );
                     finish();
                 }
-                else if (taskTitleEt.length() == 0)
+                else if (taskTitle.isEmpty())
                     taskTitleEt.setError(R.string.titleError + "");
 
-                else if(descriptionEt.length() == 0)
+                else if(taskDescription.isEmpty())
                     descriptionEt.setError(R.string.descriptionError + "");
 
             }
@@ -115,22 +123,23 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     public void setSpinners(){
         String[] period_spinner_items = {getString(R.string.inDayAhead) , getString(R.string.inThreeDays) , getString(R.string.inThisWeek) , getString(R.string.inThisMonth)};
-        ArrayAdapter<String> periodSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_period_spinner , R.id.spinnerTv , period_spinner_items);
+        periodSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_period_spinner , R.id.spinnerTv , period_spinner_items);
         periodSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         timePeriodSpinner.setAdapter(periodSpinnerAdapter);
-        timePeriodSpinner.setSelection(time_period);
+        timePeriodSpinner.setSelection(expiredDate);
 
         String[] importance_spinner_items = {getString(R.string.highImportance) , getString(R.string.normalPriority) , getString(R.string.lowPriority)};
-        ArrayAdapter<String> importanceSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_importance_spinner , R.id.spinnerTv , importance_spinner_items);
+        importanceSpinnerAdapter = new ArrayAdapter<String>(this , R.layout.item_importance_spinner , R.id.spinnerTv , importance_spinner_items);
         importanceSpinnerAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         importanceSpinner.setAdapter(importanceSpinnerAdapter);
         importanceSpinner.setSelection(importance);
 
 
+
         timePeriodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                time_period = position;
+                expiredDate = position;
             }
 
             @Override
@@ -162,7 +171,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     public void showTask(Task task) {
         taskTitleEt.setText(task.getTitle());
         descriptionEt.setText(task.getDescription());
-        time_period = task.getTime_period();
+        expiredDate = task.getTime_period();
         importance = task.getImportance();
         timePeriodSpinner.setSelection(task.getTime_period());
         importanceSpinner.setSelection(task.getImportance());
@@ -184,8 +193,17 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 .setInitialDelay(expiredDate , TimeUnit.DAYS)
                 .build();
         manager.enqueue(request);
-
+        UUID workManagerId = request.getId();
+        //To add taskManager id to each tasks
+        Task task = dao.searchTask(taskId);
+        task.setWorkManagerId(workManagerId);
+        dao.update(task);
         finish();
+    }
+
+    @Override
+    public void cancelWorkManger(UUID workId) {
+        WorkManager.getInstance(TaskDetailActivity.this).cancelWorkById(workId);
     }
 
     @Override
@@ -225,6 +243,25 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         manager.set(AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis() , pi);
+    }
+
+    @Override
+    public void cancelAlarmManager(long requestCode) {
+        Intent intent = new Intent(this, Remiders.class);
+        PendingIntent pendingIntent;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            pendingIntent = PendingIntent.getBroadcast(this  , (int) requestCode , intent , PendingIntent.FLAG_IMMUTABLE );
+        }
+        else {
+            pendingIntent = PendingIntent.getBroadcast(this , (int) requestCode , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+        }
+
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (manager != null){
+            manager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
     }
 
     @Override

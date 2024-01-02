@@ -27,14 +27,14 @@ public class ListStatusUpdater extends Worker {
         try {
             DBDao dao = AppDataBase.getAppDataBase(this.getApplicationContext()).getDataBaseDao();
 
-            long taskId = getInputData().getLong("taskId" , 0);
+            long taskId = getInputData().getLong("taskId" , -1);
             Task task = dao.searchTask(taskId);
             if (task != null){
                 task.setTime_period(4);
                 dao.update(task);
             }
 
-            long eventId = getInputData().getLong("eventId" , 0);
+            long eventId = getInputData().getLong("eventId" , -1);
             Event event = dao.searchEvent(eventId);
             if (event != null){
                 event.setOutdated(true);

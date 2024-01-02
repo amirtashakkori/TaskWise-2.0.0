@@ -1,9 +1,13 @@
 package com.example.taskwise.Main.Adapter;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskmanager.R;
 import com.example.taskwise.Model.Event;
+import com.example.taskwise.Model.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -82,10 +87,41 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.item> {
                     listener.onClick(event);
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    PopupMenu popupMenu = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        popupMenu = new PopupMenu(c, v , Gravity.END , 0 , R.style.popUpMenuStyle);
+                        MenuInflater inflater = popupMenu.getMenuInflater();
+                        inflater.inflate(R.menu.hold_item_menu, popupMenu.getMenu());
+                        popupMenu.show();
+
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()){
+                                    case R.id.deleteBtn:
+                                        listener.onDelete(event);
+                                        return true;
+
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
     }
 
     public interface changeListener{
+        public void onDelete(Event event);
+
         public void onClick(Event event);
     }
 
@@ -94,13 +130,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.item> {
         notifyDataSetChanged();
     }
 
-    public void updateEvent(Event event){
+    public void deleteEvent(Event event){
         for (int i = 0; i < events.size(); i++) {
-            if (events.get(i).getId() == event.getId()){
-                events.set(i , event);
-                notifyItemChanged(i);
+            if (events.get(i).getId() == event.getId()) {
+                events.remove(i);
+                notifyItemRemoved(i);
                 break;
             }
         }
     }
+
 }

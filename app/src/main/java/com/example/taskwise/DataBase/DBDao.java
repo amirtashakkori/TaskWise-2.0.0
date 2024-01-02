@@ -17,7 +17,7 @@ public interface DBDao {
     @Insert
     long addTask(Task task);
 
-    @Query("select * from table_task ORDER BY importance ASC , time_period ASC")
+    @Query("select * from table_task ORDER BY time_period ASC , importance ASC")
     List<Task> getTaskList();
 
     @Query("select * from table_task where time_period = 4 and is_completed = 0")
@@ -28,7 +28,6 @@ public interface DBDao {
 
     @Query("SELECT * FROM table_task WHERE id = :id")
     Task searchTask(long id);
-
 
     @Delete
     int deleteTask(Task task);
@@ -63,10 +62,6 @@ public interface DBDao {
 
     @Query("SELECT * FROM table_event WHERE id = :id")
     Event searchEvent(long id);
-
-    @Query("SELECT * FROM table_event WHERE event_title = :title AND date = :date")
-    Event searchByString(String title , String date);
-
 
     @Update
     int update(Event event);

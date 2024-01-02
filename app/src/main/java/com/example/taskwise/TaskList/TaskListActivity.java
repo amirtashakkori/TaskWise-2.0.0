@@ -25,7 +25,7 @@ import java.util.List;
 
 public class TaskListActivity extends AppCompatActivity implements TaskAdapter.changeListener, TaskListContract.view{
 
-    TextView headerTv , emptyStateTv;
+    TextView headerTv ;
     RecyclerView rv_tasks;
     RelativeLayout deleteAllBtn , backBtn , emptyState;
     NestedScrollView nested;
@@ -43,7 +43,6 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
         emptyState = findViewById(R.id.emptyState);
         nested = findViewById(R.id.nested);
         img_empty_state = findViewById(R.id.img_empty_state);
-        emptyStateTv = findViewById(R.id.emptyStateTv);
         backBtn = findViewById(R.id.backBtn);
     }
 
@@ -92,6 +91,12 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     }
 
     @Override
+    public void onDelete(Task task) {
+        presentor.deleteTask(task);
+        adapter.deleteTask(task);
+    }
+
+    @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ContextWrapper.wrap(newBase));
     }
@@ -116,7 +121,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     }
 
     @Override
-    public void setEmptyStateVisibility(boolean visible , int es , int appTheme) {
+    public void setEmptyStateVisibility(boolean visible , int es) {
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
         nested.setVisibility(visible ? View.GONE : View.VISIBLE);
         if (es == 1)

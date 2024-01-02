@@ -70,8 +70,14 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
 
             if (result > 0) {
                 view.updateEvent();
-                if (event.isOutdated() == false && settingContainer.isEventNotificationEnabled()){
-                    view.setAlarmManager(title, firstDate, notifyMe);
+                if (event.isOutdated() == false){
+                    //Cancel previous alarmManager then add new one if notification is enabled
+                    if (settingContainer.isEventNotificationEnabled()){
+                        view.cancelAlarmManager(event.getId());
+                        view.setAlarmManager(event.getId() , title, firstDate, notifyMe , event.getId());
+                    }
+
+                    //Cancel previous workManager then add new one
                     view.cancelWorkManger(event.getWorkmanagerId());
                     view.setWorkManager(event.getId() , secondDate);
                 }
@@ -90,7 +96,7 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             long id = dao.addEvent(event);
 
             if (event.isOutdated() == false && settingContainer.isEventNotificationEnabled()){
-                view.setAlarmManager(title, firstDate, notifyMe);
+                view.setAlarmManager(event.getId() , title, firstDate, notifyMe , id);
                 view.setWorkManager(id , secondDate);
             }
 

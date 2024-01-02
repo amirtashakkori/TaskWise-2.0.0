@@ -13,6 +13,6 @@ public interface CalendarContract {
     }
     interface presentor extends BasePresentor<view>{
         void onSearch(String query);
-        void updateEvent(Event event);
+        void deleteEvent(Event event , String query);
     }
 }

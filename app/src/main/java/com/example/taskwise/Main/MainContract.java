@@ -28,5 +28,7 @@ public interface MainContract {
         void validatingFirstUse(boolean firsUse);
         void switchTab(int tabPosition);
         void updateTask(Task task);
+        void deleteTask(Task task);
+        void deleteEvent(Event event);
     }
 }

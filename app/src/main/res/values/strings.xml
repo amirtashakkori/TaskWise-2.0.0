@@ -8,6 +8,8 @@
     <string name="tasks">Tasks</string>
     <string name="events">Events</string>
 
+    <string name="delete">Delete</string>
+
     //NavigationDrawer
     <string name="taskOptions">Task options</string>
     <string name="eventOptions">Event options</string>

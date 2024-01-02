@@ -4,18 +4,18 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="24dp"
-    android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
+    android:layout_marginTop="12dp"
     android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:background="@drawable/bg_task_item">
+        android:background="@drawable/bg_task_item"
+        android:gravity="start">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,14 +44,14 @@
                 android:textAlignment="viewStart"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:maxLines="3"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/importanceBtn"
                 android:layout_width="100dp"
                 android:layout_height="28dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bg_importance_high"
                 android:text="Important"
                 android:textSize="12sp"
@@ -67,7 +67,16 @@
             android:layout_height="35dp"
             android:layout_gravity="bottom"
             android:background="@drawable/bg_checkbox"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/checkImg"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:tint="?colorOnSurface" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

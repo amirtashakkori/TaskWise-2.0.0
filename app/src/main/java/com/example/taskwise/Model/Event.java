@@ -22,6 +22,7 @@ public class Event implements Parcelable {
     int notifyMe;
     UUID workmanagerId;
 
+
     public UUID getWorkmanagerId() {
         return workmanagerId;
     }
