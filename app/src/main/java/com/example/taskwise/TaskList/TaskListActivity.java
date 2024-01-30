@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     TextView headerTv ;
     RecyclerView rv_tasks;
     RelativeLayout deleteAllBtn , backBtn , emptyState;
-    NestedScrollView nested;
+    LinearLayout nested;
     ImageView img_empty_state;
 
     TaskAdapter adapter;
@@ -123,7 +124,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.c
     @Override
     public void setEmptyStateVisibility(boolean visible , int es) {
         emptyState.setVisibility(visible ? View.VISIBLE : View.GONE);
-        nested.setVisibility(visible ? View.GONE : View.VISIBLE);
+        rv_tasks.setVisibility(visible ? View.GONE : View.VISIBLE);
         if (es == 1)
             img_empty_state.setImageResource(R.drawable.il_completed_empty_state);
 

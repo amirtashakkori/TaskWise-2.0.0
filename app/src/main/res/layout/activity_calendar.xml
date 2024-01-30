@@ -8,88 +8,94 @@
     app:ignore="NamespaceTypo"
     android:background="@drawable/bg_dark2light">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
-
-        <RelativeLayout
-            android:id="@+id/backBtn"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_centerVertical="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_back"
-                app:tint="?colorOnSurface"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/headerTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/calendar"
-            android:textColor="?colorOnSurface"
-            android:textSize="16sp" />
-
-    </RelativeLayout>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:id="@+id/NestedScrollView"
-        android:fillViewport="true"
-        android:background="@drawable/bg_white2white">
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/calendarSection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/bg_white2white">
+            android:orientation="vertical">
 
-            <CalendarView
-                android:id="@+id/calendar"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="56dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/backBtn"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_back"
+                        app:tint="?colorOnSurface"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/headerTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/calendar"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/taskList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                android:background="@drawable/bg_white2white"
+                android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/eventsRv"
+                <CalendarView
+                    android:id="@+id/calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/taskList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"/>
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-            </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/eventsRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="30dp"
+                        android:nestedScrollingEnabled="false"/>
 
-            <LinearLayout
-                android:id="@+id/emptyState"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center">
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/singleListEmptyState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="230dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/il_event_empty_state" />
+                <LinearLayout
+                    android:id="@+id/emptyState"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/singleListEmptyState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="230dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/il_event_empty_state" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

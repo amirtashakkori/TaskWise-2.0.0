@@ -52,6 +52,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -72,8 +73,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     int notify = 2 ;
     long subtractDate;
 
-    SimpleDateFormat dateSdf = new SimpleDateFormat("MMM dd, yyyy");
-    SimpleDateFormat timeSdf = new SimpleDateFormat("hh:mm a");
+    SimpleDateFormat dateSdf , timeSdf;
 
     public void cast(){
         headerTv = findViewById(R.id.headerTv);
@@ -94,6 +94,8 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
         setContentView(R.layout.activity_event_detail);
         cast();
+        dateSdf = new SimpleDateFormat("MMM dd, yyyy" , new Locale(settingContainer.getAppLanguage()));
+        timeSdf = new SimpleDateFormat("hh:mm a" , new Locale(settingContainer.getAppLanguage()));
         dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
         presentor = new EventDetailPresentor(dao , getIntent().getParcelableExtra("event") , settingContainer);
         presentor.onAttach(this);
@@ -133,7 +135,8 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
             public void onClick(View v) {
                 if (!eventTitleEt.getText().toString().equals("")){
                     String eventTitle = eventTitleEt.getText().toString();
-                    String date = dateTv.getText().toString();
+                    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy" , Locale.ENGLISH);
+                    String date = sdf.format(selectedDate.getTime());
                     presentor.saveButtonClicked(eventTitle , selectedDate.getTime() , futureDate.getTime() , date , notify );
                     finish();
                 } else {
@@ -168,11 +171,14 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         submitEventBtn.setText(getString(buttonTv));
 
         if (create){
-            selectedCalendar = Calendar.getInstance();
+            Locale selectedLocale = new Locale("en");
+            selectedCalendar = Calendar.getInstance(selectedLocale);
+
             selectedCalendar.add(Calendar.MINUTE , (30 - selectedCalendar.get(Calendar.MINUTE) % 30));
             selectedDate = selectedCalendar.getTime();
 
-            futureCalendar = Calendar.getInstance();
+            Locale futureLocale = new Locale("en");
+            futureCalendar = Calendar.getInstance(futureLocale);
             futureCalendar.add(Calendar.MINUTE , (30 - futureCalendar.get(Calendar.MINUTE) % 30 + 90));
             futureDate = futureCalendar.getTime();
 

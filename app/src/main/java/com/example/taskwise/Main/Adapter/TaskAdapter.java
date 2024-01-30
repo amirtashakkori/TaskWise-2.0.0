@@ -69,14 +69,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
             taskDescriptionTv.setText(task.getDescription());
 
             if (task.getImportance() == 2){
+                importanceBtn.setVisibility(View.VISIBLE);
                 importanceBtn.setText("Low Priority");
                 importanceBtn.setBackgroundResource(R.drawable.bg_importance_low);
             }
             else if (task.getImportance() == 0){
+                importanceBtn.setVisibility(View.VISIBLE);
                 importanceBtn.setText("Important");
                 importanceBtn.setBackgroundResource(R.drawable.bg_importance_high);
             } else {
-                importanceBtn.setVisibility(View.GONE);
                 importanceBtn.setVisibility(View.GONE);
             }
 
@@ -100,7 +101,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.item> {
                         btnCheck.setBackgroundResource(R.drawable.bg_checkbox_checked);
                         listener.onUpdate(task);
                     }
-
                 }
             });
 

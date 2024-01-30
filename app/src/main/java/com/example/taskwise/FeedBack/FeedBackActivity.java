@@ -64,7 +64,7 @@ public class FeedBackActivity extends AppCompatActivity {
             return R.drawable.il_feedback_green;
 
         else if (theme == 1)
-            return R.drawable.il_feedback_ivory;
+            return R.drawable.il_feedback_gray;
 
         else
             return R.drawable.il_feedback_blue;

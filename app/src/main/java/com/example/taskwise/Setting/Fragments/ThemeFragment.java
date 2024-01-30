@@ -34,15 +34,14 @@ public class ThemeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_theme, container, false);
         cast();
         settingContainer = new AppSettingContainer(getActivity());
 
         themeList = new ArrayList<>();
         themeList.add(new Theme(R.drawable.bg_theme_green , "Avocado" , "#246832"));
-        themeList.add(new Theme(R.drawable.bg_theme_red , "Red Apple" , "#A41D19"));
+        themeList.add(new Theme(R.drawable.bg_theme_gray , "Dolphin" , "#414A54"));
         themeList.add(new Theme(R.drawable.bg_theme_blue , "BlueBerry" , "#0C356A"));
         themeRv.setLayoutManager(new GridLayoutManager(getActivity() , 2 , RecyclerView.VERTICAL , false));
         themeAdapter = new ThemeAdapter(getActivity() , themeList);
@@ -54,7 +53,6 @@ public class ThemeFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
 
         return view;
     }

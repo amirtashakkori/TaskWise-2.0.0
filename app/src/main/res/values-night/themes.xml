@@ -19,23 +19,24 @@
         <item name="android:actionMenuTextColor">@color/darkerGreen</item>
     </style>
 
-    <style name="Theme.RedTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.GrayTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/darkRed</item>
-        <item name="colorPrimaryVariant">@color/darkerRed</item>
+        <item name="colorPrimary">@color/brownBlack</item>
+        <item name="colorPrimaryVariant">@color/darkerBrownBlack</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorOnSurface">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/ivory</item>
-        <item name="colorSecondaryVariant">@color/darkerIvory</item>
+        <item name="colorSecondary">@color/lightGray</item>
+        <item name="colorSecondaryVariant">@color/darkerGray</item>
         <item name="colorOnSecondary">#3C3C3C</item>
         <item name="colorAccent">@color/white</item>
-        <item name="colorOnPrimarySurface">@color/darkRed</item>
+        <item name="colorOnPrimarySurface">@color/darkerBrownBlack</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/darkerRed</item>
+        <item name="android:statusBarColor">@color/darkerBrownBlack</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/gilroy_samibold_regular</item>
-        <item name="android:actionMenuTextColor">@color/darkerRed</item>
+        <item name="actionMenuTextColor">@color/darkerBrownBlack</item>
+        <item name="android:textAppearance">@style/menuItemText</item>
     </style>
 
     <style name="Theme.BlueTaskManager" parent="Theme.MaterialComponents.DayNight.NoActionBar">

@@ -124,154 +124,161 @@
                 android:layout_marginTop="8dp"
                 android:elevation="2dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/middleGray"
-                    android:text="@string/Date"
-                    android:textSize="14sp"/>
-
                 <LinearLayout
-                    android:id="@+id/dateLay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp">
+                    android:paddingBottom="60dp">
 
                     <TextView
-                        android:id="@+id/dateTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:background="#00FEFEFE"
-                        android:hint="23 Jan, 2023"
-                        android:textColor="?colorAccent"
-                        android:textColorHint="?colorAccent"
-                        android:maxLines="1"
-                        android:gravity="center_vertical"
-                        android:singleLine="true"
-                        android:imeOptions="actionNext"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/middleGray"
-                        android:layout_below="@+id/descriptionEdt"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/timeLay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/dateLay"
-                    android:layout_marginTop="32dp">
-
-                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/startTime"
-                            android:textColor="@color/middleGray"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:id="@+id/startTimeTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="56dp"
-                            android:text="00:00 AM"
-                            android:textColor="?colorAccent"
-                            android:textSize="18sp"
-                            android:gravity="center_vertical"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/endTime"
-                            android:textColor="@color/middleGray"
-                            android:textSize="14sp"/>
-
-                        <TextView
-                            android:id="@+id/endTimeTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="56dp"
-                            android:text="00:00 AM"
-                            android:textColor="?colorAccent"
-                            android:textSize="18sp"
-                            android:layout_marginStart="8dp"
-                            android:gravity="center_vertical"
-                            android:layout_marginTop="8dp"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/vi"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/middleGray"
-                    android:layout_below="@+id/timeLay"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="60dp"
-                    android:layout_marginTop="32dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/timePeriodTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/notifyMe"
                         android:textColor="@color/middleGray"
-                        android:textSize="14sp" />
+                        android:text="@string/Date"
+                        android:textSize="14sp"/>
 
                     <LinearLayout
-                        android:id="@+id/timePeriodLay"
+                        android:id="@+id/dateLay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_below="@id/timePeriodTv"
-                        android:layout_marginStart="8dp">
+                        android:layout_marginTop="8dp">
 
-                        <Spinner
-                            android:id="@+id/notifySpinner"
+                        <TextView
+                            android:id="@+id/dateTv"
                             android:layout_width="wrap_content"
                             android:layout_height="56dp"
-                            android:spinnerMode="dropdown"
-                            android:backgroundTint="?colorAccent"
-                            android:contextClickable="true"
-                            android:textSize="19sp"
-                            android:popupElevation="8dp"
-                            android:layout_marginStart="-4dp"
-                            style="@style/SpinnerTheme"/>
+                            android:background="#00FEFEFE"
+                            android:hint="23 Jan, 2023"
+                            android:textColor="?colorAccent"
+                            android:textColorHint="?colorAccent"
+                            android:maxLines="1"
+                            android:gravity="center_vertical"
+                            android:singleLine="true"
+                            android:imeOptions="actionNext"
+                            android:textSize="18sp" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/middleGray"/>
+                            android:background="@color/middleGray"
+                            android:layout_below="@+id/descriptionEdt"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/timeLay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@+id/dateLay"
+                        android:layout_marginTop="32dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/startTime"
+                                android:textColor="@color/middleGray"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/startTimeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:text="00:00 AM"
+                                android:textColor="?colorAccent"
+                                android:textSize="18sp"
+                                android:gravity="center_vertical"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/endTime"
+                                android:textColor="@color/middleGray"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/endTimeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:text="00:00 AM"
+                                android:textColor="?colorAccent"
+                                android:textSize="18sp"
+                                android:layout_marginStart="8dp"
+                                android:gravity="center_vertical"
+                                android:layout_marginTop="8dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/vi"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/middleGray"
+                        android:layout_below="@+id/timeLay"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/timePeriodTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/notifyMe"
+                            android:textColor="@color/middleGray"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:id="@+id/timePeriodLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_below="@id/timePeriodTv"
+                            android:layout_marginStart="8dp">
+
+                            <Spinner
+                                android:id="@+id/notifySpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:spinnerMode="dropdown"
+                                android:backgroundTint="?colorAccent"
+                                android:contextClickable="true"
+                                android:textSize="19sp"
+                                android:popupElevation="8dp"
+                                android:layout_marginStart="-4dp"
+                                style="@style/SpinnerTheme"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/middleGray"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

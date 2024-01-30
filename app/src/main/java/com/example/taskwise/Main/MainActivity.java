@@ -70,12 +70,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     TextView headerTv , helloTv , plansMessage , weekDayTv ,  monthTv ,  userNameTv , userExpertiseTv ;
     ExtendedFloatingActionButton addPlanBtn;
     FloatingActionButton addEventBtn , addTaskBtn;
-    ImageView drawerToggle, editBtn , singleListEmptyState , emptyStateImg;
+    ImageView drawerToggle , singleListEmptyState , emptyStateImg;
     DrawerLayout drawerLayout_parent;
     NavigationView navigationMain;
     View navigationHeader;
     TextClock clockTv;
-    RelativeLayout calendarBtn , parent;
+    RelativeLayout calendarBtn , editBtn;
     TabLayout tabLayout;
     NestedScrollView nestedScrollView;
     RecyclerView listRv;
@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
     @Override
     protected void onResume() {
         super.onResume();
+        nestedScrollView.scrollTo(0,0);
         //Setting the view settings
         ContextWrapper.wrap(this);
         ContextWrapper.setTheme(this , settingContainer.getAppTheme());
@@ -293,7 +294,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
                 extendedFabShrink();
             }
         });
-
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override

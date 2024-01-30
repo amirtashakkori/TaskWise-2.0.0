@@ -33,7 +33,7 @@ public class MainPresentor implements MainContract.presentor {
         tasks = dao.getTaskList();
         events = dao.getEventList();
         userName = userInfoContainer.getName().toString();
-        fullName = userInfoContainer.getName() + userInfoContainer.getFamily();
+        fullName = userInfoContainer.getName() + " " + userInfoContainer.getFamily();
         expertise = userInfoContainer.getExpertise();
         appLanguage = settingContainer.getAppLanguage();
         firstUse = settingContainer.getFirstUse();

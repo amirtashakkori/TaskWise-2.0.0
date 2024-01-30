@@ -36,7 +36,7 @@ public class ContextWrapper {
         if (theme == 0)
             context.setTheme(R.style.Theme_GreenTaskManager);
         else if (theme == 1)
-            context.setTheme(R.style.Theme_RedTaskManager);
+            context.setTheme(R.style.Theme_GrayTaskManager);
         else
             context.setTheme(R.style.Theme_BlueTaskManager);
     }

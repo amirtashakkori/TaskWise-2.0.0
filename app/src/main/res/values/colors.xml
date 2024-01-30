@@ -18,11 +18,11 @@
     <color name="lightGreen">#9FCA59 </color>
     <color name="darkerLightGreen">#84A74A</color>
 
-    //Red TaskManger
-    <color name="darkRed">#A41D19</color>
-    <color name="darkerRed">#921916</color>
-    <color name="ivory">#F8EAB9</color>
-    <color name="darkerIvory">#D6CA9F</color>
+    //Red TaskManger414A54
+    <color name="brownBlack">#414A54</color>
+    <color name="darkerBrownBlack">#383F45</color>
+    <color name="lightGray">#BFBFC0</color>
+    <color name="darkerGray">#B5B5B5</color>
 
     //Blue TaskManger
     <color name="darkBlue">#0C356A</color>

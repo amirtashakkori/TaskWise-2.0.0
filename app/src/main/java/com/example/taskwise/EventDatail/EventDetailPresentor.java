@@ -60,7 +60,7 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             event.setTitle(title);
             event.setFirstDate(firstDate);
             event.setSecondDate(secondDate);
-            event.setDate(sdf.format(firstDate));
+            event.setDate(date);
             event.setNotifyMe(notifyMe);
 
             if (firstDate - System.currentTimeMillis() < 0 && secondDate - System.currentTimeMillis() < 0) event.setOutdated(true);
@@ -87,7 +87,7 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             event.setTitle(title);
             event.setFirstDate(firstDate);
             event.setSecondDate(secondDate);
-            event.setDate(sdf.format(firstDate));
+            event.setDate(date);
             event.setNotifyMe(notifyMe);
 
             if (firstDate - System.currentTimeMillis() < 0 && secondDate - System.currentTimeMillis() < 0) event.setOutdated(true);

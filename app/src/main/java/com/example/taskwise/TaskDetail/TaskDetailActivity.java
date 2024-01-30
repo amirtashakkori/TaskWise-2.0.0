@@ -56,7 +56,6 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     ArrayAdapter<String> importanceSpinnerAdapter;
 
     public void cast(){
-
         taskTitleEt = findViewById(R.id.taskTitleEt);
         descriptionEt = findViewById(R.id.descriptionEt);
         timePeriodSpinner = findViewById(R.id.timePeriodSpinner);
