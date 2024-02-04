@@ -35,10 +35,12 @@ public class ListStatusUpdater extends Worker {
             }
 
             long eventId = getInputData().getLong("eventId" , -1);
-            Event event = dao.searchEvent(eventId);
-            if (event != null){
-                event.setOutdated(true);
-                dao.update(event);
+            if (eventId != -1){
+                Event event = dao.searchEvent(eventId);
+                if (event != null){
+                    event.setOutdated(true);
+                    dao.update(event);
+                }
             }
 
             return Result.success();

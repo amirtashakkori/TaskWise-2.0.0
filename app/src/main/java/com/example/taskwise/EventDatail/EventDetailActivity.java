@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.UiccCardInfo;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -330,10 +331,10 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
 
     //WorkManager & AlarmManager
     @Override
-    public void setWorkManager(long id , long expiredDate) {
-        Data data = new Data.Builder().putLong("eventId" , id) .build();
+    public void setWorkManager(Event event) {
+        Data data = new Data.Builder().putLong("eventId" , event.getId()) .build();
 
-        long date = expiredDate - System.currentTimeMillis();
+        long date = event.getSecondDate() - System.currentTimeMillis();
 
         WorkManager manager = WorkManager.getInstance(EventDetailActivity.this);
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
@@ -342,32 +343,33 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
                 .build();
         manager.enqueue(request);
         UUID workManagerId = request.getId();
-        Event event = dao.searchEvent(id);
-        event.setWorkmanagerId(workManagerId);
-        dao.update(event);
+        event.setWorkManagerId(workManagerId.toString());
+        long res = dao.update(event);
+        if (res > 0)
+            Toast.makeText(this, "" + workManagerId, Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
-    public void cancelWorkManger(UUID workId) {
-        WorkManager.getInstance(EventDetailActivity.this).cancelWorkById(workId);
+    public void cancelWorkManger(Event event) {
+        WorkManager.getInstance(EventDetailActivity.this).cancelWorkById(UUID.fromString(event.getWorkManagerId()));
     }
 
     @Override
-    public void setAlarmManager(long eventId , String eventTitle, long notificationDate , int notifyMe , long requestCode) {
+    public void setAlarmManager(Event event) {
         Intent intent = new Intent(EventDetailActivity.this , Remiders.class);
-        intent.putExtra("eventTitle" , eventTitle);
-        intent.putExtra("eventId" , eventId);
+        intent.putExtra("eventTitle" , event.getTitle());
+        intent.putExtra("eventId" , event.getId());
         PendingIntent pi;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
-            pi = PendingIntent.getBroadcast(getApplicationContext() , (int) requestCode , intent , PendingIntent.FLAG_IMMUTABLE );
+            pi = PendingIntent.getBroadcast(getApplicationContext() , (int) event.getId() , intent , PendingIntent.FLAG_IMMUTABLE );
         }
         else {
-            pi = PendingIntent.getBroadcast(EventDetailActivity.this , (int) requestCode , intent , PendingIntent.FLAG_UPDATE_CURRENT );
+            pi = PendingIntent.getBroadcast(EventDetailActivity.this , (int) event.getId() , intent , PendingIntent.FLAG_UPDATE_CURRENT );
         }
 
-        switch (notifyMe){
+        switch (event.getNotifyMe()){
             case 0 :
                 subtractDate = 0;
                 break;
@@ -382,7 +384,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
                 break;
         }
 
-        long date = notificationDate - subtractDate;
+        long date = event.getFirstDate() - subtractDate;
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);

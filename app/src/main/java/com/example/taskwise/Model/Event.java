@@ -20,42 +20,9 @@ public class Event implements Parcelable {
     long firstDate , secondDate;
     String date;
     int notifyMe;
-    UUID workmanagerId;
-
-
-    public UUID getWorkmanagerId() {
-        return workmanagerId;
-    }
-
-    public void setWorkmanagerId(UUID workmanagerId) {
-        this.workmanagerId = workmanagerId;
-    }
-
+    public String workManagerId;
     boolean outdated = false;
 
-    public boolean isOutdated() {
-        return outdated;
-    }
-
-    public void setOutdated(boolean outdated) {
-        this.outdated = outdated;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getNotifyMe() {
-        return notifyMe;
-    }
-
-    public void setNotifyMe(int notifyMe) {
-        this.notifyMe = notifyMe;
-    }
 
     public long getId() {
         return id;
@@ -89,6 +56,37 @@ public class Event implements Parcelable {
         this.secondDate = secondDate;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getNotifyMe() {
+        return notifyMe;
+    }
+
+    public void setNotifyMe(int notifyMe) {
+        this.notifyMe = notifyMe;
+    }
+
+    public String getWorkManagerId() {
+        return workManagerId;
+    }
+
+    public void setWorkManagerId(String workManagerId) {
+        this.workManagerId = workManagerId;
+    }
+
+    public boolean isOutdated() {
+        return outdated;
+    }
+
+    public void setOutdated(boolean outdated) {
+        this.outdated = outdated;
+    }
 
     @Override
     public int describeContents() {
@@ -103,6 +101,8 @@ public class Event implements Parcelable {
         dest.writeLong(this.secondDate);
         dest.writeString(this.date);
         dest.writeInt(this.notifyMe);
+        dest.writeString(this.workManagerId);
+        dest.writeByte(this.outdated ? (byte) 1 : (byte) 0);
     }
 
     public void readFromParcel(Parcel source) {
@@ -112,6 +112,8 @@ public class Event implements Parcelable {
         this.secondDate = source.readLong();
         this.date = source.readString();
         this.notifyMe = source.readInt();
+        this.workManagerId = source.readString();
+        this.outdated = source.readByte() != 0;
     }
 
     public Event() {
@@ -124,9 +126,11 @@ public class Event implements Parcelable {
         this.secondDate = in.readLong();
         this.date = in.readString();
         this.notifyMe = in.readInt();
+        this.workManagerId = in.readString();
+        this.outdated = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
         @Override
         public Event createFromParcel(Parcel source) {
             return new Event(source);
