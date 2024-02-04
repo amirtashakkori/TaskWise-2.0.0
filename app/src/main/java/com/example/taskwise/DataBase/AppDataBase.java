@@ -36,7 +36,16 @@ public abstract class AppDataBase extends RoomDatabase {
     public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE table_task ADD COLUMN workManagerId UIID DEFAULT ''");
+            database.execSQL("ALTER TABLE table_task ADD COLUMN workManagerId TEXT DEFAULT ''");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `table_event` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`event_title` TEXT, " +
+                    "`firstDate` INTEGER NOT NULL, " +
+                    "`secondDate` INTEGER NOT NULL, " +
+                    "`date` TEXT, " +
+                    "`notifyMe` INTEGER NOT NULL, " +
+                    "`workManagerId` TEXT NOT NULL, " +
+                    "`outdated` INTEGER NOT NULL)");
         }
     };
 

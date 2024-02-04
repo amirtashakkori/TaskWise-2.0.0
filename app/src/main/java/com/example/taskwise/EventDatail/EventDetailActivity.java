@@ -331,9 +331,10 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
 
     //WorkManager & AlarmManager
     @Override
-    public void setWorkManager(Event event) {
-        Data data = new Data.Builder().putLong("eventId" , event.getId()) .build();
+    public void setWorkManager(long id) {
+        Data data = new Data.Builder().putLong("eventId" , id) .build();
 
+        Event event = dao.searchEvent(id);
         long date = event.getSecondDate() - System.currentTimeMillis();
 
         WorkManager manager = WorkManager.getInstance(EventDetailActivity.this);
@@ -345,7 +346,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         UUID workManagerId = request.getId();
         event.setWorkManagerId(workManagerId.toString());
         long res = dao.update(event);
-        if (res > 0)
+        if (res > -1)
             Toast.makeText(this, "" + workManagerId, Toast.LENGTH_SHORT).show();
         finish();
     }

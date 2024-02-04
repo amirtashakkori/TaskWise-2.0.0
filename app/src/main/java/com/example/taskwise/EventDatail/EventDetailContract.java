@@ -14,7 +14,7 @@ public interface EventDetailContract {
         void setTexts(int headerText, int buttonTv , boolean create);
         void showEvent(Event event);
         void setDeleteButtonVisibility(boolean visible);
-        void setWorkManager(Event event);
+        void setWorkManager(long id);
         void cancelWorkManger(Event event);
         void setAlarmManager(Event event);
         void cancelAlarmManager(long requestCode);
