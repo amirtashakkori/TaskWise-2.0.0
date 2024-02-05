@@ -74,7 +74,7 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
                 if (firstDate > System.currentTimeMillis()) {
                     if (settingContainer.isEventNotificationEnabled()){
                         view.cancelAlarmManager(event.getId());
-                        view.setAlarmManager(event);
+                        view.setAlarmManager(event.getId() , event);
                     }
 
                 }
@@ -95,12 +95,12 @@ public class EventDetailPresentor implements EventDetailContract.presentor{
             if (firstDate - System.currentTimeMillis() < 0 && secondDate - System.currentTimeMillis() < 0) event.setOutdated(true);
             else event.setOutdated(false);
 
+            long id = dao.addEvent(event);
+
             if (firstDate > System.currentTimeMillis()) {
                 if (settingContainer.isEventNotificationEnabled())
-                    view.setAlarmManager(event);
+                    view.setAlarmManager(id , event);
             }
-
-            long id = dao.addEvent(event);
 
             if (secondDate > System.currentTimeMillis())
                 view.setWorkManager(id);

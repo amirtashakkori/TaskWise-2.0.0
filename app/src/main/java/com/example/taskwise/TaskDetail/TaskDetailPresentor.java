@@ -56,17 +56,17 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
             task.setTime_period(timePeriod);
             task.setImportance(priority);
             int res = dao.update(task);
+
             if (res > 0){
                 view.updateTask();
-                //Cancel previous alarmManager then add new one if task notification is enabled
+
                 if (settingContainer.isTaskNotificationEnabled()){
                     view.cancelAlarmManager(task.getId());
-                    view.setAlarmManager(task.getTitle() , task.getDescription() , timePeriod);
+                    view.setAlarmManager(task.getId() , task);
                 }
 
-                //Cancel previous workManager then add new one
-                view.cancelWorkManger(task.getWorkManagerId());
-                view.setWorkManager(task.getId() , timePeriod);
+                view.cancelWorkManger(task);
+                view.setWorkManager(task.getId());
             }
 
         } else {
@@ -75,10 +75,13 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
             task.setDescription(description);
             task.setTime_period(timePeriod);
             task.setImportance(priority);
+
             long id = dao.addTask(task);
-            view.setWorkManager(id , getExpireDate(timePeriod));
+
+            view.setWorkManager(id);
+
             if (settingContainer.isTaskNotificationEnabled())
-                view.setAlarmManager(title , description , timePeriod);
+                view.setAlarmManager(task.getId() , task);
         }
     }
 

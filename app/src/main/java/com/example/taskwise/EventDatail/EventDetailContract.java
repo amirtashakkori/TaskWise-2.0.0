@@ -16,7 +16,7 @@ public interface EventDetailContract {
         void setDeleteButtonVisibility(boolean visible);
         void setWorkManager(long id);
         void cancelWorkManger(Event event);
-        void setAlarmManager(Event event);
+        void setAlarmManager(long id , Event event);
         void cancelAlarmManager(long requestCode);
         void updateEvent();
         void deleteEvent();

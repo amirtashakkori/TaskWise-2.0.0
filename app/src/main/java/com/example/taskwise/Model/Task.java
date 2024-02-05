@@ -21,15 +21,8 @@ public class Task implements Parcelable {
     int time_period;
     int is_completed;
     int importance;
-    UUID workManagerId;
+    public String workManagerId;
 
-    public UUID getWorkManagerId() {
-        return workManagerId;
-    }
-
-    public void setWorkManagerId(UUID workManagerId) {
-        this.workManagerId = workManagerId;
-    }
 
     public long getId() {
         return id;
@@ -79,6 +72,14 @@ public class Task implements Parcelable {
         this.importance = importance;
     }
 
+    public String getWorkManagerId() {
+        return workManagerId;
+    }
+
+    public void setWorkManagerId(String workManagerId) {
+        this.workManagerId = workManagerId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,6 +93,7 @@ public class Task implements Parcelable {
         dest.writeInt(this.time_period);
         dest.writeInt(this.is_completed);
         dest.writeInt(this.importance);
+        dest.writeString(this.workManagerId);
     }
 
     public void readFromParcel(Parcel source) {
@@ -101,6 +103,7 @@ public class Task implements Parcelable {
         this.time_period = source.readInt();
         this.is_completed = source.readInt();
         this.importance = source.readInt();
+        this.workManagerId = source.readString();
     }
 
     public Task() {
@@ -113,9 +116,10 @@ public class Task implements Parcelable {
         this.time_period = in.readInt();
         this.is_completed = in.readInt();
         this.importance = in.readInt();
+        this.workManagerId = in.readString();
     }
 
-    public static final Creator<Task> CREATOR = new Creator<Task>() {
+    public static final Parcelable.Creator<Task> CREATOR = new Parcelable.Creator<Task>() {
         @Override
         public Task createFromParcel(Parcel source) {
             return new Task(source);

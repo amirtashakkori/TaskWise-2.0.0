@@ -346,8 +346,6 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
         UUID workManagerId = request.getId();
         event.setWorkManagerId(workManagerId.toString());
         long res = dao.update(event);
-        if (res > -1)
-            Toast.makeText(this, "" + workManagerId, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -357,7 +355,7 @@ public class EventDetailActivity extends AppCompatActivity implements EventDetai
     }
 
     @Override
-    public void setAlarmManager(Event event) {
+    public void setAlarmManager(long id , Event event) {
         Intent intent = new Intent(EventDetailActivity.this , Remiders.class);
         intent.putExtra("eventTitle" , event.getTitle());
         intent.putExtra("eventId" , event.getId());

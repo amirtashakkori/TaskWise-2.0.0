@@ -183,8 +183,9 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     }
 
     @Override
-    public void setWorkManager(long taskId , int expiredDate) {
-        Data data = new Data.Builder().putLong("taskId" , taskId ).build();
+    public void setWorkManager(long id) {
+        Data data = new Data.Builder().putLong("taskId" , id ).build();
+        Task task = dao.searchTask(id);
 
         WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
@@ -193,23 +194,21 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
                 .build();
         manager.enqueue(request);
         UUID workManagerId = request.getId();
-        //To add taskManager id to each tasks
-        Task task = dao.searchTask(taskId);
-        task.setWorkManagerId(workManagerId);
-        dao.update(task);
+        task.setWorkManagerId(workManagerId.toString());
+        long res = dao.update(task);
         finish();
     }
 
     @Override
-    public void cancelWorkManger(UUID workId) {
-        WorkManager.getInstance(TaskDetailActivity.this).cancelWorkById(workId);
+    public void cancelWorkManger(Task task) {
+        WorkManager.getInstance(TaskDetailActivity.this).cancelWorkById(UUID.fromString(task.getWorkManagerId()));
     }
 
     @Override
-    public void setAlarmManager(String taskTitle, String taskDescription , int expiredDate) {
+    public void setAlarmManager(long id , Task task) {
         Intent intent = new Intent(TaskDetailActivity.this , Remiders.class);
-        intent.putExtra("eventTitle" , taskTitle);
-        intent.putExtra("taskDescription" , taskDescription);
+        intent.putExtra("eventTitle" , task.getTitle());
+        intent.putExtra("taskDescription" , task.getDescription());
         PendingIntent pi;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
@@ -219,7 +218,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
             pi = PendingIntent.getBroadcast(TaskDetailActivity.this , 0 , intent , PendingIntent.FLAG_UPDATE_CURRENT );
         }
 
-        switch (expiredDate){
+        switch (task.getTime_period()){
             case 0 :
                 notificationTime = TimeUnit.DAYS.toMillis(1);
                 break;

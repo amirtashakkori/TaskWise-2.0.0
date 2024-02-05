@@ -11,9 +11,9 @@ public interface TaskDetailContract {
         void setTexts(int headerText, int buttonTv);
         void showTask(Task task);
         void setDeleteButtonVisibility(boolean visible);
-        void setWorkManager(long taskId , int expiredDate);
-        void cancelWorkManger(UUID workId);
-        void setAlarmManager(String taskTitle , String taskDescription , int expiredDate);
+        void setWorkManager(long id);
+        void cancelWorkManger(Task task);
+        void setAlarmManager(long id , Task task);
         void cancelAlarmManager(long requestCode);
         void updateTask();
         void deleteTask();
