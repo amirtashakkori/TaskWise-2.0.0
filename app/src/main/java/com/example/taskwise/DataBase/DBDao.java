@@ -17,7 +17,7 @@ public interface DBDao {
     @Insert
     long addTask(Task task);
 
-    @Query("select * from table_task ORDER BY time_period ASC , importance ASC")
+    @Query("select * from table_task WHERE time_period != 4 ORDER BY time_period ASC , importance ASC")
     List<Task> getTaskList();
 
     @Query("select * from table_task where time_period = 4 and is_completed = 0")

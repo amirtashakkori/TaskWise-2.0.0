@@ -7,8 +7,7 @@ import com.example.taskwise.SharedPreferences.AppSettingContainer;
 
 import java.util.UUID;
 
-public class TaskDetailPresentor implements TaskDetailContract.presentor
-{
+public class TaskDetailPresentor implements TaskDetailContract.presentor {
     DBDao dao;
     TaskDetailContract.view view;
     Task task;
@@ -85,15 +84,6 @@ public class TaskDetailPresentor implements TaskDetailContract.presentor
         }
     }
 
-    public int getExpireDate(int timePeriod){
-        if(timePeriod == 0)
-            return 1;
-        else if (timePeriod == 1)
-            return 3;
-        else if (timePeriod == 2)
-            return 7;
-        else
-            return 30;
-    }
+
 
 }

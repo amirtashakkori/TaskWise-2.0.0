@@ -52,6 +52,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     AppSettingContainer settingContainer;
     TaskDetailPresentor presentor;
     DBDao dao;
+    Task task;
     ArrayAdapter<String> periodSpinnerAdapter;
     ArrayAdapter<String> importanceSpinnerAdapter;
 
@@ -75,7 +76,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         setContentView(R.layout.activity_task_detail);
         cast();
         dao = AppDataBase.getAppDataBase(this).getDataBaseDao();
-        presentor = new TaskDetailPresentor(dao , getIntent().getParcelableExtra("task") , settingContainer);
+        task = getIntent().getParcelableExtra("task");
+        presentor = new TaskDetailPresentor(dao , task , settingContainer);
         presentor.onAttach(this);
 
         setSpinners();
@@ -114,6 +116,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
             }
         });
     }
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -172,8 +175,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         descriptionEt.setText(task.getDescription());
         expiredDate = task.getTime_period();
         importance = task.getImportance();
-        timePeriodSpinner.setSelection(task.getTime_period());
-        importanceSpinner.setSelection(task.getImportance());
+        timePeriodSpinner.setSelection(expiredDate);
+        importanceSpinner.setSelection(importance);
 
     }
 
@@ -190,7 +193,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
         WorkManager manager = WorkManager.getInstance(TaskDetailActivity.this);
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(ListStatusUpdater.class)
                 .setInputData(data)
-                .setInitialDelay(expiredDate , TimeUnit.DAYS)
+                .setInitialDelay(getExpireDate(expiredDate) , TimeUnit.DAYS)
                 .build();
         manager.enqueue(request);
         UUID workManagerId = request.getId();
@@ -278,5 +281,16 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
     protected void onDestroy() {
         super.onDestroy();
         presentor.onDetach();
+    }
+
+    public int getExpireDate(int timePeriod){
+        if(timePeriod == 0)
+            return 1;
+        else if (timePeriod == 1)
+            return 3;
+        else if (timePeriod == 2)
+            return 7;
+        else
+            return 30;
     }
 }
