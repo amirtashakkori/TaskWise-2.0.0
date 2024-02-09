@@ -26,8 +26,6 @@ import com.example.taskwise.BroadCastReceivers.Remiders;
 import com.example.taskwise.ContextWrapper;
 import com.example.taskwise.DataBase.AppDataBase;
 import com.example.taskwise.DataBase.DBDao;
-import com.example.taskwise.EventDatail.EventDetailActivity;
-import com.example.taskwise.Model.Event;
 import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;

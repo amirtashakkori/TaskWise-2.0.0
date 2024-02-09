@@ -21,9 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +29,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.taskwise.Calendar.CalendarActivity;
 import com.example.taskwise.ContextWrapper;
@@ -53,6 +49,7 @@ import com.example.taskwise.SharedPreferences.AppSettingContainer;
 import com.example.taskwise.SharedPreferences.UserInfoContainer;
 import com.example.taskwise.TaskDetail.TaskDetailActivity;
 import com.example.taskwise.TaskList.TaskListActivity;
+import com.example.taskwise.Welcome.UserInfoActivity;
 import com.example.taskwise.Welcome.WelcomeActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -298,9 +295,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.chang
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this , WelcomeActivity.class);
-                intent.putExtra("key" , 1);
+                Intent intent = new Intent(MainActivity.this , UserInfoActivity.class);
+                intent.putExtra("edit" , true);
                 startActivity(intent);
+                drawerLayout_parent.close();
             }
         });
     }

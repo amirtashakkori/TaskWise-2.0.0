@@ -11,6 +11,7 @@ public class AppSettingContainer {
     SharedPreferences notificationSp;
     SharedPreferences appModeSp;
     SharedPreferences themeSp;
+    SharedPreferences openSecondFragment;
 
     public AppSettingContainer(Context context){
         languageSp = context.getSharedPreferences("language" , Context.MODE_PRIVATE);
@@ -18,6 +19,13 @@ public class AppSettingContainer {
         notificationSp = context.getSharedPreferences("notification" , Context.MODE_PRIVATE);
         appModeSp = context.getSharedPreferences("appMode" , Context.MODE_PRIVATE);
         themeSp = context.getSharedPreferences("theme" , Context.MODE_PRIVATE);
+        openSecondFragment = context.getSharedPreferences("openSecondFragment" , Context.MODE_PRIVATE);
+    }
+
+    public void saveSecondFragment(boolean secondApp){
+        SharedPreferences.Editor editor = openSecondFragment.edit();
+        editor.putBoolean("openSecondFragment" , secondApp);
+        editor.apply();
     }
 
     public void saveAppLanguage(String language){
@@ -79,5 +87,9 @@ public class AppSettingContainer {
 
     public int getAppTheme(){
         return themeSp.getInt("theme" , 0);
+    }
+
+    public boolean getSecondFragment(){
+        return openSecondFragment.getBoolean("openSecondFragment" , false);
     }
 }

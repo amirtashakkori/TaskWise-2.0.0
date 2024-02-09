@@ -1,16 +1,11 @@
 package com.example.taskwise.EventDatail;
 
-import android.widget.Toast;
-
 import com.example.taskmanager.R;
 import com.example.taskwise.DataBase.DBDao;
 import com.example.taskwise.Model.Event;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
 
 public class EventDetailPresentor implements EventDetailContract.presentor{
 

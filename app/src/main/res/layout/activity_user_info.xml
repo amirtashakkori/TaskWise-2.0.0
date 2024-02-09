@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.taskwise.Welcome.Fragments.UserInfoFragment"
+    tools:context="com.example.taskwise.Welcome.UserInfoActivity"
     android:background="@drawable/bg_dark2light"
     android:fillViewport="true">
 
@@ -46,7 +46,6 @@
                     android:layout_height="240dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/il_high_five"
                     android:layout_marginBottom="-19dp"
                     android:visibility="gone"/>
 

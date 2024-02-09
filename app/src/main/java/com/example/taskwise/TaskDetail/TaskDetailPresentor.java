@@ -5,8 +5,6 @@ import com.example.taskwise.Model.Task;
 import com.example.taskmanager.R;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
 
-import java.util.UUID;
-
 public class TaskDetailPresentor implements TaskDetailContract.presentor {
     DBDao dao;
     TaskDetailContract.view view;

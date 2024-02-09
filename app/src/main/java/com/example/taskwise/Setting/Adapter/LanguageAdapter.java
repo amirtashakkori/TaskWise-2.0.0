@@ -2,7 +2,6 @@ package com.example.taskwise.Setting.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.telecom.StatusHints;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,28 +1,25 @@
-package com.example.taskwise.Welcome.Fragments;
+package com.example.taskwise.Welcome;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskwise.Main.MainActivity;
 import com.example.taskmanager.R;
+import com.example.taskwise.ContextWrapper;
+import com.example.taskwise.Main.MainActivity;
 import com.example.taskwise.SharedPreferences.AppSettingContainer;
 import com.example.taskwise.SharedPreferences.UserInfoContainer;
 
-public class UserInfoFragment extends Fragment {
+public class UserInfoActivity extends AppCompatActivity {
 
-    View view;
     EditText nameEt , familyEt , expertiseEt;
     AppCompatButton submitBtn;
     TextView userInfoTv;
@@ -33,26 +30,27 @@ public class UserInfoFragment extends Fragment {
     AppSettingContainer settingContainer;
 
     public void cast(){
-        nameEt = view.findViewById(R.id.nameEt);
-        familyEt = view.findViewById(R.id.familyEt);
-        expertiseEt = view.findViewById(R.id.expertiseEt);
-        submitBtn = view.findViewById(R.id.submitBtn);
-        userInfoTv = view.findViewById(R.id.userInfoTv);
-        il1 = view.findViewById(R.id.il1);
-        il2 = view.findViewById(R.id.il2);
-        backBtn = view.findViewById(R.id.backBtn);
+        nameEt = findViewById(R.id.nameEt);
+        familyEt = findViewById(R.id.familyEt);
+        expertiseEt = findViewById(R.id.expertiseEt);
+        submitBtn = findViewById(R.id.submitBtn);
+        userInfoTv = findViewById(R.id.userInfoTv);
+        il1 = findViewById(R.id.il1);
+        il2 = findViewById(R.id.il2);
+        backBtn = findViewById(R.id.backBtn);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_user_info, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        settingContainer = new AppSettingContainer(this);
+        ContextWrapper.setTheme(this , settingContainer.getAppTheme());
+        setContentView(R.layout.activity_user_info);
 
         cast();
 
-        userContainer = new UserInfoContainer(getActivity());
-        settingContainer = new AppSettingContainer(getActivity());
+        userContainer = new UserInfoContainer(this);
+        settingContainer = new AppSettingContainer(this);
 
         if (!userContainer.getName().equals("")){
             il1.setVisibility(View.GONE);
@@ -67,7 +65,6 @@ public class UserInfoFragment extends Fragment {
         } else {
             backBtn.setVisibility(View.GONE);
         }
-
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,15 +74,15 @@ public class UserInfoFragment extends Fragment {
 
                 if (name.length() > 0 && family.length() > 0 && expertise.length() > 0){
                     userContainer.saveInfo(nameEt.getText().toString() , familyEt.getText().toString() , expertiseEt.getText().toString());
-                    getActivity().finish();
-                    Intent intent = new Intent(getActivity() , MainActivity.class);
+                    finish();
+                    Intent intent = new Intent(UserInfoActivity.this , MainActivity.class);
                     startActivity(intent);
-                    
+
                     if (!userContainer.getName().equals(""))
-                        Toast.makeText(getActivity(), "Saving Info Completed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserInfoActivity.this, "Saving Info Completed!", Toast.LENGTH_SHORT).show();
                     else
-                        Toast.makeText(getActivity(), "Changes Saved!", Toast.LENGTH_SHORT).show();
-                    
+                        Toast.makeText(UserInfoActivity.this, "Changes Saved!", Toast.LENGTH_SHORT).show();
+
                 } else if (name.length() == 0)
                     nameEt.setError("Please Enter your first name");
 
@@ -101,11 +98,10 @@ public class UserInfoFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                finish();
             }
         });
 
-        return view;
     }
 
     public int setIlls(int theme){
@@ -117,5 +113,11 @@ public class UserInfoFragment extends Fragment {
 
         else
             return R.drawable.il_edit_user_info_blue;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

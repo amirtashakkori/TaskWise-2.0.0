@@ -1,13 +1,11 @@
 package com.example.taskwise.Setting.Fragments;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -18,7 +16,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.taskmanager.R;
 import com.example.taskwise.ApplicationClass;

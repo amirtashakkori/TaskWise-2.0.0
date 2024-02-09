@@ -5,12 +5,8 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.unusedapprestrictions.IUnusedAppRestrictionsBackportService;
 
 import com.example.taskmanager.R;
 import com.example.taskwise.ApplicationClass;
